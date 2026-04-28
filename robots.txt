@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.updateyourlife.it/sitemap.xml
+
+# Blocca file di sistema
+Disallow: /tweaks-panel.jsx
