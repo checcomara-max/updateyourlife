@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Supervisione tra Pari — Francesco Maragliulo | Update Your Life</title>
-<meta name="description" content="Supervisione tra pari per coach, counselor e psicologi. Sessioni in coppia con Francesco Maragliulo. Sessione singola o pacchetto da 5 con sconto del 20% — contattami per prezzi e disponibilità.">
-<meta name="keywords" content="supervisione tra pari, supervisione professionisti, psicologo supervisore, counselor, coach ICF, formazione continua, aggiornamento professionale, Francesco Maragliulo">
+<meta name="description" content="Supervisione tra pari per coach, counselor e psicologi. Sessioni in coppia su casistiche selezionate. Francesco Maragliulo — psicologo, coach, 14 anni in Amplifon.">
+<meta name="keywords" content="supervisione tra pari, supervisione professionisti, psicologo supervisore, counselor, coach ICF, formazione continua, Francesco Maragliulo">
 <meta name="author" content="Francesco Maragliulo">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.updateyourlife.it/supervisione">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.updateyourlife.it/supervisione">
 <meta property="og:title" content="Supervisione tra Pari — Francesco Maragliulo">
-<meta property="og:description" content="Sessioni di supervisione in coppia per coach, counselor e psicologi. Pacchetto da 5 sessioni con sconto del 20% — contattami per prezzi e dettagli.">
+<meta property="og:description" content="Sessioni di supervisione in coppia per coach, counselor e psicologi. Casistiche selezionate, schede preparatorie, sintesi post-sessione.">
 <meta property="og:image" content="https://www.updateyourlife.it/foto-profilo.png">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Update Your Life">
@@ -29,7 +29,7 @@
     "name": "Francesco Maragliulo",
     "url": "https://www.updateyourlife.it"
   },
-  "description": "Sessioni di supervisione in coppia per coach ICF, counselor e psicologi. Sessione singola o pacchetto da 5 sessioni con sconto del 20%.",
+  "description": "Sessioni di supervisione in coppia per coach ICF, counselor e psicologi. Casistiche selezionate dal supervisore, schede preparatorie, sintesi post-sessione.",
   "url": "https://www.updateyourlife.it/supervisione",
   "serviceType": "Supervisione professionale",
   "audience": {
@@ -93,6 +93,7 @@
     .pricing-grid { grid-template-columns: 1fr !important; }
     .steps-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
     .materials-grid { grid-template-columns: 1fr 1fr !important; }
+    .chi-sono-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
   }
 </style>
 </head>
@@ -120,7 +121,6 @@ function App() {
   const text = isDark ? 'oklch(93% 0.005 80)' : 'oklch(20% 0.02 80)';
   const textMuted = isDark ? 'oklch(65% 0.01 80)' : 'oklch(50% 0.015 80)';
   const accent = tweaks.accentColor;
-  const warm = tweaks.accentWarm;
 
   useEffect(() => {
     document.documentElement.style.setProperty('--bg', bg);
@@ -145,6 +145,8 @@ function App() {
   }, []);
   const isMobile = width < 768;
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const WA_LINK = "https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0";
 
   const s = {
     nav: {
@@ -182,26 +184,49 @@ function App() {
   };
 
   const steps = [
-    { num: '01', title: 'Richiesta', body: 'I due professionisti interessati mi contattano insieme — via WhatsApp o email — indicando i rispettivi ambiti di lavoro e cosa vogliono portare in supervisione.' },
-    { num: '02', title: 'Call preliminare', body: 'Facciamo una breve call gratuita di 20 minuti per allinearci sul formato, sulle aspettative e sul focus del lavoro condiviso.' },
-    { num: '03', title: 'Sessione', body: 'La sessione dura 90 minuti e si svolge online via videocall a tre. Ogni professionista porta un caso, una dinamica relazionale o una sfida del proprio lavoro da esplorare insieme.' },
-    { num: '04', title: 'Follow-up', body: 'A chiusura di ogni sessione ricevete un documento di sintesi con i punti chiave emersi, le piste di riflessione e i materiali pertinenti.' },
+    {
+      num: '01',
+      title: 'Richiesta',
+      body: 'I due professionisti mi contattano via WhatsApp indicando i propri ambiti di lavoro. Non occorre inventare nulla: sono io a selezionare le casistiche su cui lavoreremo — situazioni reali e rappresentative delle dinamiche più rilevanti per quella coppia di professionisti.',
+    },
+    {
+      num: '02',
+      title: 'Call & schede preparatorie',
+      body: 'Facciamo una breve call gratuita di 20 minuti per allinearci. Prima della sessione ricevete schede preparatorie con i casi selezionati: materiali per entrare nel contesto, "incarnare" le situazioni e arrivare all\'incontro già immersi nel tema.',
+    },
+    {
+      num: '03',
+      title: 'Sessione a tre',
+      body: 'La sessione dura 90 minuti online, con tutti e tre presenti. Lavoriamo sui casi selezionati: i due professionisti li mettono in scena, li esplorano, si confrontano. Il mio ruolo è tenere il contenitore e far emergere i temi trasversali di approccio e relazione.',
+    },
+    {
+      num: '04',
+      title: 'Follow-up',
+      body: 'A chiusura di ogni sessione ricevete un documento di sintesi con i punti chiave emersi, le piste di riflessione personale, domande guida e risorse bibliografiche pertinenti.',
+    },
   ];
 
   const materials = [
-    { icon: '📄', title: 'Sintesi scritta', body: 'Documento di follow-up dopo ogni sessione con i principali insight, domande chiave e traiettorie di lavoro.' },
-    { icon: '📚', title: 'Schede teoriche', body: 'Materiali di riferimento su modelli, strumenti e framework pertinenti ai temi portati in sessione.' },
-    { icon: '🔍', title: 'Domande guida', body: 'Una lista di domande riflessive da usare in autonomia dopo la supervisione, per approfondire la propria pratica.' },
-    { icon: '🗂', title: 'Risorse bibliografiche', body: 'Indicazioni di letture, articoli e risorse formative legate ai temi emersi nel lavoro condiviso.' },
+    { icon: '📋', title: 'Schede pre-sessione', body: 'Prima di ogni incontro ricevete materiali preparatori con le casistiche selezionate. Servono a entrare nel contesto, a "incarnare" i casi e ad arrivare alla sessione già immersi nel lavoro.' },
+    { icon: '📄', title: 'Sintesi post-sessione', body: 'Documento di follow-up con i principali insight emersi, le piste di riflessione e le traiettorie di lavoro individuate nella sessione.' },
+    { icon: '🔍', title: 'Domande guida', body: 'Una lista di domande riflessive da usare in autonomia dopo la supervisione, per continuare ad approfondire la propria pratica relazionale.' },
+    { icon: '🗂', title: 'Risorse bibliografiche', body: 'Indicazioni di letture, articoli e risorse formative legate ai temi e ai modelli emersi nel lavoro condiviso.' },
   ];
 
   const faqs = [
-    { q: 'Perché solo in coppia?', a: 'La supervisione tra pari è pensata come uno spazio a tre: io come supervisore e due colleghi che si osservano e si rispecchiano a vicenda. Questo formato genera dinamiche di apprendimento che la supervisione individuale da sola non produce — confronto, risonanza, senso di non essere soli nel proprio lavoro. Una coppia è la dimensione minima per attivare questo processo.' },
-    { q: 'Posso partecipare con un collega che conosco appena?', a: "Sì, non è necessario avere già un rapporto consolidato. L'importante è che entrambi portiate un'intenzione genuina di crescita professionale. Spesso colleghi che si conoscono poco sviluppano una prospettiva ancora più fresca e meno contaminata da dinamiche relazionali consolidate." },
-    { q: 'A chi si rivolge questo servizio?', a: 'A coach ICF, counselor e psicologi che desiderano una supervisione strutturata, continuativa e ben documentata sul proprio modo di stare in relazione con le persone con cui lavorano. Non è pensato per chi muove i primi passi nella professione, ma per chi ha già esperienza e vuole affinare la propria pratica.' },
-    { q: 'Cosa si porta in supervisione?', a: 'Casi di lavoro (in forma anonimizzata), difficoltà relazionali con i clienti, impasse nel percorso, domande sulla propria identità professionale, dubbi metodologici. La supervisione si concentra su come stai in relazione con la persona che hai di fronte — non su diagnosi o protocolli. Ogni sessione ha un focus specifico concordato in anticipo.' },
-    { q: 'Il pacchetto da 5 sessioni può essere usato con colleghi diversi?', a: "No, il pacchetto è pensato per una coppia stabile che lavora insieme nel tempo. La continuità è parte del valore del servizio: permette di seguire l'evoluzione dei casi e di costruire una relazione di fiducia reciproca." },
+    { q: 'Cosa distingue questa supervisione da un gruppo di supervisione?', a: 'Nei gruppi di supervisione di solito è il professionista a portare il caso che vuole. Qui funziona diversamente: sono io a selezionare le casistiche in base al profilo dei partecipanti. Non è il professionista che "porta" liberamente — è una supervisione su situazioni scelte per far emergere temi trasversali di approccio, di stile relazionale e di presenza con il cliente. Questo rende il lavoro più mirato e meno dipendente da ciò che si è già pronti a vedere.' },
+    { q: 'Perché le casistiche le sceglie il supervisore?', a: "La forza di questo format sta esattamente qui: i partecipanti non devono inventare né scegliere. Ricevono scenari reali e rappresentativi, li esplorano senza il filtro del proprio punto di vista difensivo, e questo permette di rilevare pattern e dinamiche che spesso non emergono quando si porta solo ciò che si è già elaborato." },
+    { q: 'Perché solo in coppia?', a: 'La supervisione tra pari è uno spazio a tre: io come supervisore e due colleghi che si osservano e si rispecchiano a vicenda. Questo formato genera dinamiche di apprendimento che la supervisione individuale non produce — confronto, risonanza, senso di non essere soli nel proprio lavoro. Una coppia è la dimensione minima per attivare questo processo.' },
+    { q: 'Posso partecipare con un collega che conosco appena?', a: "Sì, non è necessario avere già un rapporto consolidato. L'importante è che entrambi portiate un'intenzione genuina di crescita professionale. Spesso colleghi che si conoscono poco sviluppano una prospettiva più fresca e meno contaminata da dinamiche già consolidate." },
+    { q: 'Il pacchetto da 5 sessioni può essere usato con colleghi diversi?', a: "No, il pacchetto è pensato per una coppia stabile. La continuità è parte del valore: permette di seguire l'evoluzione dei temi e costruire una relazione di fiducia reciproca nel tempo." },
     { q: 'Le sessioni sono valide ai fini ECM o crediti formativi?', a: 'Al momento non eroghiamo crediti ECM. Le sessioni sono però documentate e verbalizzate, e possono essere inserite nel proprio portfolio formativo come attività di supervisione continua.' },
+  ];
+
+  const credentials = [
+    { label: 'Psicologo', detail: 'Laurea in Psicologia, abilitazione professionale e lunga formazione nel lavoro sulla relazione e sui processi psicologici in contesto lavorativo e personale.' },
+    { label: 'Coach certificato', detail: 'Formazione specifica nel coaching professionale con esperienza diretta nel supporto a leader, manager e professionisti in percorsi di sviluppo e cambiamento.' },
+    { label: '14 anni in Amplifon', detail: 'Esperienza diretta nello sviluppo delle persone all\'interno di una grande organizzazione internazionale: coaching continuo, assessment, sviluppo del potenziale, selezione e gestione delle risorse.' },
+    { label: 'Supervisore praticante', detail: 'Esperienza pluriennale come supervisore di coach e counselor, con attenzione ai processi relazionali, alle dinamiche di transfert e all\'identità professionale del professionista.' },
   ];
 
   return (
@@ -231,7 +256,7 @@ function App() {
             </li>
           ))}
           <li>
-            <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={s.ctaBtn}
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={s.ctaBtn}
               onMouseEnter={e => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-1px)'; }}
               onMouseLeave={e => { e.target.style.opacity = '1'; e.target.style.transform = 'none'; }}
             >Scrivimi su WhatsApp</a>
@@ -271,10 +296,10 @@ function App() {
           </h1>
           <p style={{
             fontSize: 18, lineHeight: 1.75, fontWeight: 300,
-            color: 'oklch(78% 0.01 80)', maxWidth: 600, margin: '0 auto 32px',
+            color: 'oklch(78% 0.01 80)', maxWidth: 620, margin: '0 auto 32px',
           }}>
-            Uno spazio strutturato dove due professionisti portano la propria esperienza
-            per esplorarla insieme, con la guida di un supervisore esperto.
+            Uno spazio strutturato dove due professionisti lavorano su casistiche selezionate,
+            con schede preparatorie e la guida di un supervisore esperto.
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '10px 20px', borderRadius: 4, background: 'oklch(100% 0 0 / 0.06)', border: '1px solid oklch(100% 0 0 / 0.12)', marginBottom: 40 }}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: accent, display: 'inline-block', flexShrink: 0 }}/>
@@ -284,8 +309,8 @@ function App() {
             <a href="#pricing" style={{ ...s.ctaBtn, fontSize: 15, padding: '14px 32px' }}
               onMouseEnter={e => e.target.style.opacity = '0.85'}
               onMouseLeave={e => e.target.style.opacity = '1'}
-            >Richiedi prezzi e dettagli</a>
-            <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{
+            >Scopri prezzi e dettagli</a>
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
               padding: '14px 32px', background: 'transparent',
               border: '1.5px solid oklch(50% 0.05 155)',
               borderRadius: 4, fontSize: 15, color: 'oklch(85% 0.005 80)', cursor: 'pointer',
@@ -293,7 +318,7 @@ function App() {
             }}
               onMouseEnter={e => { e.target.style.borderColor = accent; }}
               onMouseLeave={e => { e.target.style.borderColor = 'oklch(50% 0.05 155)'; }}
-            >Contattami</a>
+            >Contattami via WhatsApp per i dettagli</a>
           </div>
         </div>
       </section>
@@ -310,13 +335,13 @@ function App() {
           </div>
           <div className="reveal" style={{ paddingTop: isMobile ? 0 : 12 }}>
             <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, marginBottom: 24, textWrap: 'pretty' }}>
-              La supervisione tra pari è una pratica di sviluppo professionale in cui due colleghi portano la propria esperienza dentro uno spazio facilitato da un terzo esperto. Non è terapia, non è formazione frontale: è un luogo di riflessione condivisa su come stai in relazione con le persone con cui lavori.
+              La supervisione tra pari è una pratica di sviluppo professionale in cui due colleghi portano la propria esperienza dentro uno spazio facilitato da un terzo esperto. Non è terapia, non è formazione frontale: è un luogo di riflessione condivisa su <strong style={{ color: text, fontWeight: 500 }}>come stai in relazione con le persone con cui lavori</strong>.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, marginBottom: 24, textWrap: 'pretty' }}>
-              Il formato <strong style={{ color: text, fontWeight: 500 }}>esclusivamente in coppia</strong> non è una limitazione operativa, ma una scelta metodologica precisa. Il dialogo tra due professionisti — con le loro sensibilità, i loro stili e le loro domande aperte — genera una qualità di riflessione che la supervisione individuale da sola non produce.
+              A differenza dei gruppi di supervisione tradizionali — dove ognuno porta liberamente il caso che vuole — qui le <strong style={{ color: text, fontWeight: 500 }}>casistiche sono selezionate dal supervisore</strong> in base al profilo dei partecipanti. Non si parte da ciò che si è già pronti a vedere: si lavora su scenari costruiti per far emergere i temi trasversali più rilevanti per quella coppia di professionisti.
             </p>
             <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, textWrap: 'pretty' }}>
-              Il mio ruolo è quello di tenere il contenitore, introdurre elementi teorici e metodologici, fare domande che spostino il punto di vista, e restituire una sintesi utile. Non porto risposte pronte: porto la struttura per trovarne insieme di migliori.
+              Il formato <strong style={{ color: text, fontWeight: 500 }}>esclusivamente in coppia</strong> non è una limitazione operativa, ma una scelta metodologica precisa: il dialogo tra due professionisti genera una qualità di riflessione che la supervisione individuale da sola non produce.
             </p>
           </div>
         </div>
@@ -337,9 +362,9 @@ function App() {
               fontSize: isMobile ? 22 : 28, fontWeight: 300, fontStyle: 'italic',
               color: text, lineHeight: 1.6, marginBottom: 16,
             }}>
-              "Due professionisti che si osservano a vicenda mentre portano un caso producono qualcosa che nessuno dei due avrebbe trovato da solo."
+              "Non è che il professionista porta quello che vuole — è il supervisore che seleziona le casistiche. Questo è esattamente il punto di forza: mettere in scena scenari scelti per rivelare ciò che di solito non si vede."
             </p>
-            <p style={{ fontSize: 13, color: textMuted, letterSpacing: '0.08em', textTransform: 'uppercase' }}>— Principio della supervisione tra pari</p>
+            <p style={{ fontSize: 13, color: textMuted, letterSpacing: '0.08em', textTransform: 'uppercase' }}>— Il principio metodologico di questo percorso</p>
           </div>
         </div>
       </section>
@@ -353,9 +378,9 @@ function App() {
           </div>
           <div className="grid-3col reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
             {[
-              { label: 'Psicologi e Psicoterapeuti', body: 'Professionisti con almeno 2–3 anni di pratica che vogliono portare situazioni di lavoro complesse in uno spazio riflessivo strutturato, con attenzione alla qualità della relazione con il cliente.' },
-              { label: 'Counselor', body: 'Chi lavora con approcci integrati — BioGestalt, Analisi Transazionale, Somatic Experiencing e altri — e cerca un supervisore che parli la stessa lingua metodologica e relazionale.' },
-              { label: 'Coach ICF e certificati', body: 'Coach che incontrano dinamiche relazionali complesse nel proprio lavoro e cercano uno spazio dove elaborare le sfide del contatto, del confine e della presenza con il cliente.' },
+              { label: 'Counselor', body: 'Chi lavora con approcci integrati — BioGestalt, Analisi Transazionale, Somatic Experiencing e altri — e cerca un supervisore che parli la stessa lingua metodologica e relazionale. Con almeno 2–3 anni di pratica.' },
+              { label: 'Psicologi', body: 'Professionisti che desiderano uno spazio riflessivo strutturato sul proprio modo di stare in relazione con il cliente, con attenzione alla qualità del contatto, ai processi di transfert e alla propria identità professionale.' },
+              { label: 'Coach (certificati ICF e non)', body: 'Coach che incontrano dinamiche relazionali complesse nel proprio lavoro e cercano uno spazio dove elaborare le sfide del contatto, del confine e della presenza con il cliente.' },
             ].map((item, i) => (
               <div key={i} className="reveal" style={{
                 padding: '40px 36px',
@@ -398,7 +423,7 @@ function App() {
           <div className="reveal" style={{ marginTop: 32, padding: '24px 32px', background: 'oklch(100% 0 0 / 0.04)', borderRadius: 4, border: '1px solid oklch(100% 0 0 / 0.08)', display: 'flex', alignItems: 'center', gap: 16 }}>
             <span style={{ fontSize: 20 }}>🕑</span>
             <p style={{ fontSize: 14, color: 'oklch(72% 0.01 80)', fontWeight: 300, lineHeight: 1.6 }}>
-              <strong style={{ color: 'oklch(85% 0.005 80)', fontWeight: 500 }}>Durata di ogni sessione: 90 minuti</strong> · online via videocall · entrambi i professionisti presenti insieme
+              <strong style={{ color: 'oklch(85% 0.005 80)', fontWeight: 500 }}>Durata di ogni sessione: 90 minuti</strong> · online via videocall · entrambi i professionisti presenti insieme al supervisore
             </p>
           </div>
         </div>
@@ -409,7 +434,7 @@ function App() {
         <div style={s.sectionInner}>
           <div className="reveal" style={{ marginBottom: 56 }}>
             <p style={s.sectionTag}>I materiali</p>
-            <h2 style={s.sectionTitle}>Cosa ricevete<br/>dopo ogni sessione</h2>
+            <h2 style={s.sectionTitle}>Prima e dopo<br/>ogni sessione</h2>
           </div>
           <div className="materials-grid reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
             {materials.map((m, i) => (
@@ -429,21 +454,71 @@ function App() {
           <div className="reveal" style={{ marginTop: 40, padding: '28px 36px', background: isDark ? `oklch(16% 0.04 145 / 0.4)` : `oklch(94% 0.04 145 / 0.4)`, borderRadius: 4, border: `1px solid ${isDark ? 'oklch(32% 0.06 145)' : 'oklch(82% 0.06 145)'}` }}>
             <p style={{ fontSize: 15, color: textMuted, fontWeight: 300, lineHeight: 1.7 }}>
               <strong style={{ color: text, fontWeight: 500 }}>Nota sulla riservatezza:</strong>{' '}
-              tutti i casi portati in supervisione sono trattati nel rispetto delle norme deontologiche. I nomi e i dati identificativi dei clienti devono essere sempre anonimizzati prima della sessione. I materiali condivisi restano all'interno della triade supervisiva.
+              tutti i casi portati in supervisione sono trattati nel rispetto delle norme deontologiche. I nomi e i dati identificativi dei clienti devono essere sempre anonimizzati. I materiali condivisi restano all'interno della triade supervisiva.
             </p>
           </div>
         </div>
       </section>
 
+      {/* CHI SONO */}
+      <section style={{ ...s.section, background: bg }}>
+        <div style={s.sectionInner}>
+          <div className="reveal" style={{ marginBottom: 56 }}>
+            <p style={s.sectionTag}>Perché sono titolato a farlo</p>
+            <h2 style={s.sectionTitle}>Chi sono</h2>
+          </div>
+          <div className="chi-sono-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 80, alignItems: 'start' }}>
+            <div className="reveal">
+              {tweaks.showPhoto && (
+                <div style={{
+                  width: '100%', aspectRatio: '3/4', maxWidth: 320,
+                  background: isDark ? 'oklch(20% 0.02 145)' : 'oklch(92% 0.02 145)',
+                  borderRadius: 4, overflow: 'hidden', marginBottom: 28,
+                }}>
+                  <img src="foto-profilo.png" alt="Francesco Maragliulo" width="320" height="427"
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                    onError={e => { e.target.style.display='none'; }}
+                  />
+                </div>
+              )}
+              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 500, color: text, marginBottom: 8, lineHeight: 1.2 }}>Francesco Maragliulo</p>
+              <p style={{ fontSize: 13, color: textMuted, fontWeight: 300, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Psicologo · Coach · Supervisore</p>
+            </div>
+            <div className="reveal">
+              <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, marginBottom: 28, textWrap: 'pretty' }}>
+                Sono psicologo abilitato e coach con una lunga esperienza nel lavoro sullo sviluppo delle persone, maturata sia in contesti clinici sia dentro le organizzazioni. Per 14 anni ho lavorato in Amplifon, dove mi sono occupato di coaching continuo delle risorse, assessment, sviluppo del potenziale e selezione: in pratica, di leggere le persone in relazione — con i loro clienti, con i colleghi, con i ruoli che incarnano.
+              </p>
+              <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, marginBottom: 36, textWrap: 'pretty' }}>
+                Questa esperienza — psicologica da un lato, aziendale e di coaching dall'altro — è esattamente ciò che porta valore nella supervisione tra pari: sapere cosa succede realmente nella relazione professionista-cliente, saper riconoscere i pattern ripetitivi, e saper costruire domande che spostino davvero il punto di vista.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
+                {credentials.map((c, i) => (
+                  <div key={i} style={{
+                    padding: '20px 24px',
+                    background: isDark ? 'oklch(18% 0.01 80)' : 'oklch(96% 0.008 80)',
+                    border: `1px solid ${isDark ? 'oklch(28% 0.01 80)' : 'oklch(90% 0.01 80)'}`,
+                    borderRadius: 4,
+                  }}>
+                    <p style={{ fontSize: 13, fontWeight: 500, color: accent, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 8 }}>{c.label}</p>
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: textMuted, fontWeight: 300 }}>{c.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* PRICING */}
-      <section id="pricing" style={{ ...s.section, background: bg }}>
+      <section id="pricing" style={{ ...s.section, background: bgAlt }}>
         <div style={s.sectionInner}>
           <div className="reveal" style={{ marginBottom: 60, textAlign: 'center' }}>
             <p style={s.sectionTag}>Investimento</p>
             <h2 style={{ ...s.sectionTitle, textAlign: 'center' }}>Quanto costa<br/>la supervisione</h2>
             <p style={{ fontSize: 15, color: textMuted, fontWeight: 300, maxWidth: 560, margin: '-24px auto 0', lineHeight: 1.75 }}>
-              È possibile accedere al percorso con sessione singola oppure con un pacchetto da 5 sessioni.<br/>
-              Il pacchetto prevede uno <strong style={{ color: text, fontWeight: 500 }}>sconto del 20%</strong> rispetto alle sessioni singole.
+              Sessione singola oppure pacchetto da 5. Il pacchetto prevede uno{' '}
+              <strong style={{ color: text, fontWeight: 500 }}>sconto del 20%</strong> rispetto alle singole.
             </p>
           </div>
           <div className="pricing-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, maxWidth: 860, margin: '0 auto' }}>
@@ -451,24 +526,26 @@ function App() {
             {/* Sessione singola */}
             <div className="reveal" style={{
               padding: '48px 40px',
-              background: isDark ? 'oklch(18% 0.01 80)' : 'oklch(96% 0.008 80)',
+              background: isDark ? 'oklch(18% 0.01 80)' : '#fff',
               border: `1px solid ${isDark ? 'oklch(30% 0.01 80)' : 'oklch(88% 0.01 80)'}`,
               borderRadius: 4,
               display: 'flex', flexDirection: 'column',
             }}>
-              <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: textMuted, marginBottom: 20 }}>Sessione singola</p>
-              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 300, color: text, lineHeight: 1.5, marginBottom: 32 }}>
-                Un incontro di supervisione online per portare una situazione di lavoro, una dinamica relazionale o una domanda professionale specifica.
+              <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: textMuted, marginBottom: 12 }}>Sessione singola</p>
+              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 48, fontWeight: 300, color: text, lineHeight: 1, marginBottom: 6 }}>€250</p>
+              <p style={{ fontSize: 13, color: textMuted, fontWeight: 300, marginBottom: 28 }}>a coppia · IVA inclusa</p>
+              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 19, fontWeight: 300, color: textMuted, lineHeight: 1.5, marginBottom: 32 }}>
+                Un incontro di 90 minuti per portare una situazione di lavoro su casistiche selezionate.
               </p>
               <div style={{ borderTop: `1px solid ${isDark ? 'oklch(30% 0.01 80)' : 'oklch(88% 0.01 80)'}`, paddingTop: 28, marginBottom: 32, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {['90 minuti in videocall (3 partecipanti)','Documento di sintesi post-sessione','Materiali teorici pertinenti','Domande guida per il follow-up'].map(f => (
+                {['Schede preparatorie pre-sessione','90 minuti in videocall (3 partecipanti)','Documento di sintesi post-sessione','Risorse bibliografiche pertinenti'].map(f => (
                   <div key={f} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><path d="M5 12l5 5L19 7" stroke={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     <span style={{ fontSize: 14, color: textMuted, fontWeight: 300, lineHeight: 1.5 }}>{f}</span>
                   </div>
                 ))}
               </div>
-              <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{
+              <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
                 display: 'block', textAlign: 'center', padding: '14px 24px',
                 background: 'transparent', border: `1.5px solid ${isDark ? 'oklch(40% 0.01 80)' : 'oklch(78% 0.01 80)'}`,
                 borderRadius: 4, fontSize: 14, color: text, cursor: 'pointer',
@@ -477,7 +554,7 @@ function App() {
               }}
                 onMouseEnter={e => e.target.style.borderColor = accent}
                 onMouseLeave={e => e.target.style.borderColor = isDark ? 'oklch(40% 0.01 80)' : 'oklch(78% 0.01 80)'}
-              >Richiedi prezzi e dettagli</a>
+              >Contattami via WhatsApp per i dettagli</a>
             </div>
 
             {/* Pacchetto 5 */}
@@ -494,17 +571,19 @@ function App() {
                 padding: '4px 12px', background: accent, borderRadius: 99,
                 fontSize: 11, fontWeight: 500, color: '#fff', letterSpacing: '0.06em', textTransform: 'uppercase',
               }}>Consigliato</div>
-              <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'oklch(70% 0.08 145)', marginBottom: 20 }}>Pacchetto 5 sessioni</p>
-              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 300, color: 'oklch(92% 0.005 80)', lineHeight: 1.5, marginBottom: 12 }}>
-                Un percorso continuativo per una coppia stabile di professionisti che desidera lavorare con maggiore profondità e visione nel tempo.
+              <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'oklch(70% 0.08 145)', marginBottom: 12 }}>Pacchetto 5 sessioni</p>
+              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 48, fontWeight: 300, color: 'oklch(92% 0.005 80)', lineHeight: 1, marginBottom: 6 }}>€990</p>
+              <p style={{ fontSize: 13, color: 'oklch(65% 0.06 145)', fontWeight: 300, marginBottom: 4 }}>a coppia · IVA inclusa</p>
+              <p style={{ fontSize: 13, color: accent, fontWeight: 500, marginBottom: 28 }}>Risparmio di €260 rispetto alle singole</p>
+              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 19, fontWeight: 300, color: 'oklch(80% 0.005 80)', lineHeight: 1.5, marginBottom: 32 }}>
+                Un percorso continuativo per una coppia stabile che vuole lavorare in profondità nel tempo.
               </p>
-              <p style={{ fontSize: 14, color: accent, fontWeight: 500, marginBottom: 32 }}>Sconto del 20% rispetto alle sessioni singole</p>
               <div style={{ borderTop: '1px solid oklch(50% 0.06 155 / 0.4)', paddingTop: 28, marginBottom: 32, display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {[
+                  'Schede preparatorie per ogni sessione',
                   '5 sessioni da 90 minuti in videocall',
                   '5 documenti di sintesi post-sessione',
-                  'Schede teoriche e risorse bibliografiche',
-                  'Domande guida per ogni sessione',
+                  'Risorse bibliografiche per ogni sessione',
                   'Continuità e follow-up dei casi nel tempo',
                   'Priorità nella prenotazione delle date',
                 ].map(f => (
@@ -514,7 +593,7 @@ function App() {
                   </div>
                 ))}
               </div>
-              <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{
+              <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
                 display: 'block', textAlign: 'center', padding: '14px 24px',
                 background: accent, borderRadius: 4,
                 fontSize: 14, color: '#fff', cursor: 'pointer',
@@ -523,7 +602,7 @@ function App() {
               }}
                 onMouseEnter={e => e.target.style.opacity = '0.85'}
                 onMouseLeave={e => e.target.style.opacity = '1'}
-              >Scrivimi per conoscere il pacchetto</a>
+              >Contattami via WhatsApp per i dettagli</a>
             </div>
 
           </div>
@@ -531,9 +610,8 @@ function App() {
           {/* Note pricing */}
           <div className="reveal" style={{ marginTop: 32, maxWidth: 860, margin: '32px auto 0', display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
-              'I percorsi sono pensati esclusivamente per coach ICF, counselor e psicologi.',
-              'Il pacchetto da 5 sessioni è dedicato a una coppia stabile e non è frazionabile tra partecipanti diversi.',
-              'Per informazioni su costi, modalità e disponibilità, è possibile contattarmi direttamente.',
+              'Il percorso è riservato a coach (certificati ICF e non), counselor e psicologi.',
+              'Il pacchetto da 5 sessioni è dedicato a una coppia stabile — non è frazionabile tra partecipanti diversi.',
               'È possibile richiedere fattura per i professionisti con partita IVA.',
             ].map((note, i) => (
               <p key={i} style={{ fontSize: 13, color: textMuted, fontWeight: 300, lineHeight: 1.6, display: 'flex', gap: 10 }}>
@@ -547,7 +625,7 @@ function App() {
       </section>
 
       {/* FAQ */}
-      <section style={{ ...s.section, background: bgAlt }}>
+      <section style={{ ...s.section, background: bg }}>
         <div style={{ ...s.sectionInner, maxWidth: 860 }}>
           <div className="reveal" style={{ marginBottom: 56 }}>
             <p style={s.sectionTag}>Domande frequenti</p>
@@ -569,37 +647,42 @@ function App() {
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(34px, 4vw, 54px)', fontWeight: 300, color: 'oklch(95% 0.005 80)', marginBottom: 20, lineHeight: 1.15 }}>
               Hai già un collega con cui<br/>vorresti supervisionarti?
             </h2>
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'oklch(72% 0.01 80)', fontWeight: 300, marginBottom: 40, maxWidth: 540, margin: '0 auto 40px' }}>
-              Scrivetemi su WhatsApp — entrambi o anche solo uno di voi — e organizziamo una call gratuita di 20 minuti per capire se questo formato fa per voi.
+            <p style={{ fontSize: 17, lineHeight: 1.75, fontWeight: 300, color: 'oklch(72% 0.01 80)', marginBottom: 40, maxWidth: 520, margin: '0 auto 40px' }}>
+              Scrivetemi insieme su WhatsApp indicando i vostri ambiti di lavoro. Vi rispondo entro 24 ore per organizzare la call preliminare gratuita.
             </p>
-            <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{ ...s.ctaBtn, fontSize: 15, padding: '16px 40px' }}
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{ ...s.ctaBtn, fontSize: 16, padding: '16px 40px' }}
               onMouseEnter={e => e.target.style.opacity = '0.85'}
               onMouseLeave={e => e.target.style.opacity = '1'}
-            >Scrivimi su WhatsApp</a>
-            <p style={{ fontSize: 13, color: 'oklch(55% 0.02 80)', marginTop: 16, fontWeight: 300 }}>Call conoscitiva gratuita · 20 minuti</p>
+            >Contattami via WhatsApp per i dettagli</a>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer style={{
-        padding: '28px 5%', background: isDark ? 'oklch(11% 0.03 155)' : 'oklch(20% 0.05 155)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
+        padding: '48px 5%', borderTop: `1px solid ${isDark ? 'oklch(26% 0.01 80)' : 'oklch(88% 0.01 80)'}`,
+        display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'space-between', alignItems: 'center',
+        background: bg,
       }}>
-        <span style={{ fontFamily: 'Cormorant Garamond', fontSize: 16, color: 'oklch(68% 0.02 80)' }}>
-          Update Your Life © 2026
-        </span>
-        <span style={{ fontSize: 12, color: 'oklch(65% 0.02 80)', fontWeight: 300, letterSpacing: '0.03em' }}>
-          Francesco Maragliulo · Psicologo · Coach · Counselor
-        </span>
-        <div style={{ display: 'flex', gap: 20 }}>
-          {[['Privacy Policy','privacy-policy.html'],['Cookie Policy','cookie-policy.html'],['Note Legali','note-legali.html']].map(([label, href]) => (
-            <a key={label} href={href} style={{ fontSize: 12, color: 'oklch(62% 0.02 80)', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.target.style.color = 'oklch(70% 0.10 145)'}
-              onMouseLeave={e => e.target.style.color = 'oklch(62% 0.02 80)'}
-            >{label}</a>
-          ))}
+        <div>
+          <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 500, color: text, marginBottom: 4 }}>Update Your Life</p>
+          <p style={{ fontSize: 13, color: textMuted, fontWeight: 300 }}>Francesco Maragliulo · Psicologo, Coach, Supervisore</p>
         </div>
+        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+          <a href="index.html" style={{ fontSize: 13, color: textMuted, textDecoration: 'none', fontWeight: 300 }}
+            onMouseEnter={e => e.target.style.color = accent}
+            onMouseLeave={e => e.target.style.color = textMuted}
+          >Home</a>
+          <a href="index.html#chi-sono" style={{ fontSize: 13, color: textMuted, textDecoration: 'none', fontWeight: 300 }}
+            onMouseEnter={e => e.target.style.color = accent}
+            onMouseLeave={e => e.target.style.color = textMuted}
+          >Chi Sono</a>
+          <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: textMuted, textDecoration: 'none', fontWeight: 300 }}
+            onMouseEnter={e => e.target.style.color = accent}
+            onMouseLeave={e => e.target.style.color = textMuted}
+          >WhatsApp</a>
+        </div>
+        <p style={{ fontSize: 12, color: textMuted, fontWeight: 300, opacity: 0.6 }}>© {new Date().getFullYear()} Francesco Maragliulo</p>
       </footer>
 
     </div>
@@ -607,30 +690,22 @@ function App() {
 }
 
 function FaqItem({ faq, isDark, text, textMuted, accent }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const bg = isDark ? 'oklch(18% 0.01 80)' : '#fff';
+  const border = isDark ? 'oklch(28% 0.01 80)' : 'oklch(90% 0.01 80)';
   return (
-    <div style={{
-      border: `1px solid ${isDark ? 'oklch(28% 0.01 80)' : 'oklch(88% 0.01 80)'}`,
-      borderRadius: 4,
-      background: isDark ? 'oklch(16% 0.01 80)' : '#fff',
-      overflow: 'hidden',
-    }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{
-          width: '100%', textAlign: 'left', padding: '22px 28px',
-          background: 'none', border: 'none', cursor: 'pointer',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
-        }}
-      >
-        <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 500, color: text, lineHeight: 1.2 }}>{faq.q}</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'none' }}>
-          <path d="M6 9l6 6 6-6" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+    <div style={{ background: bg, border: `1px solid ${border}`, borderRadius: 2, overflow: 'hidden', marginBottom: 2 }}>
+      <button onClick={() => setOpen(o => !o)} style={{
+        width: '100%', textAlign: 'left', padding: '24px 28px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+        background: 'none', border: 'none', cursor: 'pointer',
+      }}>
+        <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 500, color: text, lineHeight: 1.3 }}>{faq.q}</span>
+        <span style={{ color: accent, fontSize: 22, lineHeight: 1, flexShrink: 0, transition: 'transform 0.25s', transform: open ? 'rotate(45deg)' : 'none' }}>+</span>
       </button>
       {open && (
         <div style={{ padding: '0 28px 24px' }}>
-          <p style={{ fontSize: 15, lineHeight: 1.75, color: textMuted, fontWeight: 300 }}>{faq.a}</p>
+          <p style={{ fontSize: 15, lineHeight: 1.8, color: textMuted, fontWeight: 300 }}>{faq.a}</p>
         </div>
       )}
     </div>
