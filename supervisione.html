@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supervisione tra Pari — Francesco Maragliulo | Update Your Life</title>
+<meta name="description" content="Supervisione tra pari per professionisti della relazione d'aiuto. Sessioni in coppia con Francesco Maragliulo, psicologo e coach ICF. Sessione singola €250 · Pacchetto 5 sessioni €990.">
+<meta name="keywords" content="supervisione tra pari, supervisione professionisti, psicologo supervisore, counselor, coach, formazione continua, aggiornamento professionale, Francesco Maragliulo">
+<meta name="author" content="Francesco Maragliulo">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.updateyourlife.it/supervisione">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.updateyourlife.it/supervisione">
+<meta property="og:title" content="Supervisione tra Pari — Francesco Maragliulo">
+<meta property="og:description" content="Sessioni di supervisione in coppia per professionisti della relazione d'aiuto. €250 a sessione · pacchetto 5 sessioni €990.">
+<meta property="og:image" content="https://www.updateyourlife.it/foto-profilo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Update Your Life">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://www.updateyourlife.it/supervisione#service",
+  "name": "Supervisione tra Pari per Professionisti",
+  "provider": {
+    "@type": "Person",
+    "name": "Francesco Maragliulo",
+    "url": "https://www.updateyourlife.it"
+  },
+  "description": "Sessioni di supervisione in coppia per psicoterapeuti, counselor, coach e professionisti della relazione d'aiuto. Sessione singola €250, pacchetto 5 sessioni €990.",
+  "url": "https://www.updateyourlife.it/supervisione",
+  "serviceType": "Supervisione professionale",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Sessione singola",
+      "price": "250",
+      "priceCurrency": "EUR"
+    },
+    {
+      "@type": "Offer",
+      "name": "Pacchetto 5 sessioni",
+      "price": "990",
+      "priceCurrency": "EUR"
+    }
+  ]
+}
+</script>
+
+<script>
+  (function() {
+    function loadGA() {
+      if (window._gaLoaded) return;
+      window._gaLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZEHNGYS0Z9';
+      s.async = true;
+      document.head.appendChild(s);
+      s.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-ZEHNGYS0Z9', { anonymize_ip: true });
+      };
+    }
+    var consent = localStorage.getItem('uyl_cookie_consent');
+    if (consent === 'all') loadGA();
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'uyl_cookie_consent' && e.newValue === 'all') loadGA();
+    });
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+  @media (max-width: 768px) {
+    .grid-2col { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .grid-3col { grid-template-columns: 1fr !important; }
+    .nav-links { display: none !important; }
+    .nav-links.open { display: flex !important; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; bottom: 0; background: var(--bg); padding: 32px 5%; gap: 24px; z-index: 99; align-items: flex-start; }
+    .hamburger { display: flex !important; }
+    .hero-inner { padding: 100px 5% 60px !important; }
+    .pricing-grid { grid-template-columns: 1fr !important; }
+    .steps-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .materials-grid { grid-template-columns: 1fr 1fr !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "oklch(52% 0.14 145)",
+  "accentWarm": "oklch(62% 0.12 50)",
+  "heroBold": false,
+  "darkMode": false,
+  "showPhoto": true
+}/*EDITMODE-END*/;
+
+const { useState, useEffect, useRef } = React;
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  const isDark = tweaks.darkMode;
+  const bg = isDark ? 'oklch(14% 0.01 80)' : 'oklch(97.5% 0.008 80)';
+  const bgAlt = isDark ? 'oklch(18% 0.012 80)' : 'oklch(94% 0.012 80)';
+  const bgDark = isDark ? 'oklch(15% 0.04 155)' : 'oklch(26% 0.06 155)';
+  const text = isDark ? 'oklch(93% 0.005 80)' : 'oklch(20% 0.02 80)';
+  const textMuted = isDark ? 'oklch(65% 0.01 80)' : 'oklch(50% 0.015 80)';
+  const accent = tweaks.accentColor;
+  const warm = tweaks.accentWarm;
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--bg', bg);
+    document.documentElement.style.setProperty('--text', text);
+    document.documentElement.style.setProperty('--accent', accent);
+  }, [bg, text, accent]);
+
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  const isMobile = width < 768;
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const s = {
+    nav: {
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 5%', height: 72,
+      background: isDark ? 'oklch(14% 0.01 80 / 0.95)' : 'oklch(97.5% 0.008 80 / 0.95)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: `1px solid ${isDark ? 'oklch(30% 0.01 80)' : 'oklch(88% 0.012 80)'}`,
+    },
+    logoText: {
+      fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 500,
+      color: text, letterSpacing: '0.02em', lineHeight: 1.2,
+    },
+    logoSub: { fontSize: 12, fontWeight: 300, color: textMuted, display: 'block', letterSpacing: '0.06em' },
+    navLinks: { display: 'flex', gap: 36, alignItems: 'center', listStyle: 'none' },
+    navLink: { fontFamily: 'DM Sans', fontSize: 14, color: text, textDecoration: 'none', letterSpacing: '0.04em', cursor: 'pointer', transition: 'color 0.2s' },
+    ctaBtn: {
+      padding: '10px 24px', background: accent, color: '#fff',
+      border: 'none', borderRadius: 4, fontSize: 14, fontWeight: 500,
+      cursor: 'pointer', letterSpacing: '0.03em', transition: 'opacity 0.2s, transform 0.15s',
+      fontFamily: 'DM Sans', textDecoration: 'none', display: 'inline-block',
+    },
+    section: { padding: '100px 5%' },
+    sectionInner: { maxWidth: 1200, margin: '0 auto' },
+    sectionTag: { fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: accent, fontWeight: 500, marginBottom: 16 },
+    sectionTitle: {
+      fontFamily: 'Cormorant Garamond, serif',
+      fontSize: 'clamp(34px, 4vw, 54px)',
+      fontWeight: 300,
+      color: text,
+      marginBottom: 48,
+      lineHeight: 1.15,
+    },
+  };
+
+  const steps = [
+    { num: '01', title: 'Richiesta', body: 'I due professionisti interessati mi contattano insieme — via WhatsApp o email — indicando i rispettivi ambiti di lavoro e cosa vogliono portare in supervisione.' },
+    { num: '02', title: 'Call preliminare', body: 'Facciamo una breve call gratuita di 20 minuti per allinearci sul formato, sulle aspettative e sul focus del lavoro condiviso.' },
+    { num: '03', title: 'Sessione', body: 'La sessione dura 90 minuti e si svolge online via videocall a tre. Ogni professionista porta un caso, una dinamica relazionale o una sfida clinica da esplorare insieme.' },
+    { num: '04', title: 'Follow-up', body: 'A chiusura di ogni sessione ricevete un documento di sintesi con i punti chiave emersi, le piste di riflessione e i materiali pertinenti.' },
+  ];
+
+  const materials = [
+    { icon: '📄', title: 'Sintesi scritta', body: 'Documento di follow-up dopo ogni sessione con i principali insight, domande chiave e traiettorie di lavoro.' },
+    { icon: '📚', title: 'Schede teoriche', body: 'Materiali di riferimento su modelli, strumenti e framework clinici pertinenti ai casi portati in sessione.' },
+    { icon: '🔍', title: 'Domande guida', body: 'Una lista di domande riflessive da usare in autonomia dopo la supervisione, per approfondire la propria pratica.' },
+    { icon: '🗂', title: 'Risorse bibliografiche', body: 'Indicazioni di letture, articoli e risorse formative legate ai temi emersi nel lavoro condiviso.' },
+  ];
+
+  const faqs = [
+    { q: 'Perché solo in coppia?', a: 'La supervisione tra pari è pensata come uno spazio a tre: io come supervisore e due colleghi che si osservano e si rispecchiano a vicenda. Questo formato genera dinamiche di apprendimento che la supervisione individuale da sola non produce — confronto, risonanza, senso di non essere soli nel proprio lavoro. Una coppia è la dimensione minima per attivare questo processo.' },
+    { q: 'Posso partecipare con un collega che conosco appena?', a: "Sì, non è necessario avere già un rapporto consolidato. L'importante è che entrambi portiate un'intenzione genuina di crescita professionale. Spesso colleghi che si conoscono poco sviluppano una prospettiva ancora più fresca e meno contaminata da dinamiche relazionali consolidate." },
+    { q: 'A chi si rivolge questo servizio?', a: 'A psicoterapeuti, psicologi clinici, counselor, coach e professionisti della relazione d\'aiuto che desiderano una supervisione strutturata, continuativa e ben documentata. Non è pensato per chi muove i primi passi nella professione, ma per chi ha già esperienza e vuole affinare la propria pratica.' },
+    { q: 'Cosa si porta in supervisione?', a: 'Casi clinici (in forma anonimizzata), difficoltà relazionali con i clienti, impasse terapeutiche, domande sulla propria identità professionale, dubbi metodologici. Ogni sessione ha un focus specifico concordato in anticipo.' },
+    { q: 'Il pacchetto da 5 sessioni può essere usato con colleghi diversi?', a: 'No, il pacchetto è pensato per una coppia stabile che lavora insieme nel tempo. La continuità è parte del valore del servizio: permette di seguire l\'evoluzione dei casi e di costruire una relazione di fiducia reciproca.' },
+    { q: 'Le sessioni sono valide ai fini ECM o crediti formativi?', a: 'Al momento non eroghiamo crediti ECM. Le sessioni sono però documentate e verbalizzate, e possono essere inserite nel proprio portfolio formativo come attività di supervisione continua.' },
+  ];
+
+  return (
+    <div style={{ background: bg, minHeight: '100vh' }}>
+
+      {/* NAV */}
+      <nav style={s.nav}>
+        <a href="index.html" style={{ textDecoration: 'none' }}>
+          <span style={s.logoText}>Update Your Life</span>
+          <span style={s.logoSub}>Francesco Maragliulo</span>
+        </a>
+        <button className="hamburger" onClick={() => setMenuOpen(o => !o)} style={{
+          display: 'none', flexDirection: 'column', gap: 5, background: 'none', border: 'none', cursor: 'pointer', padding: 8,
+        }}>
+          <span style={{ display: 'block', width: 24, height: 2, background: text, transition: 'transform 0.2s', transform: menuOpen ? 'rotate(45deg) translate(5px,5px)' : 'none' }}/>
+          <span style={{ display: 'block', width: 24, height: 2, background: text, opacity: menuOpen ? 0 : 1, transition: 'opacity 0.2s' }}/>
+          <span style={{ display: 'block', width: 24, height: 2, background: text, transition: 'transform 0.2s', transform: menuOpen ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }}/>
+        </button>
+        <ul className={`nav-links${menuOpen ? ' open' : ''}`} style={s.navLinks}>
+          {[['Chi Sono','index.html#chi-sono'],['Percorsi','index.html#percorsi'],['Supervisione','#top']].map(([l, href]) => (
+            <li key={l}>
+              <a href={href} style={s.navLink}
+                onClick={() => setMenuOpen(false)}
+                onMouseEnter={e => e.target.style.color = accent}
+                onMouseLeave={e => e.target.style.color = text}
+              >{l}</a>
+            </li>
+          ))}
+          <li>
+            <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={s.ctaBtn}
+              onMouseEnter={e => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-1px)'; }}
+              onMouseLeave={e => { e.target.style.opacity = '1'; e.target.style.transform = 'none'; }}
+            >Scrivimi su WhatsApp</a>
+          </li>
+        </ul>
+      </nav>
+
+      {/* HERO */}
+      <section id="top" style={{
+        minHeight: '80vh', display: 'flex', alignItems: 'center',
+        padding: '140px 5% 100px', position: 'relative', overflow: 'hidden',
+        background: bgDark,
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url(color-splash.png)',
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          opacity: isDark ? 0.15 : 0.35,
+          zIndex: 0,
+        }}/>
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: 'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 10%, oklch(26% 0.06 155 / 0.85) 100%)',
+        }}/>
+        <div className="reveal" style={{ maxWidth: 820, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2, width: '100%' }}>
+          <p style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'oklch(70% 0.12 145)', fontWeight: 500, marginBottom: 24 }}>
+            Per professionisti della relazione d'aiuto
+          </p>
+          <h1 style={{
+            fontFamily: 'Cormorant Garamond, serif',
+            fontSize: 'clamp(42px, 5.5vw, 76px)',
+            fontWeight: 300, lineHeight: 1.1,
+            color: 'oklch(95% 0.005 80)',
+            marginBottom: 28, textWrap: 'pretty',
+          }}>
+            Supervisione tra Pari
+          </h1>
+          <p style={{
+            fontSize: 18, lineHeight: 1.75, fontWeight: 300,
+            color: 'oklch(78% 0.01 80)', maxWidth: 600, margin: '0 auto 32px',
+          }}>
+            Uno spazio strutturato dove due professionisti portano la propria pratica clinica
+            per esplorarla insieme, con la guida di un supervisore esperto.
+          </p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '10px 20px', borderRadius: 4, background: 'oklch(100% 0 0 / 0.06)', border: '1px solid oklch(100% 0 0 / 0.12)', marginBottom: 40 }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: accent, display: 'inline-block', flexShrink: 0 }}/>
+            <span style={{ fontSize: 13, color: 'oklch(80% 0.01 80)', letterSpacing: '0.04em' }}>Riservato esclusivamente a coppie di professionisti</span>
+          </div>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <a href="#pricing" style={{ ...s.ctaBtn, fontSize: 15, padding: '14px 32px' }}
+              onMouseEnter={e => e.target.style.opacity = '0.85'}
+              onMouseLeave={e => e.target.style.opacity = '1'}
+            >Scopri i prezzi</a>
+            <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{
+              padding: '14px 32px', background: 'transparent',
+              border: '1.5px solid oklch(50% 0.05 155)',
+              borderRadius: 4, fontSize: 15, color: 'oklch(85% 0.005 80)', cursor: 'pointer',
+              textDecoration: 'none', fontFamily: 'DM Sans', transition: 'border-color 0.2s',
+            }}
+              onMouseEnter={e => { e.target.style.borderColor = accent; }}
+              onMouseLeave={e => { e.target.style.borderColor = 'oklch(50% 0.05 155)'; }}
+            >Contattami</a>
+          </div>
+        </div>
+      </section>
+
+      {/* DIVIDER */}
+      <div style={{ height: 1, background: isDark ? 'oklch(28% 0.01 80)' : 'oklch(88% 0.01 80)', margin: '0 5%' }}/>
+
+      {/* COS'È */}
+      <section style={{ ...s.section, background: bg }}>
+        <div className="grid-2col" style={{ ...s.sectionInner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+          <div className="reveal">
+            <p style={s.sectionTag}>Il servizio</p>
+            <h2 style={s.sectionTitle}>Cosa significa<br/>supervisionarsi tra pari</h2>
+          </div>
+          <div className="reveal" style={{ paddingTop: isMobile ? 0 : 12 }}>
+            <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, marginBottom: 24, textWrap: 'pretty' }}>
+              La supervisione tra pari è una pratica di sviluppo professionale in cui due colleghi portano la propria esperienza clinica dentro uno spazio facilitato da un terzo esperto. Non è terapia, non è formazione frontale: è un luogo di riflessione condivisa sulla propria pratica.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, marginBottom: 24, textWrap: 'pretty' }}>
+              Il formato <strong style={{ color: text, fontWeight: 500 }}>esclusivamente in coppia</strong> non è una limitazione operativa, ma una scelta metodologica precisa. Il dialogo tra due professionisti — con le loro sensibilità, i loro stili clinici e le loro domande aperte — genera una qualità di riflessione che la supervisione individuale da sola non produce.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.85, color: textMuted, fontWeight: 300, textWrap: 'pretty' }}>
+              Il mio ruolo è quello di tenere il contenitore, introdurre elementi teorici e metodologici, fare domande che spostino il punto di vista, e restituire una sintesi utile. Non porto risposte pronte: porto la struttura per trovarne insieme di migliori.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* PERCHÉ SOLO IN COPPIA */}
+      <section style={{ ...s.section, background: bgAlt, paddingTop: 60, paddingBottom: 60 }}>
+        <div style={s.sectionInner}>
+          <div className="reveal" style={{
+            padding: '48px 56px',
+            background: isDark ? 'oklch(16% 0.01 80)' : '#fff',
+            borderLeft: `3px solid ${accent}`,
+            borderRadius: '0 4px 4px 0',
+            maxWidth: 860, margin: '0 auto',
+          }}>
+            <p style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: isMobile ? 22 : 28, fontWeight: 300, fontStyle: 'italic',
+              color: text, lineHeight: 1.6, marginBottom: 16,
+            }}>
+              "Due professionisti che si osservano a vicenda mentre portano un caso producono qualcosa che nessuno dei due avrebbe trovato da solo."
+            </p>
+            <p style={{ fontSize: 13, color: textMuted, letterSpacing: '0.08em', textTransform: 'uppercase' }}>— Principio della supervisione tra pari</p>
+          </div>
+        </div>
+      </section>
+
+      {/* A CHI SI RIVOLGE */}
+      <section style={{ ...s.section, background: bg }}>
+        <div style={s.sectionInner}>
+          <div className="reveal" style={{ marginBottom: 56 }}>
+            <p style={s.sectionTag}>A chi è pensato</p>
+            <h2 style={{ ...s.sectionTitle, marginBottom: 16 }}>Il professionista<br/>giusto per questo percorso</h2>
+          </div>
+          <div className="grid-3col reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
+            {[
+              { label: 'Psicoterapeuti e Psicologi clinici', body: 'Professionisti con almeno 2–3 anni di pratica che vogliono portare casi complessi in uno spazio riflessivo strutturato, mantenendo riservatezza e profondità.' },
+              { label: 'Counselor e Psicocorporei', body: 'Chi lavora con approcci integrati (BioGestalt, Analisi Transazionale, Somatic Experiencing) e cerca un supervisore che parli la stessa lingua metodologica.' },
+              { label: 'Coach con clientele complesse', body: 'Coach ICF o certificati che incontrano temi di confine con la psicologia e cercano un luogo dove elaborare le sfide relazionali e cliniche del proprio lavoro.' },
+            ].map((item, i) => (
+              <div key={i} className="reveal" style={{
+                padding: '40px 36px',
+                background: isDark ? 'oklch(18% 0.01 80)' : 'oklch(96% 0.008 80)',
+                border: `1px solid ${isDark ? 'oklch(28% 0.01 80)' : 'oklch(90% 0.01 80)'}`,
+                transition: 'box-shadow 0.2s',
+              }}
+                onMouseEnter={e => e.currentTarget.style.boxShadow = `0 8px 32px oklch(0.2 0.01 80 / 0.08)`}
+                onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
+              >
+                <div style={{ width: 3, height: 32, background: accent, marginBottom: 24, borderRadius: 99 }}/>
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 500, color: text, marginBottom: 16, lineHeight: 1.2 }}>{item.label}</p>
+                <p style={{ fontSize: 15, lineHeight: 1.75, color: textMuted, fontWeight: 300 }}>{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* COME FUNZIONA */}
+      <section style={{ ...s.section, background: bgDark }}>
+        <div style={s.sectionInner}>
+          <div className="reveal" style={{ marginBottom: 60 }}>
+            <p style={{ ...s.sectionTag, color: 'oklch(70% 0.10 145)' }}>Come funziona</p>
+            <h2 style={{ ...s.sectionTitle, color: 'oklch(95% 0.005 80)', marginBottom: 16 }}>Il percorso passo<br/>dopo passo</h2>
+          </div>
+          <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2 }}>
+            {steps.map((step, i) => (
+              <div key={i} className="reveal" style={{
+                padding: '36px 28px',
+                background: isDark ? 'oklch(17% 0.04 155)' : 'oklch(22% 0.05 155)',
+                borderTop: `1px solid oklch(50% 0.06 155)`,
+              }}>
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 42, fontWeight: 300, color: accent, opacity: 0.5, lineHeight: 1, marginBottom: 20 }}>{step.num}</p>
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 22, fontWeight: 500, color: 'oklch(92% 0.005 80)', marginBottom: 14 }}>{step.title}</p>
+                <p style={{ fontSize: 14, lineHeight: 1.75, color: 'oklch(68% 0.01 80)', fontWeight: 300 }}>{step.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="reveal" style={{ marginTop: 32, padding: '24px 32px', background: 'oklch(100% 0 0 / 0.04)', borderRadius: 4, border: '1px solid oklch(100% 0 0 / 0.08)', display: 'flex', alignItems: 'center', gap: 16 }}>
+            <span style={{ fontSize: 20 }}>🕑</span>
+            <p style={{ fontSize: 14, color: 'oklch(72% 0.01 80)', fontWeight: 300, lineHeight: 1.6 }}>
+              <strong style={{ color: 'oklch(85% 0.005 80)', fontWeight: 500 }}>Durata di ogni sessione: 90 minuti</strong> · online via videocall · entrambi i professionisti presenti insieme
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* MATERIALI */}
+      <section style={{ ...s.section, background: bgAlt }}>
+        <div style={s.sectionInner}>
+          <div className="reveal" style={{ marginBottom: 56 }}>
+            <p style={s.sectionTag}>I materiali</p>
+            <h2 style={s.sectionTitle}>Cosa ricevete<br/>dopo ogni sessione</h2>
+          </div>
+          <div className="materials-grid reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
+            {materials.map((m, i) => (
+              <div key={i} style={{
+                padding: '32px 28px',
+                background: isDark ? 'oklch(16% 0.01 80)' : '#fff',
+                borderRadius: 2,
+                border: `1px solid ${isDark ? 'oklch(26% 0.01 80)' : 'oklch(91% 0.01 80)'}`,
+                display: 'flex', flexDirection: 'column', gap: 14,
+              }}>
+                <span style={{ fontSize: 28 }}>{m.icon}</span>
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 500, color: text, lineHeight: 1.2 }}>{m.title}</p>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: textMuted, fontWeight: 300 }}>{m.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="reveal" style={{ marginTop: 40, padding: '28px 36px', background: isDark ? `oklch(16% 0.04 145 / 0.4)` : `oklch(94% 0.04 145 / 0.4)`, borderRadius: 4, border: `1px solid ${isDark ? 'oklch(32% 0.06 145)' : 'oklch(82% 0.06 145)'}` }}>
+            <p style={{ fontSize: 15, color: textMuted, fontWeight: 300, lineHeight: 1.7 }}>
+              <strong style={{ color: text, fontWeight: 500 }}>Nota sulla riservatezza:</strong>{' '}
+              tutti i casi portati in supervisione sono trattati nel rispetto del Codice Deontologico. I nomi e i dati identificativi dei clienti devono essere sempre anonimizzati prima della sessione. I materiali condivisi restano all'interno della triade supervisiva.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section id="pricing" style={{ ...s.section, background: bg }}>
+        <div style={s.sectionInner}>
+          <div className="reveal" style={{ marginBottom: 60, textAlign: 'center' }}>
+            <p style={s.sectionTag}>Investimento</p>
+            <h2 style={{ ...s.sectionTitle, textAlign: 'center' }}>Quanto costa<br/>la supervisione</h2>
+            <p style={{ fontSize: 15, color: textMuted, fontWeight: 300, maxWidth: 520, margin: '-24px auto 0', lineHeight: 1.7 }}>
+              I prezzi sono riferiti alla coppia di professionisti nel suo insieme, non al singolo partecipante.
+            </p>
+          </div>
+          <div className="pricing-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, maxWidth: 860, margin: '0 auto' }}>
+
+            {/* Sessione singola */}
+            <div className="reveal" style={{
+              padding: '48px 40px',
+              background: isDark ? 'oklch(18% 0.01 80)' : 'oklch(96% 0.008 80)',
+              border: `1px solid ${isDark ? 'oklch(30% 0.01 80)' : 'oklch(88% 0.01 80)'}`,
+              borderRadius: 4,
+              display: 'flex', flexDirection: 'column',
+            }}>
+              <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: textMuted, marginBottom: 20 }}>Sessione singola</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
+                <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 64, fontWeight: 300, lineHeight: 1, color: text }}>250</span>
+                <span style={{ fontSize: 18, color: textMuted, fontWeight: 300 }}>€</span>
+              </div>
+              <p style={{ fontSize: 13, color: textMuted, fontWeight: 300, marginBottom: 32 }}>per la coppia · 90 minuti</p>
+              <div style={{ borderTop: `1px solid ${isDark ? 'oklch(30% 0.01 80)' : 'oklch(88% 0.01 80)'}`, paddingTop: 28, marginBottom: 32, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {['90 minuti in videocall (3 partecipanti)','Documento di sintesi post-sessione','Materiali teorici pertinenti','Domande guida per il follow-up'].map(f => (
+                  <div key={f} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><path d="M5 12l5 5L19 7" stroke={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <span style={{ fontSize: 14, color: textMuted, fontWeight: 300, lineHeight: 1.5 }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{
+                display: 'block', textAlign: 'center', padding: '14px 24px',
+                background: 'transparent', border: `1.5px solid ${isDark ? 'oklch(40% 0.01 80)' : 'oklch(78% 0.01 80)'}`,
+                borderRadius: 4, fontSize: 14, color: text, cursor: 'pointer',
+                textDecoration: 'none', fontFamily: 'DM Sans', fontWeight: 500,
+                transition: 'border-color 0.2s', marginTop: 'auto',
+              }}
+                onMouseEnter={e => e.target.style.borderColor = accent}
+                onMouseLeave={e => e.target.style.borderColor = isDark ? 'oklch(40% 0.01 80)' : 'oklch(78% 0.01 80)'}
+              >Prenota una sessione</a>
+            </div>
+
+            {/* Pacchetto 5 */}
+            <div className="reveal" style={{
+              padding: '48px 40px',
+              background: isDark ? 'oklch(18% 0.06 145)' : 'oklch(26% 0.06 155)',
+              border: `1px solid oklch(50% 0.08 145)`,
+              borderRadius: 4,
+              display: 'flex', flexDirection: 'column',
+              position: 'relative', overflow: 'hidden',
+            }}>
+              <div style={{
+                position: 'absolute', top: 16, right: 16,
+                padding: '4px 12px', background: accent, borderRadius: 99,
+                fontSize: 11, fontWeight: 500, color: '#fff', letterSpacing: '0.06em', textTransform: 'uppercase',
+              }}>Consigliato</div>
+              <p style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'oklch(70% 0.08 145)', marginBottom: 20 }}>Pacchetto 5 sessioni</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 64, fontWeight: 300, lineHeight: 1, color: 'oklch(94% 0.005 80)' }}>990</span>
+                <span style={{ fontSize: 18, color: 'oklch(70% 0.05 155)', fontWeight: 300 }}>€</span>
+              </div>
+              <p style={{ fontSize: 13, color: 'oklch(65% 0.05 155)', fontWeight: 300, marginBottom: 8 }}>per la coppia · 5 × 90 minuti</p>
+              <p style={{ fontSize: 13, color: accent, fontWeight: 500, marginBottom: 32 }}>Risparmi 260€ rispetto alle sessioni singole</p>
+              <div style={{ borderTop: '1px solid oklch(50% 0.06 155 / 0.4)', paddingTop: 28, marginBottom: 32, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  '5 sessioni da 90 minuti in videocall',
+                  '5 documenti di sintesi post-sessione',
+                  'Schede teoriche e risorse bibliografiche',
+                  'Domande guida per ogni sessione',
+                  'Continuità e follow-up dei casi nel tempo',
+                  'Priorità nella prenotazione delle date',
+                ].map(f => (
+                  <div key={f} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><path d="M5 12l5 5L19 7" stroke={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <span style={{ fontSize: 14, color: 'oklch(72% 0.01 80)', fontWeight: 300, lineHeight: 1.5 }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{
+                display: 'block', textAlign: 'center', padding: '14px 24px',
+                background: accent, borderRadius: 4,
+                fontSize: 14, color: '#fff', cursor: 'pointer',
+                textDecoration: 'none', fontFamily: 'DM Sans', fontWeight: 500,
+                transition: 'opacity 0.2s', marginTop: 'auto',
+              }}
+                onMouseEnter={e => e.target.style.opacity = '0.85'}
+                onMouseLeave={e => e.target.style.opacity = '1'}
+              >Attiva il pacchetto</a>
+            </div>
+
+          </div>
+
+          {/* Note pricing */}
+          <div className="reveal" style={{ marginTop: 32, maxWidth: 860, margin: '32px auto 0', display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {[
+              'I prezzi si intendono per la coppia di professionisti nel suo insieme.',
+              'Il pacchetto da 5 sessioni non è cedibile a terzi e non è frazionabile tra coppie diverse.',
+              'È possibile richiedere fattura per i professionisti con partita IVA.',
+              'Il pagamento avviene anticipatamente tramite bonifico bancario o PayPal.',
+            ].map((note, i) => (
+              <p key={i} style={{ fontSize: 13, color: textMuted, fontWeight: 300, lineHeight: 1.6, display: 'flex', gap: 10 }}>
+                <span style={{ color: accent, fontWeight: 500, flexShrink: 0 }}>—</span>
+                {note}
+              </p>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{ ...s.section, background: bgAlt }}>
+        <div style={{ ...s.sectionInner, maxWidth: 860 }}>
+          <div className="reveal" style={{ marginBottom: 56 }}>
+            <p style={s.sectionTag}>Domande frequenti</p>
+            <h2 style={s.sectionTitle}>Quello che<br/>chiedono di solito</h2>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {faqs.map((faq, i) => (
+              <FaqItem key={i} faq={faq} isDark={isDark} text={text} textMuted={textMuted} accent={accent} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA finale */}
+      <section style={{ ...s.section, background: bgDark }}>
+        <div style={{ ...s.sectionInner, textAlign: 'center', maxWidth: 720 }}>
+          <div className="reveal">
+            <p style={{ ...s.sectionTag, color: 'oklch(70% 0.10 145)' }}>Inizia il percorso</p>
+            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(34px, 4vw, 54px)', fontWeight: 300, color: 'oklch(95% 0.005 80)', marginBottom: 20, lineHeight: 1.15 }}>
+              Hai già un collega con cui<br/>vorresti supervisionarti?
+            </h2>
+            <p style={{ fontSize: 16, lineHeight: 1.8, color: 'oklch(72% 0.01 80)', fontWeight: 300, marginBottom: 40, maxWidth: 540, margin: '0 auto 40px' }}>
+              Scrivetemi su WhatsApp — entrambi o anche solo uno di voi — e organizziamo una call gratuita di 20 minuti per capire se questo formato fa per voi.
+            </p>
+            <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{ ...s.ctaBtn, fontSize: 15, padding: '16px 40px' }}
+              onMouseEnter={e => e.target.style.opacity = '0.85'}
+              onMouseLeave={e => e.target.style.opacity = '1'}
+            >Scrivimi su WhatsApp</a>
+            <p style={{ fontSize: 13, color: 'oklch(55% 0.02 80)', marginTop: 16, fontWeight: 300 }}>Call conoscitiva gratuita · 20 minuti</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{
+        padding: '28px 5%', background: isDark ? 'oklch(11% 0.03 155)' : 'oklch(20% 0.05 155)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
+      }}>
+        <span style={{ fontFamily: 'Cormorant Garamond', fontSize: 16, color: 'oklch(68% 0.02 80)' }}>
+          Update Your Life © 2026
+        </span>
+        <span style={{ fontSize: 12, color: 'oklch(65% 0.02 80)', fontWeight: 300, letterSpacing: '0.03em' }}>
+          Francesco Maragliulo · Psicologo · Coach · Counselor
+        </span>
+        <div style={{ display: 'flex', gap: 20 }}>
+          {[['Privacy Policy','privacy-policy.html'],['Cookie Policy','cookie-policy.html'],['Note Legali','note-legali.html']].map(([label, href]) => (
+            <a key={label} href={href} style={{ fontSize: 12, color: 'oklch(62% 0.02 80)', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={e => e.target.style.color = 'oklch(70% 0.10 145)'}
+              onMouseLeave={e => e.target.style.color = 'oklch(62% 0.02 80)'}
+            >{label}</a>
+          ))}
+        </div>
+      </footer>
+
+    </div>
+  );
+}
+
+function FaqItem({ faq, isDark, text, textMuted, accent }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div style={{
+      border: `1px solid ${isDark ? 'oklch(28% 0.01 80)' : 'oklch(88% 0.01 80)'}`,
+      borderRadius: 4,
+      background: isDark ? 'oklch(16% 0.01 80)' : '#fff',
+      overflow: 'hidden',
+    }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%', textAlign: 'left', padding: '22px 28px',
+          background: 'none', border: 'none', cursor: 'pointer',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
+        }}
+      >
+        <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 20, fontWeight: 500, color: text, lineHeight: 1.2 }}>{faq.q}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'none' }}>
+          <path d="M6 9l6 6 6-6" stroke={accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {open && (
+        <div style={{ padding: '0 28px 24px' }}>
+          <p style={{ fontSize: 15, lineHeight: 1.75, color: textMuted, fontWeight: 300 }}>{faq.a}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
