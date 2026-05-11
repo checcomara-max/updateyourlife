@@ -23,9 +23,12 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   --text:       oklch(18% 0.02 80);
   --muted:      oklch(48% 0.015 80);
   --faint:      oklch(70% 0.01 80);
-  --accent:     oklch(46% 0.13 40);
-  --accent-lt:  oklch(60% 0.12 40);
-  --accent-bg:  oklch(96% 0.025 40);
+  /* ACCENT PRINCIPALE: verde come index.html */
+  --accent:     oklch(52% 0.14 145);
+  --accent-lt:  oklch(62% 0.12 145);
+  --accent-bg:  oklch(96% 0.025 145);
+  /* ACCENT CALDO */
+  --warm:       oklch(62% 0.12 50);
   --gold:       oklch(72% 0.13 80);
   --border:     oklch(88% 0.01 80);
   --white:      #ffffff;
@@ -76,7 +79,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.03em; text-decoration: none; white-space: nowrap;
   transition: background 0.2s, transform 0.15s;
 }
-.nav-cta:hover { background: oklch(38% 0.12 40); transform: translateY(-1px); }
+.nav-cta:hover { background: oklch(40% 0.13 145); transform: translateY(-1px); }
 
 /* === HERO === */
 .hero {
@@ -86,7 +89,7 @@ a { color: inherit; text-decoration: none; }
 .hero-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 55% 65% at 15% 25%, oklch(0.4 0.12 40 / 0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 65% at 15% 25%, oklch(0.38 0.12 145 / 0.45) 0%, transparent 70%),
     radial-gradient(ellipse 50% 55% at 82% 72%, oklch(0.28 0.06 270 / 0.4) 0%, transparent 70%),
     var(--bg-dark);
 }
@@ -102,7 +105,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 300; line-height: 1.05;
   color: oklch(94% 0.01 80); margin-bottom: 0.15rem;
 }
-.hero-title em { font-style: italic; color: oklch(72% 0.10 50); }
+.hero-title em { font-style: italic; color: oklch(72% 0.10 145); }
 .hero-sub {
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
   color: oklch(68% 0.015 60); font-weight: 300; line-height: 1.7;
@@ -125,7 +128,7 @@ a { color: inherit; text-decoration: none; }
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   text-decoration: none;
 }
-.btn-primary:hover { background: oklch(38% 0.12 40); transform: translateY(-2px); box-shadow: 0 8px 24px oklch(0.3 0.1 40 / 0.3); }
+.btn-primary:hover { background: oklch(40% 0.13 145); transform: translateY(-2px); box-shadow: 0 8px 24px oklch(0.3 0.1 145 / 0.3); }
 .btn-outline {
   display: inline-flex; align-items: center;
   padding: 0.9rem 2rem;
@@ -190,18 +193,23 @@ a { color: inherit; text-decoration: none; }
   border-left: 3px solid var(--accent); max-width: 840px; margin: 0 auto;
 }
 
-/* Program */
-.program-list { display: flex; flex-direction: column; }
-.program-row {
-  display: grid; grid-template-columns: 90px 1fr;
-  gap: 1rem; align-items: start;
-  padding: 1.25rem 0; border-bottom: 1px solid var(--border);
+/* Program — metodologie */
+.program-methods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+.method-card {
+  padding: 1.5rem 1.75rem;
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column; gap: 0.5rem;
 }
-.program-row:last-child { border-bottom: none; }
-.program-time { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 500; padding-top: 0.15rem; }
-.program-body { font-size: 0.93rem; color: var(--muted); line-height: 1.65; }
-.program-body strong { color: var(--text); font-weight: 500; }
-.program-break { color: var(--accent-lt); font-style: italic; }
+.method-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent-bg);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.method-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+.method-title { font-family: 'DM Sans', sans-serif; font-size: 0.93rem; font-weight: 500; color: var(--text); }
+.method-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
 
 /* Features */
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -210,48 +218,55 @@ a { color: inherit; text-decoration: none; }
   background: var(--white); border-radius: var(--radius);
   border: 1px solid var(--border); box-shadow: var(--shadow-sm);
 }
-.feature .ico { font-size: 1.5rem; margin-bottom: 0.9rem; }
-.feature h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500; color: var(--text); margin-bottom: 0.55rem; line-height: 1.25; }
-.feature p { font-size: 0.86rem; color: var(--muted); line-height: 1.7; max-width: 100%; }
+.feature .ico { font-size: 1.5rem; margin-bottom: 1rem; }
+.feature h3 { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.6rem; }
+.feature p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
 
 /* Info grid */
-.info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+.info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .info-card {
   padding: 1.5rem 1.75rem;
-  background: oklch(100% 0 0 / 0.05); border: 1px solid oklch(100% 0 0 / 0.1);
+  background: oklch(100% 0 0 / 0.04); border: 1px solid oklch(100% 0 0 / 0.1);
   border-radius: var(--radius);
 }
-.info-lbl { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.4rem; }
-.info-val { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: oklch(91% 0.01 80); }
-.info-note { font-size: 0.77rem; color: oklch(58% 0.01 80); margin-top: 0.2rem; line-height: 1.5; }
+.info-lbl { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: oklch(55% 0.01 80); margin-bottom: 0.4rem; font-weight: 500; }
+.info-val { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 400; color: oklch(92% 0.005 80); line-height: 1.2; margin-bottom: 0.35rem; }
+.info-note { font-size: 0.78rem; color: oklch(55% 0.01 80); line-height: 1.55; }
 
 /* Bio */
 .bio-grid { display: grid; grid-template-columns: 180px 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
 .bio-photo { width: 180px; height: 180px; border-radius: 50%; overflow: hidden; flex-shrink: 0; box-shadow: var(--shadow-md); border: 3px solid var(--border); background: var(--bg-alt); }
 .bio-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.creds { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem; }
-.cred { display: flex; align-items: baseline; gap: 0.65rem; }
-.cred-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.6rem; }
-.cred-txt { font-size: 0.88rem; color: var(--muted); }
+.creds { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.7rem; }
+.cred { display: flex; align-items: flex-start; gap: 0.75rem; }
+.cred-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin-top: 0.55rem; flex-shrink: 0; }
+.cred-txt { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 .cred-txt strong { color: var(--text); font-weight: 500; }
 
 /* Form */
 .form-section { padding: clamp(4rem, 8vw, 6.5rem) 0; background: var(--bg-dark); }
-.form-box { max-width: 540px; margin: 0 auto; text-align: center; }
-.form-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 1.4rem + 2.5vw, 3rem); font-weight: 300; color: oklch(93% 0.01 80); margin-bottom: 0.9rem; line-height: 1.15; }
-.form-desc { font-size: 0.93rem; color: oklch(63% 0.01 80); line-height: 1.7; margin-bottom: 2rem; }
-.email-form { display: flex; flex-direction: column; gap: 0.9rem; }
+.form-box {
+  max-width: 480px; margin: 0 auto; padding: 2.75rem clamp(1.5rem, 4vw, 3rem);
+  background: oklch(100% 0 0 / 0.04); border: 1px solid oklch(100% 0 0 / 0.1);
+  border-radius: calc(var(--radius) * 2);
+}
+.form-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 1.3rem + 2vw, 2.8rem);
+  font-weight: 300; color: oklch(92% 0.005 80); line-height: 1.1; margin-bottom: 0.9rem;
+}
+.form-desc { font-size: 0.9rem; color: oklch(55% 0.01 80); line-height: 1.65; margin-bottom: 2rem; }
+.email-form { display: flex; flex-direction: column; gap: 0.8rem; }
 .f-input {
-  width: 100%; padding: 0.9rem 1.25rem;
-  background: oklch(100% 0 0 / 0.07); border: 1.5px solid oklch(100% 0 0 / 0.14);
-  border-radius: var(--radius); font-size: 0.93rem;
-  color: oklch(90% 0.01 80); font-family: inherit; outline: none;
+  width: 100%; padding: 0.8rem 1rem;
+  background: oklch(100% 0 0 / 0.06); border: 1px solid oklch(100% 0 0 / 0.14);
+  border-radius: var(--radius); font-size: 0.93rem; color: oklch(88% 0.005 80);
+  font-family: inherit; outline: none;
   transition: border-color 0.2s;
 }
-.f-input::placeholder { color: oklch(52% 0.01 80); }
+.f-input::placeholder { color: oklch(42% 0.01 80); }
 .f-input:focus { border-color: var(--accent-lt); }
 textarea.f-input { resize: vertical; min-height: 80px; }
-.form-note { font-size: 0.72rem; color: oklch(48% 0.01 80); line-height: 1.6; }
+.form-note { font-size: 0.72rem; color: oklch(38% 0.01 80); line-height: 1.6; }
 .form-success { display: none; padding: 1.25rem; background: oklch(100% 0 0 / 0.07); border: 1px solid oklch(100% 0 0 / 0.15); border-radius: var(--radius); color: oklch(78% 0.08 145); font-size: 0.93rem; line-height: 1.6; }
 
 /* Divider */
@@ -272,8 +287,7 @@ footer a { color: oklch(52% 0.01 80); }
   .hero-btns { flex-direction: column; }
   .btn-primary, .btn-outline { text-align: center; }
   .nav-cta { font-size: 0.72rem; padding: 0.45rem 0.9rem; }
-  .program-row { grid-template-columns: 65px 1fr; gap: 0.75rem; }
-  .pull-quote { padding: 1.25rem 1.5rem; }
+  .program-methods { grid-template-columns: 1fr; }
 }
 @media (max-width: 420px) {
   .hero-title { font-size: clamp(2.5rem, 9vw, 4rem); }
@@ -380,51 +394,39 @@ footer a { color: oklch(52% 0.01 80); }
 <!-- PROGRAMMA -->
 <section class="section section--alt" id="programma">
   <div class="container">
-    <div class="two-col">
-      <div class="reveal">
-        <span class="tag">La giornata</span>
-        <h2 class="title">Programma</h2>
-        <p class="body">Una giornata intera: <strong>9:30 – 18:00</strong>.<br>Tre pause incluse (pausa pranzo compresa).</p>
+    <div class="reveal" style="margin-bottom: 2.5rem">
+      <span class="tag">Come lavoriamo</span>
+      <h2 class="title">La struttura<br>della giornata</h2>
+      <p class="body" style="max-width: 56ch;">Una giornata intera — <strong>9:30 – 18:00</strong> — articolata attorno a quattro modalità di lavoro che si intrecciano lungo tutto il percorso.</p>
+    </div>
+    <div class="program-methods reveal">
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <p class="method-title">Esperienze sulle singole carte</p>
+        <p class="method-desc">Ogni arcano viene incontrato attraverso esercizi esperienziali diretti che attivano il vissuto personale e professionale prima che la comprensione intellettuale.</p>
       </div>
-      <div class="reveal">
-        <ul class="program-list">
-          <li class="program-row">
-            <span class="program-time">9:30</span>
-            <div class="program-body"><strong>Apertura e orientamento</strong><br>Presentazioni, contratto di lavoro, introduzione agli archetipi. Distribuzione del riferimento iconografico alle carte utilizzate nel workshop.</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">10:00</span>
-            <div class="program-body"><strong>Modulo I — Gli Amanti</strong><br>Lettura simbolica, lavoro esperienziale in coppia, plenaria. Asse riconoscimento–scelta–valore.</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">11:30</span>
-            <div class="program-body program-break">Pausa</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">11:45</span>
-            <div class="program-body"><strong>Modulo II — Il Diavolo</strong><br>Lettura simbolica, lavoro esperienziale individuale e in coppia. Asse vincolo–dipendenza–ombra.</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">13:15</span>
-            <div class="program-body program-break">Pausa pranzo</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">14:30</span>
-            <div class="program-body"><strong>Modulo III — L'asse tra i due arcani</strong><br>Integrazione teorica, esercizi comparativi, plenaria sul continuum libertà–vincolo.</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">16:00</span>
-            <div class="program-body program-break">Pausa</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">16:15</span>
-            <div class="program-body"><strong>Chiusura e integrazione</strong><br>Riflessioni personali, restituzione in cerchio, ancoraggio degli apprendimenti.</div>
-          </li>
-          <li class="program-row">
-            <span class="program-time">18:00</span>
-            <div class="program-body"><strong>Fine lavori</strong></div>
-          </li>
-        </ul>
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <p class="method-title">Condivisione in diade</p>
+        <p class="method-desc">Il lavoro in coppia permette di portare il materiale personale in un contesto relazionale protetto, sperimentando in prima persona le dinamiche esplorate simbolicamente.</p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <p class="method-title">Condivisione in gruppo</p>
+        <p class="method-desc">Momenti di plenaria in cui il gruppo diventa uno specchio collettivo. Le risonanze condivise amplificano la comprensione individuale e creano un senso di comunità professionale.</p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <p class="method-title">Nozioni teoriche</p>
+        <p class="method-desc">Brevi interventi teorici forniscono il frame concettuale — psicologia relazionale, lavoro sull'ombra, pattern di attaccamento — per dare sostanza e trasferibilità agli apprendimenti esperienziali.</p>
       </div>
     </div>
   </div>
@@ -510,12 +512,13 @@ footer a { color: oklch(52% 0.01 80); }
         </div>
       </div>
       <div>
-        <p class="body">Sono <strong>Francesco Maragliulo</strong>, psicologo e coach certificato. Ho lavorato per 18 anni in realtà multinazionali come Amplifon, occupandomi di sviluppo delle persone, assessment e gestione del potenziale. Da questa esperienza — dentro e fuori le grandi organizzazioni — è nata la pratica che oggi porto in aula e in supervisione.</p>
-        <p class="body">Nel mio lavoro uso il <strong>simbolo come strumento riflessivo</strong>: non per interpretare o diagnosticare, ma per aprire uno spazio in cui ciò che è implicito può diventare visibile. Il mazzo Rider-Waite, con la sua straordinaria ricchezza iconografica, è uno dei più potenti specchi che conosco per portare alla luce i pattern relazionali che abitiamo.</p>
+        <p class="body">Sono <strong>Francesco Maragliulo</strong>, psicologo, counselor e coach certificato. Lavoro da 18 anni in realtà multinazionali occupandomi di sviluppo delle persone, assessment e gestione del potenziale e da più di 10 anni nel supportare le persone ad affrontare i momenti complessi del loro percorso di vita. Il profondo valore della metafora e delle immagini da sempre mi supporta nel mio lavoro con le persone per stimolare consapevolezza e cambiamenti — ed è da questo seme che nasce la proposta di questo workshop.</p>
+        <p class="body" style="margin-top: 1.2rem;">Nel mio lavoro uso il <strong>simbolo come strumento riflessivo</strong>: non per interpretare o diagnosticare, ma per aprire uno spazio in cui ciò che è implicito può diventare visibile. Il mazzo Rider-Waite, con la sua straordinaria ricchezza iconografica, è un potente specchio per portare alla luce i pattern relazionali che abitiamo.</p>
         <div class="creds">
-          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Psicologo</strong> — laureato in Psicologia, abilitato alla professione</p></div>
-          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Coach certificato ICF</strong> — formazione specifica nel coaching professionale</p></div>
-          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>18 anni in realtà multinazionali</strong> — sviluppo del potenziale, assessment, formazione</p></div>
+          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Psicologo</strong> — Iscrizione Ordine Psicologi Regione Lombardia in Psicologia n. 27664, abilitato alla professione</p></div>
+          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Coach certificato ICF</strong> — formazione specifica nel coaching in ambito personale e professionale</p></div>
+          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Counselor Biogestaltico</strong> presso SIBIG – Scuola Italiana di Biogestalt</p></div>
+          <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Docente e tutor</strong> presso SIBIG – Scuola Italiana di Biogestalt</p></div>
           <div class="cred"><div class="cred-dot"></div><p class="cred-txt"><strong>Supervisore di coach e counselor</strong> — processi relazionali e identità professionale</p></div>
         </div>
       </div>
@@ -547,7 +550,7 @@ footer a { color: oklch(52% 0.01 80); }
 <!-- FOOTER -->
 <footer>
   <p>
-    <a href="index.html">Update Your Life</a> · Francesco Maragliulo, psicologo e coach ·
+    <a href="index.html">Update Your Life</a> · Francesco Maragliulo, psicologo, counselor e coach ·
     <a href="mailto:info@updateyourlife.it">info@updateyourlife.it</a>
   </p>
   <p style="margin-top: 0.4rem; font-size: 0.68rem;">
@@ -559,22 +562,22 @@ footer a { color: oklch(52% 0.01 80); }
 (function () {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 })();
 
 function handleSubmit(e) {
   e.preventDefault();
-  const name = document.getElementById('nameInput').value;
-  const email = document.getElementById('emailInput').value;
-  const msg = document.getElementById('msgInput').value;
-  const subj = encodeURIComponent('Workshop Amanti & Diavolo — Richiesta info');
-  const body = encodeURIComponent('Nome: ' + name + '\nEmail: ' + email + '\n\nMessaggio:\n' + (msg || '(nessun messaggio aggiuntivo)'));
-  window.location.href = 'mailto:info@updateyourlife.it?subject=' + subj + '&body=' + body;
+  const name = document.getElementById('nameInput').value.trim();
+  const email = document.getElementById('emailInput').value.trim();
+  const msg = document.getElementById('msgInput').value.trim();
+  if (!name || !email) return;
+  const subject = encodeURIComponent('Interesse Workshop — Tra il legame e il vincolo');
+  const body = encodeURIComponent('Nome: ' + name + '\nEmail: ' + email + (msg ? '\n\nMessaggio:\n' + msg : ''));
+  window.location.href = 'mailto:info@updateyourlife.it?subject=' + subject + '&body=' + body;
   document.getElementById('emailForm').style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
 }
 </script>
-
 </body>
 </html>
