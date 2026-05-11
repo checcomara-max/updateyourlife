@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop — Tra il legame e il vincolo | Update Your Life</title>
+<!-- NO index/follow: pagina non indicizzata, solo link diretto -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Workshop esperienziale su Gli Amanti e Il Diavolo. Una giornata per professionisti dell'aiuto e per chiunque voglia esplorare i propri schemi relazionali.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --bg:       oklch(97.5% 0.008 80);
+    --bg-alt:   oklch(94% 0.012 80);
+    --bg-dark:  oklch(26% 0.06 155);
+    --text:     oklch(20% 0.02 80);
+    --muted:    oklch(50% 0.015 80);
+    --accent:   oklch(52% 0.14 145);
+    --warm:     oklch(62% 0.12 50);
+    --border:   oklch(88% 0.012 80);
+    --surface:  #ffffff;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ——— NAVIGATION ——— */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 72px;
+    background: oklch(97.5% 0.008 80 / 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 500;
+    color: var(--text); letter-spacing: 0.02em;
+  }
+  .nav-logo-sub {
+    font-size: 11px; font-weight: 300;
+    color: var(--muted); display: block; letter-spacing: 0.06em;
+  }
+  .nav-cta {
+    padding: 10px 22px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.03em;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ——— HERO ——— */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    background: var(--bg);
+    position: relative; overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 960px; margin: 0 auto; width: 100%;
+    text-align: center; position: relative; z-index: 2;
+  }
+  .hero-tag {
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 78px);
+    font-weight: 300; line-height: 1.1;
+    color: var(--text); margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 300; font-style: italic;
+    color: var(--muted); margin-bottom: 40px;
+  }
+
+  /* Carte container */
+  .cards-duo {
+    display: flex; justify-content: center; align-items: flex-end;
+    gap: 24px; margin-bottom: 48px;
+  }
+  .card-wrapper {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .card-img {
+    width: 130px; height: auto;
+    border-radius: 6px;
+    box-shadow: 0 8px 32px oklch(0.2 0.01 80 / 0.14);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .card-img:hover {
+    transform: translateY(-6px) rotate(1.5deg);
+    box-shadow: 0 16px 48px oklch(0.2 0.01 80 / 0.2);
+  }
+  .card-label {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); font-weight: 400;
+  }
+
+  .hero-desc {
+    font-size: clamp(15px, 1.8vw, 17px);
+    line-height: 1.8; color: var(--muted);
+    max-width: 680px; margin: 0 auto 40px;
+    font-weight: 300;
+  }
+  .hero-pills {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    margin-bottom: 44px;
+  }
+  .pill {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .pill.accent {
+    background: oklch(52% 0.14 145 / 0.08);
+    border-color: oklch(52% 0.14 145 / 0.3);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 15px 38px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500; letter-spacing: 0.04em;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px oklch(52% 0.14 145 / 0.25);
+  }
+  .cta-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+  .cta-btn:active { transform: translateY(0); }
+
+  /* ——— DIVIDER ——— */
+  .divider { height: 1px; background: var(--border); margin: 0 5%; }
+
+  /* ——— SECTIONS ——— */
+  .section { padding: 88px 5%; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 3.8vw, 48px);
+    font-weight: 300; line-height: 1.15;
+    color: var(--text); margin-bottom: 40px;
+  }
+  .section-body {
+    font-size: clamp(15px, 1.6vw, 17px);
+    line-height: 1.85; color: var(--muted);
+    font-weight: 300; max-width: 72ch;
+  }
+  .section-body + .section-body { margin-top: 20px; }
+
+  /* ——— PER CHI ——— */
+  .perchi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-top: 40px;
+  }
+  .perchi-card {
+    padding: 28px 30px;
+    background: var(--surface);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px oklch(0.2 0.01 80 / 0.05);
+  }
+  .perchi-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300;
+    color: oklch(52% 0.14 145 / 0.25);
+    line-height: 1; margin-bottom: 12px;
+  }
+  .perchi-card-title {
+    font-size: 15px; font-weight: 500;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .perchi-card-body {
+    font-size: 14px; font-weight: 300;
+    line-height: 1.7; color: var(--muted);
+  }
+
+  /* ——— COSA ESPLORIAMO ——— */
+  .archetype-row {
+    display: grid; grid-template-columns: 1fr 1px 1fr;
+    gap: 0; margin-top: 48px;
+  }
+  .archetype-col { padding: 0 40px 0 0; }
+  .archetype-col:last-child { padding: 0 0 0 40px; }
+  .archetype-divider {
+    background: var(--border);
+    width: 1px; align-self: stretch;
+  }
+  .archetype-tag {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .archetype-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 400; color: var(--text);
+    margin-bottom: 16px;
+  }
+  .archetype-body {
+    font-size: 14px; line-height: 1.8;
+    color: var(--muted); font-weight: 300;
+  }
+
+  /* ——— PROGRAMMA ——— */
+  .program-list { margin-top: 40px; display: flex; flex-direction: column; gap: 2px; }
+  .program-item {
+    display: grid; grid-template-columns: 60px 1fr;
+    gap: 20px; align-items: start;
+    padding: 22px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .program-item:first-child { border-radius: 4px 4px 0 0; }
+  .program-item:last-child { border-radius: 0 0 4px 4px; }
+  .program-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 300;
+    color: var(--accent); opacity: 0.7;
+    line-height: 1;
+  }
+  .program-title {
+    font-size: 15px; font-weight: 500;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .program-desc {
+    font-size: 13px; font-weight: 300;
+    line-height: 1.65; color: var(--muted);
+  }
+
+  /* ——— NOTE PRATICHE ——— */
+  .note-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 40px;
+  }
+  .note-item {
+    padding: 28px 24px;
+    background: var(--bg-dark);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .note-item:first-child { border-radius: 4px 0 0 4px; }
+  .note-item:last-child { border-radius: 0 4px 4px 0; }
+  .note-icon {
+    font-size: 22px; line-height: 1;
+  }
+  .note-label {
+    font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: oklch(65% 0.08 145); font-weight: 500;
+  }
+  .note-value {
+    font-size: 14px; line-height: 1.65;
+    color: oklch(88% 0.01 80); font-weight: 300;
+  }
+
+  /* ——— EMAIL FORM ——— */
+  .form-section {
+    padding: 88px 5%;
+    background: var(--bg-dark);
+  }
+  .form-inner {
+    max-width: 620px; margin: 0 auto;
+    text-align: center;
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 300; line-height: 1.15;
+    color: oklch(96% 0.005 80);
+    margin-bottom: 16px;
+  }
+  .form-subtitle {
+    font-size: 15px; line-height: 1.7;
+    color: oklch(72% 0.01 80);
+    font-weight: 300; margin-bottom: 44px;
+  }
+  .form-row {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .form-input {
+    flex: 1; min-width: 200px;
+    padding: 14px 18px;
+    background: oklch(32% 0.04 155);
+    border: 1px solid oklch(38% 0.05 155);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 300;
+    color: oklch(90% 0.005 80);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input::placeholder { color: oklch(58% 0.02 155); }
+  .form-input:focus { border-color: oklch(52% 0.14 145 / 0.7); }
+  .form-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500; letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    margin-top: 4px;
+  }
+  .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+  .form-note {
+    font-size: 12px; color: oklch(55% 0.02 155);
+    margin-top: 16px; line-height: 1.6;
+  }
+  .form-success {
+    padding: 24px;
+    background: oklch(40% 0.08 145 / 0.3);
+    border: 1px solid oklch(52% 0.14 145 / 0.4);
+    border-radius: 4px;
+    color: oklch(80% 0.08 145);
+    font-size: 15px; line-height: 1.6;
+  }
+
+  /* ——— DISCLAIMER ——— */
+  .disclaimer {
+    padding: 24px 5%;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+  }
+  .disclaimer p {
+    max-width: 960px; margin: 0 auto;
+    font-size: 11px; color: var(--muted);
+    line-height: 1.7; letter-spacing: 0.01em;
+  }
+
+  /* ——— FOOTER ——— */
+  .footer {
+    padding: 36px 5%;
+    background: var(--bg-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 400;
+    color: oklch(80% 0.01 80);
+  }
+  .footer-back {
+    font-size: 12px; letter-spacing: 0.08em;
+    color: oklch(58% 0.02 155); text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-back:hover { color: oklch(80% 0.08 145); }
+
+  /* ——— RESPONSIVE ——— */
+  @media (max-width: 768px) {
+    .cards-duo { gap: 16px; }
+    .card-img { width: 100px; }
+    .perchi-grid { grid-template-columns: 1fr; }
+    .archetype-row { grid-template-columns: 1fr; }
+    .archetype-divider { display: none; }
+    .archetype-col { padding: 0 0 32px 0; }
+    .archetype-col:last-child { padding: 0; }
+    .note-grid { grid-template-columns: 1fr; }
+    .note-item:first-child { border-radius: 4px 4px 0 0; }
+    .note-item:last-child { border-radius: 0 0 4px 4px; }
+    .program-item { grid-template-columns: 44px 1fr; gap: 14px; }
+    .form-row { flex-direction: column; }
+    .footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .nav-cta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div>
+    <span class="nav-logo-name">Update Your Life</span>
+    <span class="nav-logo-sub">Francesco Maragliulo</span>
+  </div>
+  <a href="#iscriviti" class="nav-cta">Contattami per i dettagli</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner reveal">
+    <p class="hero-tag">Workshop Esperienziale · Tarot & Psicologia</p>
+    <h1 class="hero-title">Tra il legame<br>e il vincolo</h1>
+    <p class="hero-subtitle">Gli Amanti e Il Diavolo: due archetipi, uno specchio</p>
+
+    <div class="cards-duo">
+      <div class="card-wrapper">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_06_Lovers.jpg/300px-RWS_Tarot_06_Lovers.jpg"
+          alt="Carta dei Tarocchi: Gli Amanti — Rider-Waite, Pamela Colman Smith, 1909"
+          class="card-img"
+          width="130" loading="lazy" decoding="async"
+        >
+        <span class="card-label">VI — Gli Amanti</span>
+      </div>
+      <div class="card-wrapper">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/RWS_Tarot_15_Devil.jpg/300px-RWS_Tarot_15_Devil.jpg"
+          alt="Carta dei Tarocchi: Il Diavolo — Rider-Waite, Pamela Colman Smith, 1909"
+          class="card-img"
+          style="transform: rotate(-1.5deg); margin-bottom: 8px;"
+          width="130" loading="lazy" decoding="async"
+        >
+        <span class="card-label">XV — Il Diavolo</span>
+      </div>
+    </div>
+
+    <p class="hero-desc">
+      Una giornata di lavoro per esplorare il confine tra riconoscimento, legame, dipendenza e consapevolezza attraverso due degli archetipi più profondi del mazzo Rider-Waite.
+    </p>
+
+    <div class="hero-pills">
+      <span class="pill accent">Minimo 10 partecipanti</span>
+      <span class="pill">Data in definizione</span>
+      <span class="pill">Location in definizione</span>
+      <span class="pill">Il mazzo non viene fornito</span>
+    </div>
+
+    <a href="#iscriviti" class="cta-btn">Contattami per i dettagli</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PER CHI -->
+<section class="section" style="background: var(--bg-alt);">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-tag">Per chi è</p>
+      <h2 class="section-title">Un'esperienza<br>per due tipi di persone</h2>
+    </div>
+    <div class="perchi-grid reveal">
+      <div class="perchi-card">
+        <div class="perchi-card-num">01</div>
+        <div class="perchi-card-title">Professionisti dell'aiuto</div>
+        <p class="perchi-card-body">Psicologi, coach, counselor, terapeuti e formatori che vogliono usare l'immagine simbolica come specchio clinico e strumento di riflessione nel proprio lavoro con le persone.</p>
+      </div>
+      <div class="perchi-card">
+        <div class="perchi-card-num">02</div>
+        <div class="perchi-card-title">Persone curiose del proprio stare in coppia</div>
+        <p class="perchi-card-body">Chiunque voglia approfondire le proprie modalità di stare in relazione, esplorare i propri schemi di legame e dipendenza, e portare maggiore consapevolezza nelle proprie scelte affettive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COSA ESPLORIAMO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-tag">I due poli</p>
+      <h2 class="section-title">Cosa esploriamo insieme</h2>
+      <p class="section-body">Le due carte non si oppongono: si parlano. Il workshop lavora sul continuum tra la scelta consapevole e il vincolo inconsapevole, tra il desiderio di unione e la paura di perdersi.</p>
+    </div>
+    <div class="archetype-row reveal">
+      <div class="archetype-col">
+        <p class="archetype-tag">Carta VI</p>
+        <h3 class="archetype-name">Gli Amanti</h3>
+        <p class="archetype-body">Il riconoscimento dell'altro, la scelta, il legame consapevole. La capacità di incontrarsi mantenendo la propria identità. La domanda che questa carta porta: <em>chi scelgo di essere in relazione?</em></p>
+      </div>
+      <div class="archetype-divider"></div>
+      <div class="archetype-col">
+        <p class="archetype-tag">Carta XV</p>
+        <h3 class="archetype-name">Il Diavolo</h3>
+        <p class="archetype-body">Le catene che sembrano esterne ma nascono dentro. La dipendenza, la fusione, il piacere dell'attaccamento. La domanda che questa carta porta: <em>cosa mi tiene fermo anche quando potrei andare?</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROGRAMMA -->
+<section class="section" style="background: var(--bg-alt);">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-tag">Come si svolge</p>
+      <h2 class="section-title">La struttura<br>della giornata</h2>
+      <p class="section-body">Il workshop alterna momenti di elaborazione teorica, esperienza diretta con le immagini, lavoro in piccoli gruppi e plenaria. Non serve nessuna conoscenza pregressa dei tarocchi.</p>
+    </div>
+    <div class="program-list reveal">
+      <div class="program-item">
+        <div class="program-num">I</div>
+        <div>
+          <div class="program-title">Accoglienza e presentazione del metodo</div>
+          <p class="program-desc">Come lavorare con l'immagine come strumento di riflessione simbolica, senza divinazione.</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-num">II</div>
+        <div>
+          <div class="program-title">Incontro con le carte</div>
+          <p class="program-desc">Esplorazione visiva e sensoriale di Gli Amanti e Il Diavolo. Narrazione spontanea, associazioni libere, prima lettura personale.</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-num">III</div>
+        <div>
+          <div class="program-title">Lavoro in coppia e in piccoli gruppi</div>
+          <p class="program-desc">Esercizi esperienziali su riconoscimento, legame e dinamiche di dipendenza. Condivisione guidata in sottogruppi.</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-num">IV</div>
+        <div>
+          <div class="program-title">Approfondimento teorico</div>
+          <p class="program-desc">Cornici psicologiche per leggere le dinamiche emerse: teoria dell'attaccamento, schemi relazionali, dipendenza affettiva.</p>
+        </div>
+      </div>
+      <div class="program-item">
+        <div class="program-num">V</div>
+        <div>
+          <div class="program-title">Integrazione e chiusura</div>
+          <p class="program-desc">Plenaria di restituzione, raccolta delle risonanze del gruppo, consegna di uno spunto per portare il lavoro a casa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NOTE PRATICHE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-tag">Note pratiche</p>
+      <h2 class="section-title">Informazioni<br>logistiche</h2>
+    </div>
+    <div class="note-grid reveal">
+      <div class="note-item">
+        <div class="note-icon">📅</div>
+        <div class="note-label">Data</div>
+        <div class="note-value">In corso di definizione.<br>Lascia la tua email per essere avvisato.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-icon">📍</div>
+        <div class="note-label">Location</div>
+        <div class="note-value">In corso di definizione.<br>Sede a Milano o dintorni.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-icon">👥</div>
+        <div class="note-label">Partecipanti</div>
+        <div class="note-value">Il workshop parte al raggiungimento di almeno 10 iscritti. Il mazzo non viene fornito ai partecipanti.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL FORM -->
+<section class="form-section" id="iscriviti">
+  <div class="form-inner reveal">
+    <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: oklch(65% 0.08 145); font-weight: 500; margin-bottom: 14px;">Tienimi aggiornato</p>
+    <h2 class="form-title">Vuoi saperne di più?</h2>
+    <p class="form-subtitle">
+      Data e location sono ancora in definizione. Lascia il tuo nome e la tua email: ti scrivo appena abbiamo tutti i dettagli.
+    </p>
+    <div id="form-container">
+      <form id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <input type="text" class="form-input" id="nome" name="nome" placeholder="Il tuo nome" required autocomplete="name">
+          <input type="email" class="form-input" id="email" name="email" placeholder="La tua email" required autocomplete="email">
+        </div>
+        <button type="submit" class="form-submit">Contattami per i dettagli</button>
+        <p class="form-note">Non invierò spam. Ti contatto solo con aggiornamenti sul workshop.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <p>
+    <strong>Note sulle immagini:</strong> Le carte dei tarocchi riprodotte in questa pagina sono liberamente utilizzabili a fini editoriali e informativi.
+    Fonte: <a href="https://commons.wikimedia.org/wiki/Category:Rider-Waite_tarot_card_images" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">Wikimedia Commons</a> — Mazzo Rider-Waite, illustrato da Pamela Colman Smith, 1909. Le immagini sono di pubblico dominio.
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-logo">Update Your Life · Francesco Maragliulo</span>
+  <a href="/" class="footer-back">← Torna al sito</a>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Form handler: apre mailto con i dati precompilati
+  function handleSubmit(e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = encodeURIComponent('Interesse Workshop – Tra il legame e il vincolo');
+    const body = encodeURIComponent(
+      'Ciao Francesco,\n\nSono interessato/a al workshop.\n\nNome: ' + nome +
+      '\nEmail di risposta: ' + email +
+      '\n\nTienimi aggiornato sui dettagli, grazie!'
+    );
+    window.location.href = 'mailto:francescomaragliulo@gmail.com?subject=' + subject + '&body=' + body;
+    document.getElementById('form-container').innerHTML =
+      '<div class="form-success">Si apre il tuo client email con i dati precompilati.<br>Se non si apre automaticamente, scrivimi direttamente a <strong>francescomaragliulo@gmail.com</strong></div>';
+  }
+</script>
+
+</body>
+</html>
