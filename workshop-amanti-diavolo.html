@@ -250,7 +250,6 @@ a { color: inherit; text-decoration: none; }
   background: oklch(22% 0.015 50); border: 1px solid oklch(100% 0 0 / 0.14);
   border-radius: calc(var(--radius) * 2);
 }
-/* eyebrow tag sopra il titolo */
 .form-eyebrow {
   font-size: 0.68rem; letter-spacing: 0.17em; text-transform: uppercase;
   color: var(--gold); font-weight: 500; margin-bottom: 1rem; display: block;
@@ -259,13 +258,11 @@ a { color: inherit; text-decoration: none; }
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(1.9rem, 1.3rem + 2vw, 2.8rem);
   font-weight: 300;
-  /* Bianco pieno: massima leggibilità su sfondo scuro */
   color: oklch(97% 0.005 80);
   line-height: 1.1; margin-bottom: 0.9rem;
 }
 .form-desc {
   font-size: 0.92rem;
-  /* Grigio chiaro ben leggibile */
   color: oklch(75% 0.01 80);
   line-height: 1.7; margin-bottom: 2rem;
 }
@@ -564,12 +561,7 @@ footer a { color: oklch(52% 0.01 80); }
   </div>
 </section>
 
-<!-- FORM —
-     Usa Formspree per l'invio reale senza server.
-     AZIONE RICHIESTA: accedi a https://formspree.io, crea un form gratuito,
-     copia il tuo endpoint (es. https://formspree.io/f/xyzabcde)
-     e sostituisci FORMSPREE_ENDPOINT_QUI qui sotto.
--->
+<!-- FORM -->
 <section class="form-section" id="contattami">
   <div class="container">
     <div class="form-box reveal">
@@ -594,7 +586,7 @@ footer a { color: oklch(52% 0.01 80); }
           <label class="f-label" for="msgInput">Messaggio (facoltativo)</label>
           <textarea class="f-input" id="msgInput" name="messaggio" placeholder="Hai domande o vuoi raccontarmi qualcosa?" rows="3"></textarea>
         </div>
-        <!-- campo honeypot anti-spam, nascosto agli utenti -->
+        <!-- honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
         <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top: 0.4rem;">Invia richiesta</button>
         <p class="form-note">I tuoi dati vengono utilizzati esclusivamente per contattarti in merito a questo workshop. Nessuno spam, disiscriversi in qualsiasi momento.</p>
@@ -630,12 +622,8 @@ footer a { color: oklch(52% 0.01 80); }
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 })();
 
-/* ===================================================
-   Form — invio via Formspree
-   Sostituisci FORMSPREE_ENDPOINT_QUI con il tuo
-   endpoint Formspree (https://formspree.io/f/xxxxxxxx)
-   =================================================== */
-const FORMSPREE_URL = 'FORMSPREE_ENDPOINT_QUI';
+/* === Form — invio via Formspree === */
+const FORMSPREE_URL = 'https://formspree.io/f/xlgvdyjj';
 
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
