@@ -23,11 +23,9 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   --text:       oklch(18% 0.02 80);
   --muted:      oklch(48% 0.015 80);
   --faint:      oklch(70% 0.01 80);
-  /* ACCENT PRINCIPALE: verde come index.html */
   --accent:     oklch(52% 0.14 145);
   --accent-lt:  oklch(62% 0.12 145);
   --accent-bg:  oklch(96% 0.025 145);
-  /* ACCENT CALDO */
   --warm:       oklch(62% 0.12 50);
   --gold:       oklch(72% 0.13 80);
   --border:     oklch(88% 0.01 80);
@@ -193,7 +191,7 @@ a { color: inherit; text-decoration: none; }
   border-left: 3px solid var(--accent); max-width: 840px; margin: 0 auto;
 }
 
-/* Program — metodologie */
+/* Program */
 .program-methods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
 .method-card {
   padding: 1.5rem 1.75rem;
@@ -243,31 +241,71 @@ a { color: inherit; text-decoration: none; }
 .cred-txt { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 .cred-txt strong { color: var(--text); font-weight: 500; }
 
-/* Form */
+/* ============================================
+   FORM SECTION — colori potenziati per leggibilità
+   ============================================ */
 .form-section { padding: clamp(4rem, 8vw, 6.5rem) 0; background: var(--bg-dark); }
 .form-box {
   max-width: 480px; margin: 0 auto; padding: 2.75rem clamp(1.5rem, 4vw, 3rem);
-  background: oklch(100% 0 0 / 0.04); border: 1px solid oklch(100% 0 0 / 0.1);
+  background: oklch(22% 0.015 50); border: 1px solid oklch(100% 0 0 / 0.14);
   border-radius: calc(var(--radius) * 2);
 }
-.form-title {
-  font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 1.3rem + 2vw, 2.8rem);
-  font-weight: 300; color: oklch(92% 0.005 80); line-height: 1.1; margin-bottom: 0.9rem;
+/* eyebrow tag sopra il titolo */
+.form-eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.17em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500; margin-bottom: 1rem; display: block;
 }
-.form-desc { font-size: 0.9rem; color: oklch(55% 0.01 80); line-height: 1.65; margin-bottom: 2rem; }
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.9rem, 1.3rem + 2vw, 2.8rem);
+  font-weight: 300;
+  /* Bianco pieno: massima leggibilità su sfondo scuro */
+  color: oklch(97% 0.005 80);
+  line-height: 1.1; margin-bottom: 0.9rem;
+}
+.form-desc {
+  font-size: 0.92rem;
+  /* Grigio chiaro ben leggibile */
+  color: oklch(75% 0.01 80);
+  line-height: 1.7; margin-bottom: 2rem;
+}
 .email-form { display: flex; flex-direction: column; gap: 0.8rem; }
+.f-label {
+  display: block; font-size: 0.78rem; font-weight: 500;
+  color: oklch(78% 0.01 80); margin-bottom: 0.3rem; letter-spacing: 0.02em;
+}
 .f-input {
   width: 100%; padding: 0.8rem 1rem;
-  background: oklch(100% 0 0 / 0.06); border: 1px solid oklch(100% 0 0 / 0.14);
-  border-radius: var(--radius); font-size: 0.93rem; color: oklch(88% 0.005 80);
+  background: oklch(100% 0 0 / 0.08); border: 1px solid oklch(100% 0 0 / 0.2);
+  border-radius: var(--radius); font-size: 0.93rem;
+  color: oklch(93% 0.005 80);
   font-family: inherit; outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
-.f-input::placeholder { color: oklch(42% 0.01 80); }
-.f-input:focus { border-color: var(--accent-lt); }
+.f-input::placeholder { color: oklch(50% 0.01 80); }
+.f-input:focus { border-color: var(--accent-lt); background: oklch(100% 0 0 / 0.11); }
 textarea.f-input { resize: vertical; min-height: 80px; }
-.form-note { font-size: 0.72rem; color: oklch(38% 0.01 80); line-height: 1.6; }
-.form-success { display: none; padding: 1.25rem; background: oklch(100% 0 0 / 0.07); border: 1px solid oklch(100% 0 0 / 0.15); border-radius: var(--radius); color: oklch(78% 0.08 145); font-size: 0.93rem; line-height: 1.6; }
+.form-note {
+  font-size: 0.75rem;
+  color: oklch(60% 0.01 80);
+  line-height: 1.6;
+}
+.form-success {
+  display: none; padding: 1.25rem;
+  background: oklch(100% 0 0 / 0.07);
+  border: 1px solid oklch(100% 0 0 / 0.15);
+  border-radius: var(--radius);
+  color: oklch(78% 0.08 145);
+  font-size: 0.93rem; line-height: 1.6;
+}
+.form-error {
+  display: none; padding: 0.75rem 1rem;
+  background: oklch(30% 0.06 25 / 0.5);
+  border: 1px solid oklch(100% 0 0 / 0.15);
+  border-radius: var(--radius);
+  color: oklch(85% 0.05 30);
+  font-size: 0.85rem; line-height: 1.6;
+}
 
 /* Divider */
 .hr { height: 1px; background: var(--border); }
@@ -526,20 +564,45 @@ footer a { color: oklch(52% 0.01 80); }
   </div>
 </section>
 
-<!-- FORM -->
+<!-- FORM —
+     Usa Formspree per l'invio reale senza server.
+     AZIONE RICHIESTA: accedi a https://formspree.io, crea un form gratuito,
+     copia il tuo endpoint (es. https://formspree.io/f/xyzabcde)
+     e sostituisci FORMSPREE_ENDPOINT_QUI qui sotto.
+-->
 <section class="form-section" id="contattami">
   <div class="container">
     <div class="form-box reveal">
-      <p style="font-size: 0.68rem; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1rem;">Vuoi partecipare?</p>
+      <span class="form-eyebrow">Vuoi partecipare?</span>
       <h2 class="form-title">Contattami<br>per i dettagli</h2>
-      <p class="form-desc">Data e location sono in corso di definizione. Lascia la tua email e ti contatto appena sono disponibili tutte le informazioni.</p>
-      <form class="email-form" id="emailForm" onsubmit="handleSubmit(event)">
-        <input type="text" class="f-input" id="nameInput" placeholder="Il tuo nome" autocomplete="given-name" required>
-        <input type="email" class="f-input" id="emailInput" placeholder="La tua email" autocomplete="email" required>
-        <textarea class="f-input" id="msgInput" placeholder="Un messaggio (facoltativo)" rows="3"></textarea>
-        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Invia richiesta</button>
-        <p class="form-note">La tua email viene usata esclusivamente per inviarti informazioni su questo workshop. Nessuno spam, disiscriversi in qualsiasi momento.</p>
+      <p class="form-desc">Data e location sono in corso di definizione. Lascia i tuoi contatti e ti scrivo appena sono disponibili tutte le informazioni.</p>
+
+      <form class="email-form" id="contactForm">
+        <div>
+          <label class="f-label" for="nameInput">Nome e cognome *</label>
+          <input type="text" class="f-input" id="nameInput" name="nome" placeholder="Il tuo nome" autocomplete="given-name" required>
+        </div>
+        <div>
+          <label class="f-label" for="emailInput">Email *</label>
+          <input type="email" class="f-input" id="emailInput" name="email" placeholder="La tua email" autocomplete="email" required>
+        </div>
+        <div>
+          <label class="f-label" for="phoneInput">Telefono</label>
+          <input type="tel" class="f-input" id="phoneInput" name="telefono" placeholder="Es. +39 333 1234567" autocomplete="tel">
+        </div>
+        <div>
+          <label class="f-label" for="msgInput">Messaggio (facoltativo)</label>
+          <textarea class="f-input" id="msgInput" name="messaggio" placeholder="Hai domande o vuoi raccontarmi qualcosa?" rows="3"></textarea>
+        </div>
+        <!-- campo honeypot anti-spam, nascosto agli utenti -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top: 0.4rem;">Invia richiesta</button>
+        <p class="form-note">I tuoi dati vengono utilizzati esclusivamente per contattarti in merito a questo workshop. Nessuno spam, disiscriversi in qualsiasi momento.</p>
       </form>
+
+      <div class="form-error" id="formError">
+        ⚠ Ops, si è verificato un errore. Riprova o scrivimi direttamente a <a href="mailto:francescomaragliulo@gmail.com" style="color:inherit;text-decoration:underline;">francescomaragliulo@gmail.com</a>
+      </div>
       <div class="form-success" id="formSuccess">
         ✓ &nbsp;Messaggio ricevuto! Ti contatto appena sono disponibili i dettagli del workshop.
       </div>
@@ -559,6 +622,7 @@ footer a { color: oklch(52% 0.01 80); }
 </footer>
 
 <script>
+/* === Scroll reveal === */
 (function () {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
@@ -566,18 +630,50 @@ footer a { color: oklch(52% 0.01 80); }
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 })();
 
-function handleSubmit(e) {
+/* ===================================================
+   Form — invio via Formspree
+   Sostituisci FORMSPREE_ENDPOINT_QUI con il tuo
+   endpoint Formspree (https://formspree.io/f/xxxxxxxx)
+   =================================================== */
+const FORMSPREE_URL = 'FORMSPREE_ENDPOINT_QUI';
+
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const name = document.getElementById('nameInput').value.trim();
-  const email = document.getElementById('emailInput').value.trim();
-  const msg = document.getElementById('msgInput').value.trim();
-  if (!name || !email) return;
-  const subject = encodeURIComponent('Interesse Workshop — Tra il legame e il vincolo');
-  const body = encodeURIComponent('Nome: ' + name + '\nEmail: ' + email + (msg ? '\n\nMessaggio:\n' + msg : ''));
-  window.location.href = 'mailto:info@updateyourlife.it?subject=' + subject + '&body=' + body;
-  document.getElementById('emailForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
-}
+
+  const btn = this.querySelector('button[type=submit]');
+  const errEl = document.getElementById('formError');
+  const okEl  = document.getElementById('formSuccess');
+
+  btn.disabled = true;
+  btn.textContent = 'Invio in corso…';
+  errEl.style.display = 'none';
+
+  const data = {
+    nome:      document.getElementById('nameInput').value.trim(),
+    email:     document.getElementById('emailInput').value.trim(),
+    telefono:  document.getElementById('phoneInput').value.trim(),
+    messaggio: document.getElementById('msgInput').value.trim()
+  };
+
+  try {
+    const res = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      this.style.display = 'none';
+      okEl.style.display = 'block';
+    } else {
+      throw new Error('HTTP ' + res.status);
+    }
+  } catch (err) {
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Invia richiesta';
+  }
+});
 </script>
 </body>
 </html>
