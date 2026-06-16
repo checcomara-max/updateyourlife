@@ -102,7 +102,6 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
 
-  /* ── NAV ─────────────────────────────────────────── */
   nav.site-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
@@ -112,16 +111,8 @@
     border-bottom: 1px solid var(--border);
     gap: 16px;
   }
-
-  /* Logo + chip Home — raggruppati a sinistra */
-  .nav-left {
-    display: flex; align-items: center; gap: 14px; min-width: 0;
-  }
-
-  .logo-link {
-    display: flex; flex-direction: column;
-    text-decoration: none; flex-shrink: 0;
-  }
+  .nav-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+  .logo-link { display: flex; flex-direction: column; text-decoration: none; flex-shrink: 0; }
   .logo-text {
     font-family: 'Cormorant Garamond', serif;
     font-size: 20px; font-weight: 500;
@@ -131,8 +122,6 @@
     font-size: 11px; font-weight: 300;
     color: var(--text-muted); letter-spacing: 0.06em;
   }
-
-  /* Chip "← Home" — visibile sempre, anche mentre si scrolla */
   .home-chip {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 5px 14px;
@@ -153,14 +142,11 @@
     color: var(--accent);
     background: oklch(52% 0.14 145 / 0.06);
   }
-
-  /* Separatore verticale sottile tra chip e CTA */
   .nav-sep {
     width: 1px; height: 24px;
     background: var(--border);
     flex-shrink: 0;
   }
-
   .nav-cta {
     padding: 10px 22px; background: var(--accent); color: #fff;
     border: none; border-radius: 4px; font-size: 13px; font-weight: 500;
@@ -170,15 +156,6 @@
   }
   .nav-cta:hover { opacity: 0.85; }
 
-  /* Nasconde chip label su mobile strettissimo */
-  @media (max-width: 480px) {
-    .home-chip-label { display: none; }
-    .home-chip { padding: 6px 10px; }
-    .nav-cta { padding: 10px 14px; font-size: 12px; }
-    .logo-text { font-size: 17px; }
-  }
-
-  /* ── HERO ARTICLE ────────────────────────────────── */
   .article-hero {
     padding: 140px 5% 80px;
     background: var(--bg);
@@ -201,9 +178,7 @@
   }
   .divider { height: 1px; background: var(--border); margin: 0 5%; }
 
-  /* ── MAIN CONTENT ────────────────────────────────── */
   .article-body { max-width: 780px; margin: 0 auto; padding: 80px 5%; }
-
   .section-tag { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 12px; display: block; }
   .section-title {
     font-family: 'Cormorant Garamond', serif;
@@ -214,7 +189,6 @@
   p { font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 20px; font-weight: 300; }
   strong { font-weight: 500; color: var(--text); }
 
-  /* ── JOHARI GRID ─────────────────────────────────── */
   .johari-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -258,13 +232,11 @@
     color: var(--accent); font-weight: 500; margin-bottom: 14px; display: block;
   }
   .johari-cell p { font-size: 14px; line-height: 1.75; margin-bottom: 0; color: var(--text-muted); }
-
   .johari-cell.open    { border-left: 3px solid var(--accent); }
   .johari-cell.blind   { border-left: 3px solid var(--accent-warm); }
   .johari-cell.hidden  { border-left: 3px solid oklch(55% 0.10 265); }
   .johari-cell.unknown { border-left: 3px solid oklch(55% 0.08 320); }
 
-  /* ── PULL QUOTE ──────────────────────────────────── */
   .pull-quote {
     padding: 36px 40px;
     background: var(--bg-alt);
@@ -282,7 +254,6 @@
     text-transform: uppercase; font-weight: 400; font-style: normal;
   }
 
-  /* ── STEPS ───────────────────────────────────────── */
   .steps { display: flex; flex-direction: column; gap: 24px; margin: 40px 0; }
   .step { display: flex; gap: 20px; align-items: flex-start; }
   .step-num {
@@ -296,7 +267,6 @@
   .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
   .step-desc { font-size: 15px; line-height: 1.75; color: var(--text-muted); font-weight: 300; margin: 0; }
 
-  /* ── BIBLIOGRAPHY ────────────────────────────────── */
   .biblio {
     padding: 48px 40px;
     background: var(--bg-dark);
@@ -311,7 +281,6 @@
   .biblio-item p { font-size: 14px; line-height: 1.75; color: oklch(72% 0.01 80); font-weight: 300; margin: 0; }
   .biblio-item strong { color: oklch(85% 0.005 80); font-weight: 500; }
 
-  /* ── CTA ─────────────────────────────────────────── */
   .cta-section {
     padding: 80px 5%;
     background: var(--bg-alt);
@@ -337,7 +306,6 @@
   }
   .cta-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── BREADCRUMB ──────────────────────────────────── */
   .breadcrumb {
     font-size: 13px; color: var(--text-muted); font-weight: 300;
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -346,16 +314,13 @@
   .breadcrumb a { color: var(--accent); text-decoration: none; }
   .breadcrumb a:hover { text-decoration: underline; }
 
-  /* ── FOOTER ──────────────────────────────────────── */
   footer {
     padding: 32px 5%;
     background: oklch(20% 0.05 155);
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 16px;
   }
-  .footer-brand {
-    display: flex; flex-direction: column; gap: 4px;
-  }
+  .footer-brand { display: flex; flex-direction: column; gap: 4px; }
   .footer-brand-name {
     font-family: 'Cormorant Garamond', serif;
     font-size: 17px; color: oklch(78% 0.02 80); font-weight: 400;
@@ -364,20 +329,14 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 12px; color: oklch(55% 0.02 80); font-weight: 300;
   }
-  .footer-links {
-    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
-  }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
   .footer-links a {
     font-size: 12px; color: oklch(55% 0.02 80);
-    text-decoration: none; transition: color 0.2s;
-    letter-spacing: 0.02em;
+    text-decoration: none; transition: color 0.2s; letter-spacing: 0.02em;
   }
   .footer-links a:hover { color: oklch(70% 0.10 145); }
-  .footer-sep {
-    width: 1px; height: 14px; background: oklch(38% 0.03 155);
-  }
+  .footer-sep { width: 1px; height: 14px; background: oklch(38% 0.03 155); }
 
-  /* ── RESPONSIVE ──────────────────────────────────── */
   @media (max-width: 768px) {
     .johari-grid { grid-template-columns: 1fr; }
     .johari-header-row { display: none; }
@@ -387,21 +346,21 @@
     footer { flex-direction: column; align-items: flex-start; gap: 20px; }
     .footer-links { gap: 14px; }
   }
+  @media (max-width: 480px) {
+    .home-chip-label { display: none; }
+    .home-chip { padding: 6px 10px; }
+    .nav-cta { padding: 10px 14px; font-size: 12px; }
+    .logo-text { font-size: 17px; }
+  }
 </style>
 </head>
 <body>
-
-<!-- ── NAV (sticky, sempre visibile) ─────────────── -->
 <nav class="site-nav" aria-label="Navigazione principale">
-
   <div class="nav-left">
-    <!-- Logo cliccabile → homepage -->
     <a href="https://www.updateyourlife.it" class="logo-link" title="Torna alla home di Update Your Life">
       <span class="logo-text">Update Your Life</span>
       <span class="logo-sub">Francesco Maragliulo</span>
     </a>
-
-    <!-- Chip "← Home" separato, più esplicito -->
     <a href="https://www.updateyourlife.it" class="home-chip" title="Torna alla homepage">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M19 12H5M12 5l-7 7 7 7"/>
@@ -409,17 +368,12 @@
       <span class="home-chip-label">updateyourlife.it</span>
     </a>
   </div>
-
   <div class="nav-sep" aria-hidden="true"></div>
-
-  <!-- CTA WhatsApp -->
-  <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0"
-     target="_blank" rel="noopener noreferrer" class="nav-cta">
+  <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="nav-cta">
     Scrivimi su WhatsApp
   </a>
 </nav>
 
-<!-- ── HERO ──────────────────────────────────────── -->
 <section class="article-hero">
   <div class="article-hero-inner reveal">
     <span class="tag">Psicoeducazione · Consapevolezza di sé</span>
@@ -434,11 +388,8 @@
 
 <div class="divider"></div>
 
-<!-- ── CONTENUTO ─────────────────────────────────── -->
 <main>
   <div class="article-body">
-
-    <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="https://www.updateyourlife.it">Home</a>
       <span aria-hidden="true">›</span>
@@ -447,7 +398,6 @@
       <span>Finestra di Johari</span>
     </nav>
 
-    <!-- IL PROBLEMA -->
     <div class="reveal">
       <span class="section-tag">Il problema comune</span>
       <h2 class="section-title">«Io mi conosco bene»</h2>
@@ -472,7 +422,6 @@
       <cite>— Lao Tzu, Tao Te Ching</cite>
     </div>
 
-    <!-- LA SPIEGAZIONE -->
     <div class="reveal">
       <span class="section-tag">La spiegazione psicologica</span>
       <h2 class="section-title">Come funziona la Finestra di Johari</h2>
@@ -491,7 +440,6 @@
       </p>
     </div>
 
-    <!-- GRIGLIA JOHARI -->
     <div class="reveal">
       <div style="margin-bottom: 8px;">
         <div class="johari-header-row">
@@ -522,7 +470,7 @@
           <div class="johari-cell-num">IV</div>
           <span class="johari-cell-label">Non noto a me · Non noto agli altri</span>
           <div class="johari-cell-title">Area Sconosciuta</div>
-          <p>Il territorio dell'inconscio, dei potenziali inesplorati, dei traumi non elaborati. Ciò che né io né gli altri ancora vediamo. Si esplora attraverso la terapia, i sogni, le crisi creative, le esperienze limite e i momenti di insight inaspettato.</p>
+          <p>Il territorio dell'inconscio, dei potenziali inesplorati, dei traumi non elaborati. Ciò che né io né gli altri ancora vediamo. Si esplora attraverso i sogni, le crisi creative, le esperienze limite e i momenti di insight inaspettato.</p>
         </div>
       </div>
       <p style="font-size:13px; color: var(--text-muted); text-align:center; margin-top:12px;">
@@ -530,7 +478,6 @@
       </p>
     </div>
 
-    <!-- DINAMICA -->
     <div class="reveal" style="margin-top: 56px;">
       <span class="section-tag">Come evolve la finestra</span>
       <h2 class="section-title">La finestra si muove</h2>
@@ -538,7 +485,7 @@
         I quattro quadranti non sono fissi: cambiano nel tempo e nelle relazioni.
         <strong>Dare e ricevere feedback</strong> sposta il confine tra area aperta e punto cieco.
         <strong>Condividere vulnerabilità</strong> riduce l'area nascosta.
-        Fare <strong>esperienze nuove</strong> e la psicoterapia esplorano l'area sconosciuta.
+        Fare <strong>esperienze nuove</strong> o un percorso con uno psicologo o con un coach esplora l'area sconosciuta.
       </p>
       <p>
         L'obiettivo non è azzerare le aree nascoste o sconosciute — sarebbe impossibile e
@@ -548,7 +495,6 @@
       </p>
     </div>
 
-    <!-- 3 COSE CHE PUOI FARE -->
     <div class="reveal" style="margin-top: 64px;">
       <span class="section-tag">Cosa puoi fare</span>
       <h2 class="section-title">3 passi per ampliare<br>la tua area aperta</h2>
@@ -590,38 +536,20 @@
       </div>
     </div>
 
-    <!-- BIBLIOGRAFIA -->
     <div class="biblio reveal">
       <span class="section-tag">Per approfondire</span>
       <h2 class="section-title">Riferimenti<br>bibliografici</h2>
       <ul class="biblio-list">
-        <li class="biblio-item">
-          <div class="biblio-dot"></div>
-          <p><strong>Luft, J., &amp; Ingham, H. (1955).</strong> <em>The Johari window: A graphic model of interpersonal awareness.</em> Proceedings of the Western Training Laboratory in Group Development. UCLA, Los Angeles. — <em>Il paper originale che introduce il modello.</em></p>
-        </li>
-        <li class="biblio-item">
-          <div class="biblio-dot"></div>
-          <p><strong>Luft, J. (1969).</strong> <em>Of human interaction.</em> National Press. — <em>La trattazione estesa del modello da parte del suo co-autore, con applicazioni cliniche e organizzative.</em></p>
-        </li>
-        <li class="biblio-item">
-          <div class="biblio-dot"></div>
-          <p><strong>Brown, B. (2010).</strong> <em>The Gifts of Imperfection.</em> Hazelden Publishing. — <em>Sul ruolo della vulnerabilità e dell'autenticità nel ridurre l'area nascosta e costruire connessioni autentiche.</em></p>
-        </li>
-        <li class="biblio-item">
-          <div class="biblio-dot"></div>
-          <p><strong>Goleman, D. (1995).</strong> <em>Emotional Intelligence: Why It Can Matter More Than IQ.</em> Bantam Books. — <em>Sul legame tra consapevolezza di sé, gestione delle emozioni e qualità delle relazioni interpersonali.</em></p>
-        </li>
-        <li class="biblio-item">
-          <div class="biblio-dot"></div>
-          <p><strong>Johari Window — APA Dictionary of Psychology.</strong> American Psychological Association. Disponibile su: <em>https://dictionary.apa.org/johari-window</em></p>
-        </li>
+        <li class="biblio-item"><div class="biblio-dot"></div><p><strong>Luft, J., &amp; Ingham, H. (1955).</strong> <em>The Johari window: A graphic model of interpersonal awareness.</em> Proceedings of the Western Training Laboratory in Group Development. UCLA, Los Angeles. — <em>Il paper originale che introduce il modello.</em></p></li>
+        <li class="biblio-item"><div class="biblio-dot"></div><p><strong>Luft, J. (1969).</strong> <em>Of human interaction.</em> National Press. — <em>La trattazione estesa del modello da parte del suo co-autore, con applicazioni cliniche e organizzative.</em></p></li>
+        <li class="biblio-item"><div class="biblio-dot"></div><p><strong>Brown, B. (2010).</strong> <em>The Gifts of Imperfection.</em> Hazelden Publishing. — <em>Sul ruolo della vulnerabilità e dell'autenticità nel ridurre l'area nascosta e costruire connessioni autentiche.</em></p></li>
+        <li class="biblio-item"><div class="biblio-dot"></div><p><strong>Goleman, D. (1995).</strong> <em>Emotional Intelligence: Why It Can Matter More Than IQ.</em> Bantam Books. — <em>Sul legame tra consapevolezza di sé, gestione delle emozioni e qualità delle relazioni interpersonali.</em></p></li>
+        <li class="biblio-item"><div class="biblio-dot"></div><p><strong>Johari Window — APA Dictionary of Psychology.</strong> American Psychological Association. Disponibile su: <em>https://dictionary.apa.org/johari-window</em></p></li>
       </ul>
     </div>
-
   </div>
 </main>
 
-<!-- ── CTA FINALE ─────────────────────────────────── -->
 <section class="cta-section">
   <div class="cta-inner reveal">
     <span class="tag">Il prossimo passo</span>
@@ -635,8 +563,7 @@
       buon punto di partenza.
     </p>
     <div>
-      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0"
-         target="_blank" rel="noopener noreferrer" class="cta-btn">
+      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="cta-btn">
         Prenota una sessione gratuita
       </a>
       <a href="https://www.updateyourlife.it" class="cta-secondary">
@@ -646,13 +573,11 @@
   </div>
 </section>
 
-<!-- ── FOOTER (unico punto con note legali) ───────── -->
 <footer>
   <div class="footer-brand">
     <span class="footer-brand-name">Update Your Life © 2026</span>
     <span class="footer-brand-sub">Francesco Maragliulo · Psicologo · Coach · Counselor</span>
   </div>
-
   <nav class="footer-links" aria-label="Link legali">
     <a href="https://www.updateyourlife.it/privacy-policy.html">Privacy Policy</a>
     <div class="footer-sep" aria-hidden="true"></div>
@@ -671,6 +596,5 @@
   }, { threshold: 0.1 });
   els.forEach(el => obs.observe(el));
 </script>
-
 </body>
 </html>
