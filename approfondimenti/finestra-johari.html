@@ -102,26 +102,83 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
 
-  /* NAV */
-  nav {
+  /* ── NAV ─────────────────────────────────────────── */
+  nav.site-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 5%; height: 72px;
     background: oklch(97.5% 0.008 80 / 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+    gap: 16px;
   }
-  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--text); letter-spacing: 0.02em; line-height: 1.2; text-decoration: none; display: block; }
-  .logo-sub { font-size: 12px; font-weight: 300; color: var(--text-muted); display: block; letter-spacing: 0.06em; }
+
+  /* Logo + chip Home — raggruppati a sinistra */
+  .nav-left {
+    display: flex; align-items: center; gap: 14px; min-width: 0;
+  }
+
+  .logo-link {
+    display: flex; flex-direction: column;
+    text-decoration: none; flex-shrink: 0;
+  }
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 500;
+    color: var(--text); letter-spacing: 0.02em; line-height: 1.2;
+  }
+  .logo-sub {
+    font-size: 11px; font-weight: 300;
+    color: var(--text-muted); letter-spacing: 0.06em;
+  }
+
+  /* Chip "← Home" — visibile sempre, anche mentre si scrolla */
+  .home-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 12px; font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .home-chip svg { flex-shrink: 0; }
+  .home-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: oklch(52% 0.14 145 / 0.06);
+  }
+
+  /* Separatore verticale sottile tra chip e CTA */
+  .nav-sep {
+    width: 1px; height: 24px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
   .nav-cta {
-    padding: 10px 24px; background: var(--accent); color: #fff;
-    border: none; border-radius: 4px; font-size: 14px; font-weight: 500;
+    padding: 10px 22px; background: var(--accent); color: #fff;
+    border: none; border-radius: 4px; font-size: 13px; font-weight: 500;
     cursor: pointer; letter-spacing: 0.03em; font-family: 'DM Sans', sans-serif;
     text-decoration: none; display: inline-block; transition: opacity 0.2s;
+    white-space: nowrap; flex-shrink: 0;
   }
   .nav-cta:hover { opacity: 0.85; }
 
-  /* HERO ARTICLE */
+  /* Nasconde chip label su mobile strettissimo */
+  @media (max-width: 480px) {
+    .home-chip-label { display: none; }
+    .home-chip { padding: 6px 10px; }
+    .nav-cta { padding: 10px 14px; font-size: 12px; }
+    .logo-text { font-size: 17px; }
+  }
+
+  /* ── HERO ARTICLE ────────────────────────────────── */
   .article-hero {
     padding: 140px 5% 80px;
     background: var(--bg);
@@ -144,7 +201,7 @@
   }
   .divider { height: 1px; background: var(--border); margin: 0 5%; }
 
-  /* MAIN CONTENT */
+  /* ── MAIN CONTENT ────────────────────────────────── */
   .article-body { max-width: 780px; margin: 0 auto; padding: 80px 5%; }
 
   .section-tag { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 12px; display: block; }
@@ -157,11 +214,10 @@
   p { font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 20px; font-weight: 300; }
   strong { font-weight: 500; color: var(--text); }
 
-  /* JOHARI GRID */
+  /* ── JOHARI GRID ─────────────────────────────────── */
   .johari-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
     gap: 3px;
     margin: 48px 0;
     border-radius: 4px;
@@ -203,12 +259,12 @@
   }
   .johari-cell p { font-size: 14px; line-height: 1.75; margin-bottom: 0; color: var(--text-muted); }
 
-  .johari-cell.open   { border-left: 3px solid var(--accent); }
-  .johari-cell.blind  { border-left: 3px solid var(--accent-warm); }
-  .johari-cell.hidden { border-left: 3px solid oklch(55% 0.10 265); }
-  .johari-cell.unknown{ border-left: 3px solid oklch(55% 0.08 320); }
+  .johari-cell.open    { border-left: 3px solid var(--accent); }
+  .johari-cell.blind   { border-left: 3px solid var(--accent-warm); }
+  .johari-cell.hidden  { border-left: 3px solid oklch(55% 0.10 265); }
+  .johari-cell.unknown { border-left: 3px solid oklch(55% 0.08 320); }
 
-  /* QUOTE */
+  /* ── PULL QUOTE ──────────────────────────────────── */
   .pull-quote {
     padding: 36px 40px;
     background: var(--bg-alt);
@@ -226,7 +282,7 @@
     text-transform: uppercase; font-weight: 400; font-style: normal;
   }
 
-  /* STEPS */
+  /* ── STEPS ───────────────────────────────────────── */
   .steps { display: flex; flex-direction: column; gap: 24px; margin: 40px 0; }
   .step { display: flex; gap: 20px; align-items: flex-start; }
   .step-num {
@@ -240,7 +296,7 @@
   .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
   .step-desc { font-size: 15px; line-height: 1.75; color: var(--text-muted); font-weight: 300; margin: 0; }
 
-  /* BIBLIOGRAPHY */
+  /* ── BIBLIOGRAPHY ────────────────────────────────── */
   .biblio {
     padding: 48px 40px;
     background: var(--bg-dark);
@@ -255,15 +311,13 @@
   .biblio-item p { font-size: 14px; line-height: 1.75; color: oklch(72% 0.01 80); font-weight: 300; margin: 0; }
   .biblio-item strong { color: oklch(85% 0.005 80); font-weight: 500; }
 
-  /* CTA */
+  /* ── CTA ─────────────────────────────────────────── */
   .cta-section {
     padding: 80px 5%;
     background: var(--bg-alt);
     text-align: center;
-    margin-top: 0;
   }
   .cta-inner { max-width: 600px; margin: 0 auto; }
-  .cta-section .section-title { margin-bottom: 16px; }
   .cta-desc { font-size: 17px; line-height: 1.8; color: var(--text-muted); font-weight: 300; margin-bottom: 36px; }
   .cta-btn {
     display: inline-block;
@@ -279,55 +333,93 @@
     border: 1.5px solid var(--border);
     border-radius: 4px; font-size: 16px; color: var(--text);
     cursor: pointer; letter-spacing: 0.03em; font-family: 'DM Sans', sans-serif;
-    text-decoration: none; transition: border-color 0.2s;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
   }
   .cta-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* BREADCRUMB */
+  /* ── BREADCRUMB ──────────────────────────────────── */
   .breadcrumb {
     font-size: 13px; color: var(--text-muted); font-weight: 300;
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     max-width: 780px; margin: 0 auto 20px; padding: 0 5%;
   }
   .breadcrumb a { color: var(--accent); text-decoration: none; }
   .breadcrumb a:hover { text-decoration: underline; }
 
-  /* FOOTER */
+  /* ── FOOTER ──────────────────────────────────────── */
   footer {
-    padding: 28px 5%;
+    padding: 32px 5%;
     background: oklch(20% 0.05 155);
     display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px;
+    flex-wrap: wrap; gap: 16px;
   }
-  footer span { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: oklch(68% 0.02 80); }
-  footer .footer-links { display: flex; gap: 20px; }
-  footer .footer-links a { font-size: 12px; color: oklch(62% 0.02 80); text-decoration: none; transition: color 0.2s; }
-  footer .footer-links a:hover { color: oklch(70% 0.10 145); }
+  .footer-brand {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; color: oklch(78% 0.02 80); font-weight: 400;
+  }
+  .footer-brand-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; color: oklch(55% 0.02 80); font-weight: 300;
+  }
+  .footer-links {
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+  }
+  .footer-links a {
+    font-size: 12px; color: oklch(55% 0.02 80);
+    text-decoration: none; transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .footer-links a:hover { color: oklch(70% 0.10 145); }
+  .footer-sep {
+    width: 1px; height: 14px; background: oklch(38% 0.03 155);
+  }
 
-  /* RESPONSIVE */
+  /* ── RESPONSIVE ──────────────────────────────────── */
   @media (max-width: 768px) {
     .johari-grid { grid-template-columns: 1fr; }
     .johari-header-row { display: none; }
     .cta-secondary { margin-left: 0; margin-top: 12px; display: block; }
     .pull-quote { padding: 28px 24px; }
     .biblio { padding: 36px 24px; }
+    footer { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .footer-links { gap: 14px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="https://www.updateyourlife.it" class="logo-text">
-    Update Your Life
-    <span class="logo-sub">Francesco Maragliulo</span>
-  </a>
-  <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" class="nav-cta">
+<!-- ── NAV (sticky, sempre visibile) ─────────────── -->
+<nav class="site-nav" aria-label="Navigazione principale">
+
+  <div class="nav-left">
+    <!-- Logo cliccabile → homepage -->
+    <a href="https://www.updateyourlife.it" class="logo-link" title="Torna alla home di Update Your Life">
+      <span class="logo-text">Update Your Life</span>
+      <span class="logo-sub">Francesco Maragliulo</span>
+    </a>
+
+    <!-- Chip "← Home" separato, più esplicito -->
+    <a href="https://www.updateyourlife.it" class="home-chip" title="Torna alla homepage">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      <span class="home-chip-label">updateyourlife.it</span>
+    </a>
+  </div>
+
+  <div class="nav-sep" aria-hidden="true"></div>
+
+  <!-- CTA WhatsApp -->
+  <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0"
+     target="_blank" rel="noopener noreferrer" class="nav-cta">
     Scrivimi su WhatsApp
   </a>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ──────────────────────────────────────── -->
 <section class="article-hero">
   <div class="article-hero-inner reveal">
     <span class="tag">Psicoeducazione · Consapevolezza di sé</span>
@@ -342,16 +434,16 @@
 
 <div class="divider"></div>
 
-<!-- BODY -->
+<!-- ── CONTENUTO ─────────────────────────────────── -->
 <main>
   <div class="article-body">
 
     <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="https://www.updateyourlife.it">Home</a>
-      <span>›</span>
+      <span aria-hidden="true">›</span>
       <span>Approfondimenti</span>
-      <span>›</span>
+      <span aria-hidden="true">›</span>
       <span>Finestra di Johari</span>
     </nav>
 
@@ -408,28 +500,24 @@
         </div>
       </div>
       <div class="johari-grid">
-        <!-- Q1: Open -->
         <div class="johari-cell open">
           <div class="johari-cell-num">I</div>
           <span class="johari-cell-label">Noto a me · Noto agli altri</span>
           <div class="johari-cell-title">Area Aperta</div>
           <p>Ciò che so di me e che condivido liberamente: i miei talenti riconosciuti, i valori che esprimo, i comportamenti visibili. È la zona della <strong>comunicazione autentica</strong> e della collaborazione efficace. Un'area aperta ampia è segno di fiducia reciproca e salute relazionale.</p>
         </div>
-        <!-- Q2: Blind -->
         <div class="johari-cell blind">
           <div class="johari-cell-num">II</div>
           <span class="johari-cell-label">Non noto a me · Noto agli altri</span>
           <div class="johari-cell-title">Punto Cieco</div>
           <p>Ciò che gli altri percepiscono chiaramente di noi, ma che noi non vediamo. Difetti, abitudini, stili comunicativi automatici, emozioni che trapelano senza che ce ne accorgiamo. Il <strong>feedback ricevuto con apertura</strong> è l'unico modo per illuminare questa zona.</p>
         </div>
-        <!-- Q3: Hidden -->
         <div class="johari-cell hidden">
           <div class="johari-cell-num">III</div>
           <span class="johari-cell-label">Noto a me · Non noto agli altri</span>
           <div class="johari-cell-title">Area Nascosta</div>
           <p>Ciò che conosco di me ma tengo riservato: paure, fragilità, desideri, esperienze passate che non condividiamo per timore del giudizio. La <strong>vulnerabilità consapevole</strong> — condividere gradualmente parti di sé — riduce questa zona e approfondisce le relazioni.</p>
         </div>
-        <!-- Q4: Unknown -->
         <div class="johari-cell unknown">
           <div class="johari-cell-num">IV</div>
           <span class="johari-cell-label">Non noto a me · Non noto agli altri</span>
@@ -494,8 +582,8 @@
             <p class="step-desc">
               Le situazioni in cui reagisci in modo sproporzionato — irritazione
               improvvisa, difensività, vergogna — sono spesso finestre sull'area
-              sconosciuta. Invece di ignorarle, usale come punto di partenza per
-              esplorare: <em>«Cosa mi dice di me questa reazione?»</em>
+              sconosciuta. Invece di ignorarle, usale come punto di partenza:
+              <em>«Cosa mi dice di me questa reazione?»</em>
             </p>
           </div>
         </div>
@@ -533,11 +621,11 @@
   </div>
 </main>
 
-<!-- CTA SECTION -->
+<!-- ── CTA FINALE ─────────────────────────────────── -->
 <section class="cta-section">
   <div class="cta-inner reveal">
     <span class="tag">Il prossimo passo</span>
-    <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 300; color: var(--text); margin-bottom: 16px;">
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(32px,4vw,48px); font-weight:300; color:var(--text); margin-bottom:16px; line-height:1.15;">
       Vuoi esplorare<br>la tua finestra?
     </h2>
     <p class="cta-desc">
@@ -547,7 +635,8 @@
       buon punto di partenza.
     </p>
     <div>
-      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" class="cta-btn">
+      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0"
+         target="_blank" rel="noopener noreferrer" class="cta-btn">
         Prenota una sessione gratuita
       </a>
       <a href="https://www.updateyourlife.it" class="cta-secondary">
@@ -557,19 +646,23 @@
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ── FOOTER (unico punto con note legali) ───────── -->
 <footer>
-  <span>Update Your Life © 2026</span>
-  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: oklch(65% 0.02 80); font-weight: 300;">Francesco Maragliulo · Psicologo · Coach · Counselor</span>
-  <nav class="footer-links" aria-label="Footer">
+  <div class="footer-brand">
+    <span class="footer-brand-name">Update Your Life © 2026</span>
+    <span class="footer-brand-sub">Francesco Maragliulo · Psicologo · Coach · Counselor</span>
+  </div>
+
+  <nav class="footer-links" aria-label="Link legali">
     <a href="https://www.updateyourlife.it/privacy-policy.html">Privacy Policy</a>
+    <div class="footer-sep" aria-hidden="true"></div>
     <a href="https://www.updateyourlife.it/cookie-policy.html">Cookie Policy</a>
+    <div class="footer-sep" aria-hidden="true"></div>
     <a href="https://www.updateyourlife.it/note-legali.html">Note Legali</a>
   </nav>
 </footer>
 
 <script>
-  // Scroll reveal
   const els = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
