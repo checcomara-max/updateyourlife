@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Finestra di Johari — Francesco Maragliulo | Update Your Life</title>
+<meta name="description" content="Cos'è la Finestra di Johari? Uno strumento psicologico per conoscersi davvero: scopri i tuoi punti ciechi, le aree nascoste e come la consapevolezza di sé trasforma le relazioni.">
+<meta name="keywords" content="finestra di Johari, consapevolezza di sé, psicologia, autoconsapevolezza, punti ciechi, crescita personale, Francesco Maragliulo, Update Your Life">
+<meta name="author" content="Francesco Maragliulo">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.updateyourlife.it/approfondimenti/finestra-johari.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.updateyourlife.it/approfondimenti/finestra-johari.html">
+<meta property="og:title" content="La Finestra di Johari — Conosci davvero te stesso?">
+<meta property="og:description" content="Uno strumento psicologico per esplorare ciò che sai di te, ciò che gli altri vedono e ciò che ancora non hai scoperto. Con approfondimento bibliografico.">
+<meta property="og:image" content="https://www.updateyourlife.it/foto-profilo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Update Your Life">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La Finestra di Johari — Francesco Maragliulo">
+<meta name="twitter:description" content="Conosci davvero te stesso? Scopri la Finestra di Johari: lo strumento psicologico che rivela i tuoi punti ciechi e trasforma le relazioni.">
+<meta name="twitter:image" content="https://www.updateyourlife.it/foto-profilo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "La Finestra di Johari: conosci davvero te stesso?",
+  "description": "Un approfondimento psicoeducativo sulla Finestra di Johari, strumento per la consapevolezza di sé e la qualità delle relazioni.",
+  "author": {
+    "@type": "Person",
+    "name": "Francesco Maragliulo",
+    "url": "https://www.updateyourlife.it"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Update Your Life",
+    "url": "https://www.updateyourlife.it"
+  },
+  "mainEntityOfPage": "https://www.updateyourlife.it/approfondimenti/finestra-johari.html"
+}
+</script>
+
+<script>
+  (function() {
+    function loadGA() {
+      if (window._gaLoaded) return;
+      window._gaLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZEHNGYS0Z9';
+      s.async = true;
+      document.head.appendChild(s);
+      s.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-ZEHNGYS0Z9', { anonymize_ip: true });
+      };
+    }
+    var consent = localStorage.getItem('uyl_cookie_consent');
+    if (consent === 'all') loadGA();
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'uyl_cookie_consent' && e.newValue === 'all') loadGA();
+    });
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --bg: oklch(97.5% 0.008 80);
+    --bg-alt: oklch(94% 0.012 80);
+    --bg-dark: oklch(26% 0.06 155);
+    --text: oklch(20% 0.02 80);
+    --text-muted: oklch(50% 0.015 80);
+    --accent: oklch(52% 0.14 145);
+    --accent-warm: oklch(62% 0.12 50);
+    --border: oklch(88% 0.012 80);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 72px;
+    background: oklch(97.5% 0.008 80 / 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--text); letter-spacing: 0.02em; line-height: 1.2; text-decoration: none; display: block; }
+  .logo-sub { font-size: 12px; font-weight: 300; color: var(--text-muted); display: block; letter-spacing: 0.06em; }
+  .nav-cta {
+    padding: 10px 24px; background: var(--accent); color: #fff;
+    border: none; border-radius: 4px; font-size: 14px; font-weight: 500;
+    cursor: pointer; letter-spacing: 0.03em; font-family: 'DM Sans', sans-serif;
+    text-decoration: none; display: inline-block; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO ARTICLE */
+  .article-hero {
+    padding: 140px 5% 80px;
+    background: var(--bg);
+    text-align: center;
+  }
+  .article-hero-inner { max-width: 780px; margin: 0 auto; }
+  .tag {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 20px; display: block;
+  }
+  .article-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5.5vw, 68px);
+    font-weight: 300; line-height: 1.1;
+    color: var(--text); margin-bottom: 28px;
+  }
+  .article-intro {
+    font-size: 18px; line-height: 1.8; color: var(--text-muted);
+    font-weight: 300; max-width: 640px; margin: 0 auto 40px;
+  }
+  .divider { height: 1px; background: var(--border); margin: 0 5%; }
+
+  /* MAIN CONTENT */
+  .article-body { max-width: 780px; margin: 0 auto; padding: 80px 5%; }
+
+  .section-tag { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 12px; display: block; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 300; line-height: 1.2;
+    color: var(--text); margin-bottom: 28px;
+  }
+  p { font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 20px; font-weight: 300; }
+  strong { font-weight: 500; color: var(--text); }
+
+  /* JOHARI GRID */
+  .johari-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 3px;
+    margin: 48px 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .johari-header-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+  .johari-axis-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 500; color: var(--text-muted); text-align: center; padding: 8px 0;
+  }
+  .johari-cell {
+    padding: 36px 32px;
+    background: var(--bg-alt);
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+  }
+  .johari-cell:hover { transform: translateY(-3px); box-shadow: 0 8px 32px oklch(0% 0 0 / 0.08); }
+  .johari-cell-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 300;
+    color: var(--accent); opacity: 0.18;
+    position: absolute; top: 12px; right: 20px;
+    line-height: 1; pointer-events: none; user-select: none;
+  }
+  .johari-cell-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--text); margin-bottom: 10px; line-height: 1.2;
+  }
+  .johari-cell-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 14px; display: block;
+  }
+  .johari-cell p { font-size: 14px; line-height: 1.75; margin-bottom: 0; color: var(--text-muted); }
+
+  .johari-cell.open   { border-left: 3px solid var(--accent); }
+  .johari-cell.blind  { border-left: 3px solid var(--accent-warm); }
+  .johari-cell.hidden { border-left: 3px solid oklch(55% 0.10 265); }
+  .johari-cell.unknown{ border-left: 3px solid oklch(55% 0.08 320); }
+
+  /* QUOTE */
+  .pull-quote {
+    padding: 36px 40px;
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    margin: 48px 0;
+  }
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 300; font-style: italic;
+    color: var(--text); line-height: 1.55; margin-bottom: 12px;
+  }
+  .pull-quote cite {
+    font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 400; font-style: normal;
+  }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 24px; margin: 40px 0; }
+  .step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500; flex-shrink: 0; margin-top: 2px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .step-body { flex: 1; }
+  .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .step-desc { font-size: 15px; line-height: 1.75; color: var(--text-muted); font-weight: 300; margin: 0; }
+
+  /* BIBLIOGRAPHY */
+  .biblio {
+    padding: 48px 40px;
+    background: var(--bg-dark);
+    border-radius: 4px;
+    margin: 64px 0 0;
+  }
+  .biblio .section-tag { color: oklch(70% 0.10 145); }
+  .biblio .section-title { color: oklch(95% 0.005 80); margin-bottom: 28px; }
+  .biblio-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+  .biblio-item { display: flex; gap: 16px; align-items: flex-start; }
+  .biblio-dot { width: 3px; min-height: 36px; background: oklch(55% 0.10 145); border-radius: 99px; margin-top: 4px; flex-shrink: 0; }
+  .biblio-item p { font-size: 14px; line-height: 1.75; color: oklch(72% 0.01 80); font-weight: 300; margin: 0; }
+  .biblio-item strong { color: oklch(85% 0.005 80); font-weight: 500; }
+
+  /* CTA */
+  .cta-section {
+    padding: 80px 5%;
+    background: var(--bg-alt);
+    text-align: center;
+    margin-top: 0;
+  }
+  .cta-inner { max-width: 600px; margin: 0 auto; }
+  .cta-section .section-title { margin-bottom: 16px; }
+  .cta-desc { font-size: 17px; line-height: 1.8; color: var(--text-muted); font-weight: 300; margin-bottom: 36px; }
+  .cta-btn {
+    display: inline-block;
+    padding: 16px 40px; background: var(--accent); color: #fff;
+    border: none; border-radius: 4px; font-size: 16px; font-weight: 500;
+    cursor: pointer; letter-spacing: 0.03em; font-family: 'DM Sans', sans-serif;
+    text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+  .cta-secondary {
+    display: inline-block; margin-left: 16px;
+    padding: 16px 40px; background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 4px; font-size: 16px; color: var(--text);
+    cursor: pointer; letter-spacing: 0.03em; font-family: 'DM Sans', sans-serif;
+    text-decoration: none; transition: border-color 0.2s;
+  }
+  .cta-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    font-size: 13px; color: var(--text-muted); font-weight: 300;
+    display: flex; align-items: center; gap: 8px;
+    max-width: 780px; margin: 0 auto 20px; padding: 0 5%;
+  }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    padding: 28px 5%;
+    background: oklch(20% 0.05 155);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer span { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: oklch(68% 0.02 80); }
+  footer .footer-links { display: flex; gap: 20px; }
+  footer .footer-links a { font-size: 12px; color: oklch(62% 0.02 80); text-decoration: none; transition: color 0.2s; }
+  footer .footer-links a:hover { color: oklch(70% 0.10 145); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .johari-grid { grid-template-columns: 1fr; }
+    .johari-header-row { display: none; }
+    .cta-secondary { margin-left: 0; margin-top: 12px; display: block; }
+    .pull-quote { padding: 28px 24px; }
+    .biblio { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://www.updateyourlife.it" class="logo-text">
+    Update Your Life
+    <span class="logo-sub">Francesco Maragliulo</span>
+  </a>
+  <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" class="nav-cta">
+    Scrivimi su WhatsApp
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="article-hero">
+  <div class="article-hero-inner reveal">
+    <span class="tag">Psicoeducazione · Consapevolezza di sé</span>
+    <h1 class="article-title">La Finestra<br>di Johari</h1>
+    <p class="article-intro">
+      Quanto conosci davvero te stesso? E quanto di te è visibile agli altri
+      ma ancora invisibile a te? Esiste uno strumento elegante, potente e
+      sorprendentemente semplice per esplorare queste domande.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BODY -->
+<main>
+  <div class="article-body">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="https://www.updateyourlife.it">Home</a>
+      <span>›</span>
+      <span>Approfondimenti</span>
+      <span>›</span>
+      <span>Finestra di Johari</span>
+    </nav>
+
+    <!-- IL PROBLEMA -->
+    <div class="reveal">
+      <span class="section-tag">Il problema comune</span>
+      <h2 class="section-title">«Io mi conosco bene»</h2>
+      <p>
+        Quante volte lo abbiamo detto, o pensato? Eppure le persone intorno a noi
+        sembrano cogliere aspetti del nostro carattere che noi non vediamo.
+        L'amico che ti dice "sei sempre così difensivo quando ti si critica", il
+        collega che nota quanto sei brillante nelle crisi, il partner che percepisce
+        la tua paura del rifiuto prima ancora che tu la nomini.
+      </p>
+      <p>
+        La conoscenza di sé non è mai completa né statica. È un processo, un
+        territorio con zone illuminate e zone d'ombra. E il punto cieco —
+        quello che <strong>gli altri vedono di te ma tu non vedi</strong> — è
+        spesso il luogo dove si nascondono i modelli di comportamento che
+        continuiamo a ripetere senza capire perché.
+      </p>
+    </div>
+
+    <div class="pull-quote reveal">
+      <p>«Conoscere gli altri è saggezza. Conoscere se stessi è illuminazione.»</p>
+      <cite>— Lao Tzu, Tao Te Ching</cite>
+    </div>
+
+    <!-- LA SPIEGAZIONE -->
+    <div class="reveal">
+      <span class="section-tag">La spiegazione psicologica</span>
+      <h2 class="section-title">Come funziona la Finestra di Johari</h2>
+      <p>
+        Nel 1955, gli psicologi statunitensi <strong>Joseph Luft e Harrington Ingham</strong>
+        presentarono un modello grafico per rappresentare la consapevolezza interpersonale.
+        Il nome "Johari" è semplicemente la fusione dei loro nomi: <em>Jo</em>seph e
+        <em>Hari</em>ngton. Lo strumento, nato in ambito gruppale e organizzativo, è
+        diventato uno dei più usati in psicoterapia, coaching e sviluppo personale.
+      </p>
+      <p>
+        Il modello divide la conoscenza di sé in <strong>quattro quadranti</strong>,
+        costruiti sull'intersezione di due assi: ciò che <em>io so di me</em> vs.
+        ciò che <em>non so di me</em>, e ciò che <em>gli altri sanno di me</em> vs.
+        ciò che <em>non sanno di me</em>.
+      </p>
+    </div>
+
+    <!-- GRIGLIA JOHARI -->
+    <div class="reveal">
+      <div style="margin-bottom: 8px;">
+        <div class="johari-header-row">
+          <div class="johari-axis-label">✦ Noto a me stesso</div>
+          <div class="johari-axis-label">✦ Non noto a me stesso</div>
+        </div>
+      </div>
+      <div class="johari-grid">
+        <!-- Q1: Open -->
+        <div class="johari-cell open">
+          <div class="johari-cell-num">I</div>
+          <span class="johari-cell-label">Noto a me · Noto agli altri</span>
+          <div class="johari-cell-title">Area Aperta</div>
+          <p>Ciò che so di me e che condivido liberamente: i miei talenti riconosciuti, i valori che esprimo, i comportamenti visibili. È la zona della <strong>comunicazione autentica</strong> e della collaborazione efficace. Un'area aperta ampia è segno di fiducia reciproca e salute relazionale.</p>
+        </div>
+        <!-- Q2: Blind -->
+        <div class="johari-cell blind">
+          <div class="johari-cell-num">II</div>
+          <span class="johari-cell-label">Non noto a me · Noto agli altri</span>
+          <div class="johari-cell-title">Punto Cieco</div>
+          <p>Ciò che gli altri percepiscono chiaramente di noi, ma che noi non vediamo. Difetti, abitudini, stili comunicativi automatici, emozioni che trapelano senza che ce ne accorgiamo. Il <strong>feedback ricevuto con apertura</strong> è l'unico modo per illuminare questa zona.</p>
+        </div>
+        <!-- Q3: Hidden -->
+        <div class="johari-cell hidden">
+          <div class="johari-cell-num">III</div>
+          <span class="johari-cell-label">Noto a me · Non noto agli altri</span>
+          <div class="johari-cell-title">Area Nascosta</div>
+          <p>Ciò che conosco di me ma tengo riservato: paure, fragilità, desideri, esperienze passate che non condividiamo per timore del giudizio. La <strong>vulnerabilità consapevole</strong> — condividere gradualmente parti di sé — riduce questa zona e approfondisce le relazioni.</p>
+        </div>
+        <!-- Q4: Unknown -->
+        <div class="johari-cell unknown">
+          <div class="johari-cell-num">IV</div>
+          <span class="johari-cell-label">Non noto a me · Non noto agli altri</span>
+          <div class="johari-cell-title">Area Sconosciuta</div>
+          <p>Il territorio dell'inconscio, dei potenziali inesplorati, dei traumi non elaborati. Ciò che né io né gli altri ancora vediamo. Si esplora attraverso la terapia, i sogni, le crisi creative, le esperienze limite e i momenti di insight inaspettato.</p>
+        </div>
+      </div>
+      <p style="font-size:13px; color: var(--text-muted); text-align:center; margin-top:12px;">
+        Modello originale: Luft &amp; Ingham, 1955 — adattato per uso psicoeducativo
+      </p>
+    </div>
+
+    <!-- DINAMICA -->
+    <div class="reveal" style="margin-top: 56px;">
+      <span class="section-tag">Come evolve la finestra</span>
+      <h2 class="section-title">La finestra si muove</h2>
+      <p>
+        I quattro quadranti non sono fissi: cambiano nel tempo e nelle relazioni.
+        <strong>Dare e ricevere feedback</strong> sposta il confine tra area aperta e punto cieco.
+        <strong>Condividere vulnerabilità</strong> riduce l'area nascosta.
+        Fare <strong>esperienze nuove</strong> e la psicoterapia esplorano l'area sconosciuta.
+      </p>
+      <p>
+        L'obiettivo non è azzerare le aree nascoste o sconosciute — sarebbe impossibile e
+        nemmeno auspicabile. L'obiettivo è <strong>espandere l'area aperta</strong> quanto basta
+        per permettere relazioni autentiche, scelte consapevoli e una comunicazione efficace
+        con se stessi e con gli altri.
+      </p>
+    </div>
+
+    <!-- 3 COSE CHE PUOI FARE -->
+    <div class="reveal" style="margin-top: 64px;">
+      <span class="section-tag">Cosa puoi fare</span>
+      <h2 class="section-title">3 passi per ampliare<br>la tua area aperta</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Chiedi feedback in modo specifico</div>
+            <p class="step-desc">
+              Non "cosa pensi di me?", ma "c'è qualcosa nel mio modo di comunicare
+              che potrebbe essere migliorato?". Le domande specifiche abbassano la
+              difensività e aprono lo spazio per feedback utili sul punto cieco.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Pratica la divulgazione graduale</div>
+            <p class="step-desc">
+              Scegli una relazione di fiducia e condividi qualcosa di te che
+              normalmente tieni nascosto — una paura, un'insicurezza, un desiderio.
+              La vulnerabilità reciproca è il carburante dell'intimità autentica.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Osserva le tue reazioni intense</div>
+            <p class="step-desc">
+              Le situazioni in cui reagisci in modo sproporzionato — irritazione
+              improvvisa, difensività, vergogna — sono spesso finestre sull'area
+              sconosciuta. Invece di ignorarle, usale come punto di partenza per
+              esplorare: <em>«Cosa mi dice di me questa reazione?»</em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIBLIOGRAFIA -->
+    <div class="biblio reveal">
+      <span class="section-tag">Per approfondire</span>
+      <h2 class="section-title">Riferimenti<br>bibliografici</h2>
+      <ul class="biblio-list">
+        <li class="biblio-item">
+          <div class="biblio-dot"></div>
+          <p><strong>Luft, J., &amp; Ingham, H. (1955).</strong> <em>The Johari window: A graphic model of interpersonal awareness.</em> Proceedings of the Western Training Laboratory in Group Development. UCLA, Los Angeles. — <em>Il paper originale che introduce il modello.</em></p>
+        </li>
+        <li class="biblio-item">
+          <div class="biblio-dot"></div>
+          <p><strong>Luft, J. (1969).</strong> <em>Of human interaction.</em> National Press. — <em>La trattazione estesa del modello da parte del suo co-autore, con applicazioni cliniche e organizzative.</em></p>
+        </li>
+        <li class="biblio-item">
+          <div class="biblio-dot"></div>
+          <p><strong>Brown, B. (2010).</strong> <em>The Gifts of Imperfection.</em> Hazelden Publishing. — <em>Sul ruolo della vulnerabilità e dell'autenticità nel ridurre l'area nascosta e costruire connessioni autentiche.</em></p>
+        </li>
+        <li class="biblio-item">
+          <div class="biblio-dot"></div>
+          <p><strong>Goleman, D. (1995).</strong> <em>Emotional Intelligence: Why It Can Matter More Than IQ.</em> Bantam Books. — <em>Sul legame tra consapevolezza di sé, gestione delle emozioni e qualità delle relazioni interpersonali.</em></p>
+        </li>
+        <li class="biblio-item">
+          <div class="biblio-dot"></div>
+          <p><strong>Johari Window — APA Dictionary of Psychology.</strong> American Psychological Association. Disponibile su: <em>https://dictionary.apa.org/johari-window</em></p>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <span class="tag">Il prossimo passo</span>
+    <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 300; color: var(--text); margin-bottom: 16px;">
+      Vuoi esplorare<br>la tua finestra?
+    </h2>
+    <p class="cta-desc">
+      La Finestra di Johari è uno strumento che prende vita nel dialogo.
+      Se senti che c'è qualcosa di te che non riesci a vedere chiaramente,
+      o che tieni nascosto da troppo tempo, una sessione può essere un
+      buon punto di partenza.
+    </p>
+    <div>
+      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" class="cta-btn">
+        Prenota una sessione gratuita
+      </a>
+      <a href="https://www.updateyourlife.it" class="cta-secondary">
+        Torna alla home
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Update Your Life © 2026</span>
+  <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; color: oklch(65% 0.02 80); font-weight: 300;">Francesco Maragliulo · Psicologo · Coach · Counselor</span>
+  <nav class="footer-links" aria-label="Footer">
+    <a href="https://www.updateyourlife.it/privacy-policy.html">Privacy Policy</a>
+    <a href="https://www.updateyourlife.it/cookie-policy.html">Cookie Policy</a>
+    <a href="https://www.updateyourlife.it/note-legali.html">Note Legali</a>
+  </nav>
+</footer>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
