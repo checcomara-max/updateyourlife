@@ -341,6 +341,12 @@ function App() {
             </li>
           ))}
           <li>
+            <a href="/approfondimenti/" style={s.navLink}
+              onMouseEnter={e => e.target.style.color = accent}
+              onMouseLeave={e => e.target.style.color = text}
+            >Approfondimenti</a>
+          </li>
+          <li>
             <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0" target="_blank" style={{ ...s.ctaBtn, textDecoration: 'none', display: 'inline-block' }}
               onMouseEnter={e => { e.target.style.opacity = '0.85'; e.target.style.transform = 'translateY(-1px)'; }}
               onMouseLeave={e => { e.target.style.opacity = '1'; e.target.style.transform = 'none'; }}
