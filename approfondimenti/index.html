@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approfondimenti — Update Your Life</title>
+<meta name="description" content="Approfondimenti di psicologia, coaching e crescita personale a cura di Francesco Maragliulo.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.updateyourlife.it/approfondimenti/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.updateyourlife.it/approfondimenti/">
+<meta property="og:title" content="Approfondimenti — Update Your Life">
+<meta property="og:description" content="Approfondimenti di psicologia, coaching e crescita personale a cura di Francesco Maragliulo.">
+<meta property="og:image" content="https://www.updateyourlife.it/foto-profilo.png">
+<meta property="og:locale" content="it_IT">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --accent: oklch(52% 0.14 145);
+    --bg: oklch(97.5% 0.008 80);
+    --bg-alt: oklch(94% 0.012 80);
+    --bg-dark: oklch(26% 0.06 155);
+    --text: oklch(20% 0.02 80);
+    --text-muted: oklch(50% 0.015 80);
+    --border: oklch(88% 0.012 80);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 72px;
+    background: oklch(97.5% 0.008 80 / 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 500;
+    color: var(--text); letter-spacing: 0.02em; line-height: 1.2;
+    text-decoration: none;
+  }
+  .logo-sub { font-size: 12px; font-weight: 300; color: var(--text-muted); display: block; letter-spacing: 0.06em; }
+
+  .nav-links { display: flex; gap: 36px; align-items: center; list-style: none; }
+  .nav-link {
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-link:hover, .nav-link.active { color: var(--accent); }
+
+  .cta-btn {
+    padding: 10px 24px; background: var(--accent); color: #fff;
+    border: none; border-radius: 4px; font-size: 14px; font-weight: 500;
+    cursor: pointer; letter-spacing: 0.03em; transition: opacity 0.2s, transform 0.15s;
+    font-family: 'DM Sans'; text-decoration: none; display: inline-block;
+  }
+  .cta-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 8px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--text); border-radius: 2px; transition: transform 0.2s, opacity 0.2s;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 140px 5% 80px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300; line-height: 1.1;
+    color: var(--text); margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 17px; line-height: 1.8;
+    color: var(--text-muted); font-weight: 300;
+    max-width: 580px;
+  }
+
+  /* GRID */
+  .articles-section { padding: 80px 5%; }
+  .articles-inner { max-width: 960px; margin: 0 auto; }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--bg-alt);
+    padding: 40px 36px;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: background 0.3s ease, transform 0.25s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .card:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 8px 32px oklch(0.2 0.01 80 / 0.08); }
+  .card:hover::before { transform: scaleX(1); }
+
+  .card-num {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 400; line-height: 1.2;
+    color: var(--text);
+  }
+  .card-desc {
+    font-size: 14px; line-height: 1.7;
+    color: var(--text-muted); font-weight: 300;
+    flex: 1;
+  }
+  .card-cta {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 8px;
+  }
+  .card-cta svg { transition: transform 0.2s; }
+  .card:hover .card-cta svg { transform: translateX(4px); }
+
+  /* SKELETON */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg, oklch(90% 0.01 80) 25%, oklch(93% 0.01 80) 50%, oklch(90% 0.01 80) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 3px;
+  }
+  .skeleton-card { background: var(--bg-alt); padding: 40px 36px; display: flex; flex-direction: column; gap: 16px; }
+  .sk-tag { height: 12px; width: 60px; }
+  .sk-title { height: 28px; width: 80%; }
+  .sk-line { height: 13px; }
+  .sk-line-short { height: 13px; width: 65%; }
+  .sk-cta { height: 14px; width: 100px; margin-top: 8px; }
+
+  /* EMPTY / ERROR */
+  .state-box {
+    text-align: center; padding: 80px 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    color: var(--text-muted);
+  }
+  .state-box svg { color: oklch(78% 0.01 80); }
+  .state-box h3 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; }
+  .state-box p { font-size: 15px; font-weight: 300; max-width: 36ch; }
+
+  /* FOOTER */
+  footer {
+    padding: 28px 5%;
+    background: var(--bg-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: oklch(68% 0.02 80); }
+  .footer-sub { font-size: 12px; color: oklch(65% 0.02 80); font-weight: 300; letter-spacing: 0.03em; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-link {
+    font-size: 12px; color: oklch(62% 0.02 80); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-link:hover { color: oklch(70% 0.10 145); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+      background: var(--bg); padding: 32px 5%; gap: 24px;
+      z-index: 99; align-items: flex-start;
+    }
+    .hamburger { display: flex !important; }
+    .hero { padding: 110px 5% 60px; }
+    .articles-section { padding: 60px 5%; }
+    footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .footer-links { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo-text">
+    Update Your Life
+    <span class="logo-sub">Francesco Maragliulo</span>
+  </a>
+
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger" aria-label="Menu" style="display:none;">
+    <span id="hb1"></span>
+    <span id="hb2"></span>
+    <span id="hb3"></span>
+  </button>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/#chi-sono" class="nav-link">Chi Sono</a></li>
+    <li><a href="/#percorsi" class="nav-link">Percorsi</a></li>
+    <li><a href="/#dicono-di-me" class="nav-link">Dicono di me</a></li>
+    <li><a href="/approfondimenti/" class="nav-link active">Approfondimenti</a></li>
+    <li>
+      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0"
+         target="_blank" rel="noopener noreferrer" class="cta-btn">
+        Scrivimi su WhatsApp
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner reveal">
+    <p class="section-tag">Psicologia · Coaching · Crescita Personale</p>
+    <h1>Approfondimenti</h1>
+    <p>Articoli e riflessioni su psicologia, benessere emotivo e crescita personale. Ogni approfondimento nasce dalla pratica clinica e dall'esperienza sul campo.</p>
+  </div>
+</section>
+
+<!-- ARTICOLI -->
+<section class="articles-section">
+  <div class="articles-inner">
+    <div class="reveal">
+      <p class="section-tag">Tutti gli articoli</p>
+    </div>
+    <div class="articles-grid" id="articles-grid">
+      <!-- Skeleton mentre carica -->
+      <div class="skeleton-card">
+        <div class="skeleton sk-tag"></div>
+        <div class="skeleton sk-title"></div>
+        <div class="skeleton sk-line"></div>
+        <div class="skeleton sk-line"></div>
+        <div class="skeleton sk-line-short"></div>
+        <div class="skeleton sk-cta"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton sk-tag"></div>
+        <div class="skeleton sk-title"></div>
+        <div class="skeleton sk-line"></div>
+        <div class="skeleton sk-line"></div>
+        <div class="skeleton sk-line-short"></div>
+        <div class="skeleton sk-cta"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton sk-tag"></div>
+        <div class="skeleton sk-title"></div>
+        <div class="skeleton sk-line"></div>
+        <div class="skeleton sk-line"></div>
+        <div class="skeleton sk-line-short"></div>
+        <div class="skeleton sk-cta"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Update Your Life © 2026</span>
+  <span class="footer-sub">Francesco Maragliulo · Psicologo · Coach · Counselor</span>
+  <div class="footer-links">
+    <a href="/privacy-policy.html" class="footer-link">Privacy Policy</a>
+    <a href="/cookie-policy.html" class="footer-link">Cookie Policy</a>
+    <a href="/note-legali.html" class="footer-link">Note Legali</a>
+  </div>
+  <a href="tel:+393314980002" class="footer-link" style="font-size:13px; color:oklch(68% 0.05 155);">+39 331 498 000 2</a>
+</footer>
+
+<script>
+// ── Hamburger ──────────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+hamburger.style.display = 'none';
+hamburger.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  document.getElementById('hb1').style.transform = open ? 'rotate(45deg) translate(5px,5px)' : 'none';
+  document.getElementById('hb2').style.opacity = open ? '0' : '1';
+  document.getElementById('hb3').style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : 'none';
+});
+
+// ── Scroll reveal ──────────────────────────────────────────────
+function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => obs.observe(el));
+}
+initReveal();
+
+// ── Titoli leggibili ───────────────────────────────────────────
+function slugToTitle(filename) {
+  // rimuove .html, sostituisce trattini con spazi, capitalizza ogni parola
+  return filename
+    .replace(/\.html$/, '')
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+// Mappa manuale titolo/descrizione (opzionale: sovrascrive il titolo auto-generato)
+const META_OVERRIDE = {
+  'cervello-predittivo.html': {
+    title: 'Il Cervello Predittivo',
+    desc: 'Come il nostro cervello costruisce la realtà anticipando continuamente il futuro, e cosa significa per la nostra salute mentale.',
+  },
+  'finestra-johari.html': {
+    title: 'La Finestra di Johari',
+    desc: 'Uno strumento potente per aumentare la consapevolezza di sé e migliorare la qualità delle relazioni interpersonali.',
+  },
+};
+
+// ── Carica articoli da GitHub API ─────────────────────────────
+const REPO = 'checcomara-max/updateyourlife';
+const FOLDER = 'approfondimenti';
+const API_URL = `https://api.github.com/repos/${REPO}/contents/${FOLDER}`;
+
+async function loadArticles() {
+  const grid = document.getElementById('articles-grid');
+
+  try {
+    const res = await fetch(API_URL, {
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!res.ok) throw new Error('GitHub API error ' + res.status);
+
+    const files = await res.json();
+
+    // Filtra solo file .html escludendo template (underscore) e index stesso
+    const articles = files.filter(f =>
+      f.type === 'file' &&
+      f.name.endsWith('.html') &&
+      !f.name.startsWith('_') &&
+      f.name !== 'index.html'
+    );
+
+    grid.innerHTML = '';
+
+    if (articles.length === 0) {
+      grid.innerHTML = `
+        <div class="state-box" style="grid-column:1/-1;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <h3>Nessun articolo ancora</h3>
+          <p>I prossimi approfondimenti appariranno qui automaticamente.</p>
+        </div>`;
+      return;
+    }
+
+    articles.forEach((file, idx) => {
+      const meta = META_OVERRIDE[file.name] || {};
+      const title = meta.title || slugToTitle(file.name);
+      const desc = meta.desc || '';
+      const num = String(idx + 1).padStart(2, '0');
+      // Link relativo: siamo in /approfondimenti/, il file è nella stessa cartella
+      const href = file.name;
+
+      const card = document.createElement('a');
+      card.href = href;
+      card.className = 'card reveal';
+      card.innerHTML = `
+        <span class="card-num">${num}</span>
+        <h2 class="card-title">${title}</h2>
+        ${desc ? `<p class="card-desc">${desc}</p>` : ''}
+        <span class="card-cta">
+          Leggi l'approfondimento
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Inizializza scroll reveal sulle nuove card
+    initReveal();
+
+  } catch (err) {
+    grid.innerHTML = `
+      <div class="state-box" style="grid-column:1/-1;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <h3>Errore nel caricamento</h3>
+        <p>Impossibile caricare gli articoli. Riprova più tardi.</p>
+      </div>`;
+    console.error('Approfondimenti load error:', err);
+  }
+}
+
+loadArticles();
+</script>
+</body>
+</html>
