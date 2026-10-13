@@ -1,0 +1,58 @@
+# Update Your Life — sito di Francesco Maragliulo (psicologo online)
+
+Sito statico (HTML/CSS/JS inline, nessun framework) su updateyourlife.it. Deploy automatico da `main` (GitHub Pages + Vercel). Un push/merge su `main` va subito online.
+
+## Obiettivo
+
+Diventare un riferimento online come psicologo: chi cerca "psicologo online" e vuole colloqui online deve trovare Francesco tra i primi. Orizzonte realistico 6-12 mesi, strategia long-tail + pagine per problema + E-E-A-T.
+
+## Metodo di lavoro (obbligatorio)
+
+1. Proponi la modifica e mostra un'anteprima (screenshot desktop + mobile).
+2. Aspetta che Francesco scriva "approvo". Mai fare merge su `main` senza approvazione esplicita.
+3. Lavora su un ramo, apri la pull request; il merge è la pubblicazione.
+4. Dopo il merge verifica online (title, H1, contenuti) e ricorda a Francesco di richiedere l'indicizzazione in Search Console e Bing (URL Inspection → Request indexing).
+
+## Profilo e regole di contenuto
+
+- Francesco Maragliulo, psicologo iscritto all'Albo Lombardia n. 27664. NON psicoterapeuta: mai offrire "psicoterapia" o "terapia" come servizio.
+- Non "strillare" ciò che non fa: comunicare cosa fa. "Non sono psicoterapeuta" compare solo nelle FAQ. Altrove, formula neutra: "se emerge un altro bisogno, lo valutiamo insieme e ti indico il professionista più adatto".
+- Colloqui solo online, solo in italiano (anche italiani all'estero).
+- Counselor Gestalt (BioGestalt) + Analisi Transazionale, docente SIBIG, coach ICF, mindfulness. Manager in multinazionale da 18 anni (Milano): percorsi personali + lavoro/leadership (futuro: neo manager / junior executive).
+- P.IVA non ancora aperta: niente "fattura", "spesa detraibile", tariffe. Il costo si comunica nella call gratuita. Tariffe e durata seduta: non disponibili (aggiornare quando Francesco le fornisce).
+- Prima call conoscitiva gratuita di 20 minuti.
+- Deontologia: nessuna promessa di risultato o guarigione, nessun numero di sedute garantito, nessun claim clinico. Testimonianze reali e già presenti in home; non inventarne.
+- Se la connessione cade: "troviamo subito un modo per proseguire senza intoppi, la sessione non si perde".
+- Colloqui non registrati, piattaforma di videochiamata sicura con link, frequenza di solito settimanale o quindicinale, niente pacchetti.
+- Stile testi: asciutto, diretto, dare del "tu", FAQ brevi.
+
+## Regole tecniche SEO
+
+- Ogni pagina nuova: `<title>` ≤ 60-65 caratteri, meta description ≤ 160 caratteri (Bing segnala errore oltre), un solo H1 con keyword, canonical, Open Graph, JSON-LD (WebPage, BreadcrumbList, Service, FAQPage coerente con le FAQ visibili), link interni, voce in `sitemap.xml`.
+- Pagina statica HTML pre-renderizzata (niente rendering lato client). Immagini WebP leggere (<200 KB), `width`/`height`, `loading="lazy"`.
+- Riusare CSS, nav, footer, cookie banner e script contatti della home / di `psicologo-online/index.html`. Eventi contatto con `data-contatto`.
+- Controllo mobile (nessuno scroll orizzontale) prima di proporre.
+- Contatti: WhatsApp +39 331 498 0002, email [francescomaragliulo@gmail.com](mailto:francescomaragliulo@gmail.com).
+
+## Struttura pagine
+
+- `/` home
+- `/psicologo-online/` guida al colloquio online
+- `/ansia-online/`
+- `/approfondimenti/` (articoli)
+- `/supervisione` (ancora React lato client: da rendere statica)
+
+## Prossimi step (roadmap)
+
+8. Pagine problema: `/ansia-online/` (bozza pronta), poi relazioni/coppia, momenti di cambiamento, stress lavoro e neo manager.
+9. Pagina costi (quando ci sono le tariffe).
+10. Pagina città (Milano).
+11. Due articoli al mese su intenti di ricerca reali, con link alle pagine servizio.
+12. Link interni.
+10. Scheda Google Business (un cambiamento alla volta).
+15. Recensioni.
+16. Directory (MioDottore, GuidaPsicologi, Psicologi Italia, Albo).
+17. Instagram.
+11. Report mensile da export CSV di Search Console.
+
+Fatti: Search Console (sitemap + indicizzazione), Bing Webmaster Tools agganciato.
