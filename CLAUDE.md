@@ -40,7 +40,8 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - `/` home
 - `/psicologo-online/` guida al colloquio online
 - `/ansia-online/`
-- `/relazioni-coppia-online/`
+- `/relazioni-coppia-online/`, `/autostima-online/`, `/momenti-di-cambiamento-online/`, `/stress-lavoro-burnout-online/`, `/psicologo-per-manager/`, `/psicologo-online-italiani-estero/`, `/psicologo-online-milano/`
+- Il footer di home e pagine servizio contiene l'elenco dei temi (`nav.topics`): aggiungere ogni nuova pagina servizio anche lì, in sitemap e nei blocchi "Altri temi".
 - `/approfondimenti/` (articoli; elenco STATICO: per ogni nuovo articolo aggiungere la card in `approfondimenti/index.html`, la voce nell'ItemList JSON-LD e in `sitemap.xml`)
 - `/supervisione` (statica, pre-renderizzata da React; modificare l'HTML direttamente)
 - `vercel.json`: header noindex sul dominio project-30hc5.vercel.app (duplicato). Immagini sempre WebP in `img/`, mai PNG pesanti nel repo.
