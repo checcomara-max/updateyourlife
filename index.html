@@ -34,7 +34,11 @@
       "@type": "Person",
       "@id": "https://www.updateyourlife.it/#person",
       "name": "Francesco Maragliulo",
-      "jobTitle": ["Psicologo", "Coach", "Counselor"],
+      "jobTitle": [
+        "Psicologo",
+        "Coach",
+        "Counselor"
+      ],
       "description": "Psicologo iscritto all'Ordine della Regione Lombardia n. 27664, Coach membro ICF, Counselor ad indirizzo BioGestaltico.",
       "url": "https://www.updateyourlife.it",
       "image": "https://www.updateyourlife.it/foto-profilo.png",
@@ -44,7 +48,15 @@
         "https://www.instagram.com/updateyourlife_",
         "https://www.linkedin.com/in/francescomaragliulo/"
       ],
-      "knowsAbout": ["Psicologia", "Coaching", "Counseling", "Mindfulness", "Analisi Transazionale", "Gestalt", "Bioenergetica"]
+      "knowsAbout": [
+        "Psicologia",
+        "Coaching",
+        "Counseling",
+        "Mindfulness",
+        "Analisi Transazionale",
+        "Gestalt",
+        "Bioenergetica"
+      ]
     },
     {
       "@type": "ProfessionalService",
@@ -53,9 +65,18 @@
       "description": "Percorsi individuali online di benessere emotivo, relazionale e lavorativo con psicologo, coach e counselor.",
       "url": "https://www.updateyourlife.it",
       "logo": "https://www.updateyourlife.it/foto-profilo.png",
-      "founder": { "@id": "https://www.updateyourlife.it/#person" },
-      "serviceType": ["Psicologia", "Coaching", "Counseling"],
-      "areaServed": { "@type": "Country", "name": "Italy" },
+      "founder": {
+        "@id": "https://www.updateyourlife.it/#person"
+      },
+      "serviceType": [
+        "Psicologia",
+        "Coaching",
+        "Counseling"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "Italy"
+      },
       "availableChannel": {
         "@type": "ServiceChannel",
         "serviceType": "Online via videocall"
@@ -68,26 +89,6 @@
         "contactType": "customer service",
         "availableLanguage": "Italian"
       }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Come si svolgono le sessioni?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Le sessioni si svolgono online via videocall, dalla comodità di casa tua." }
-        },
-        {
-          "@type": "Question",
-          "name": "È possibile fare una prima call gratuita?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Sì, la prima call conoscitiva è gratuita e dura circa 20 minuti." }
-        },
-        {
-          "@type": "Question",
-          "name": "Qual è la differenza tra coaching e psicoterapia?",
-          "acceptedAnswer": { "@type": "Answer", "text": "La psicoterapia lavora su disturbi psicologici clinici, il coaching si focalizza sullo sviluppo del potenziale e il raggiungimento di obiettivi specifici. Francesco integra entrambi gli approcci secondo le esigenze del cliente." }
-        }
-      ]
     }
   ]
 }
@@ -609,8 +610,8 @@ function App() {
                 <div style={{ width: 56, height: 56, borderRadius: '50%', background: accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <p style={{ fontFamily: 'Cormorant Garamond', fontSize: 24, color: 'oklch(90% 0.005 80)' }}>Messaggio inviato!</p>
-                <p style={{ fontSize: 15, color: 'oklch(60% 0.01 80)', fontWeight: 300 }}>Ti risponderò al più presto.</p>
+                <p style={{ fontFamily: 'Cormorant Garamond', fontSize: 24, color: 'oklch(90% 0.005 80)' }}>Completa l’invio nella tua app email</p>
+                <p style={{ fontSize: 15, color: 'oklch(60% 0.01 80)', fontWeight: 300 }}>Il sito non ha inviato il messaggio. Se si è aperta la tua app email, premi Invia da lì. In alternativa scrivi a francescomaragliulo@gmail.com oppure usa WhatsApp.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -658,7 +659,7 @@ function App() {
                 <button type="submit" style={{ ...s.ctaBtn, padding: '14px 32px', fontSize: 15, marginTop: 8 }}
                   onMouseEnter={e => e.target.style.opacity = '0.85'}
                   onMouseLeave={e => e.target.style.opacity = '1'}
-                >Invia messaggio</button>
+                >Prepara email</button>
               </form>
             )}
           </div>
