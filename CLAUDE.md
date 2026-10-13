@@ -30,6 +30,7 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 
 - Ogni pagina nuova: `<title>` ≤ 60-65 caratteri, meta description ≤ 160 caratteri (Bing segnala errore oltre), un solo H1 con keyword, canonical, Open Graph, JSON-LD (WebPage, BreadcrumbList, Service, FAQPage coerente con le FAQ visibili), link interni, voce in `sitemap.xml`.
 - Pagina statica HTML pre-renderizzata (niente rendering lato client). Immagini WebP leggere (<200 KB), `width`/`height`, `loading="lazy"`.
+- Ogni pagina servizio/articolo deve linkare almeno 2 altre pagine del sito con anchor descrittivi (blocco "Altri temi" o CTA finale).
 - Riusare CSS, nav, footer, cookie banner e script contatti della home / di `psicologo-online/index.html`. Eventi contatto con `data-contatto`.
 - Controllo mobile (nessuno scroll orizzontale) prima di proporre.
 - Contatti: WhatsApp +39 331 498 0002, email [francescomaragliulo@gmail.com](mailto:francescomaragliulo@gmail.com).
@@ -39,8 +40,10 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - `/` home
 - `/psicologo-online/` guida al colloquio online
 - `/ansia-online/`
-- `/approfondimenti/` (articoli)
-- `/supervisione` (ancora React lato client: da rendere statica)
+- `/relazioni-coppia-online/`
+- `/approfondimenti/` (articoli; elenco STATICO: per ogni nuovo articolo aggiungere la card in `approfondimenti/index.html`, la voce nell'ItemList JSON-LD e in `sitemap.xml`)
+- `/supervisione` (statica, pre-renderizzata da React; modificare l'HTML direttamente)
+- `vercel.json`: header noindex sul dominio project-30hc5.vercel.app (duplicato). Immagini sempre WebP in `img/`, mai PNG pesanti nel repo.
 
 ## Prossimi step (roadmap)
 

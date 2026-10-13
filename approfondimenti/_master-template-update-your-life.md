@@ -39,7 +39,7 @@ Ogni pagina deve includere **4 blocchi schema** in un array JSON-LD:
   "description": "...",
   "datePublished": "YYYY-MM-DD",
   "dateModified": "YYYY-MM-DD",
-  "image": "https://www.updateyourlife.it/foto-profilo.png",
+  "image": "https://www.updateyourlife.it/img/og-psicologo-online.jpg",
   "author": { "@type": "Person", "name": "Francesco Maragliulo", "url": "https://www.updateyourlife.it" },
   "publisher": { "@type": "Organization", "name": "Update Your Life", "url": "https://www.updateyourlife.it" },
   "mainEntityOfPage": "https://www.updateyourlife.it/approfondimenti/[slug].html"
