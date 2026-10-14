@@ -6,12 +6,11 @@ Sito statico (HTML/CSS/JS inline, nessun framework) su updateyourlife.it. Deploy
 
 Diventare un riferimento online come psicologo: chi cerca "psicologo online" e vuole colloqui online deve trovare Francesco tra i primi. Orizzonte realistico 6-12 mesi, strategia long-tail + pagine per problema + E-E-A-T.
 
-## Metodo di lavoro (obbligatorio)
+## Metodo di lavoro
 
-1. Proponi la modifica e mostra un'anteprima (screenshot desktop + mobile).
-2. Aspetta che Francesco scriva "approvo". Mai fare merge su `main` senza approvazione esplicita.
-3. Lavora su un ramo, apri la pull request; il merge è la pubblicazione.
-4. Dopo il merge verifica online (title, H1, contenuti) e ricorda a Francesco di richiedere l'indicizzazione in Search Console e Bing (URL Inspection → Request indexing).
+1. Per modifiche strutturali o di layout: proponi e mostra anteprima. Per fix tecnici, SEO, nuovi contenuti e ottimizzazioni: procedi direttamente.
+2. Push e merge su `main` autorizzati senza approvazione esplicita. Un push su `main` va subito online.
+3. Dopo il push verifica online (title, H1, contenuti) e ricorda a Francesco di richiedere l'indicizzazione in Search Console e Bing (URL Inspection → Request indexing).
 
 ## Profilo e regole di contenuto
 
