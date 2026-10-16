@@ -1,0 +1,30 @@
+name: IndexNow (Bing)
+
+# Dopo il deploy notifica a Bing/Yandex le pagine HTML modificate. Google non supporta IndexNow:
+# per Google resta la richiesta di indicizzazione in Search Console.
+on:
+  push:
+    branches: [main]
+    paths: ['**.html']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Invia URL modificati
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            node scripts/indexnow.mjs --all
+          else
+            node scripts/indexnow.mjs "${{ github.event.before }}"
+          fi

@@ -1,0 +1,26 @@
+name: Live check
+
+# Verifica il sito pubblicato: 200 senza redirect, title/H1/canonical coerenti col repo, robots.txt.
+# Dopo ogni push a main aspetta il deploy; poi controllo settimanale (lunedì 07:00 UTC).
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Attendi il deploy (solo dopo push)
+        if: github.event_name == 'push'
+        run: sleep 180
+      - run: node scripts/live-check.mjs

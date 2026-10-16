@@ -45,6 +45,14 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - `/supervisione` (statica, pre-renderizzata da React; modificare l'HTML direttamente)
 - `vercel.json`: header noindex sul dominio project-30hc5.vercel.app (duplicato). Immagini sempre WebP in `img/`, mai PNG pesanti nel repo.
 
+## Automazione e controlli (GitHub Actions)
+
+- `node scripts/audit.mjs`: audit statico (title/description, canonical, H1 unico, JSON-LD valido e FAQPage coerente con le FAQ visibili, immagini, link interni/ancore rotti, ≥2 link interni, footer `nav.topics`, sitemap, termini vietati dal profilo). Gira su ogni push/PR (`site-audit.yml`); gli errori bloccano, i warning no. Lanciarlo in locale PRIMA di ogni push su `main`.
+- `node scripts/build-sitemap.mjs`: rigenera `sitemap.xml` da tutte le pagine indicizzabili (lastmod = ultimo commit del file). `sitemap-sync.yml` lo fa da solo su `main` e committa se cambia: non serve più editare la sitemap a mano (le pagine nuove vengono incluse automaticamente).
+- `node scripts/live-check.mjs`: verifica il sito pubblicato (200 senza redirect per ogni URL in sitemap, title/H1/canonical uguali al repo, robots.txt). `live-check.yml`: dopo ogni push a `main` e ogni lunedì; se fallisce, GitHub manda la notifica.
+- `indexnow.yml`: dopo il deploy notifica a Bing/Yandex le pagine HTML modificate (chiave in `<key>.txt` nella root, non rimuoverla). Google non supporta IndexNow: resta la richiesta manuale in Search Console.
+- Una nuova pagina servizio va comunque aggiunta a mano in `nav.topics` (home e pagine servizio), nei blocchi "Altri temi" e nell'elenco `SERVICE_DIRS` di `scripts/audit.mjs`; un nuovo articolo anche in `approfondimenti/index.html` (card + ItemList): l'audit segnala se manca.
+
 ## Prossimi step (roadmap)
 
 8. Pagine problema: `/ansia-online/` (bozza pronta), poi relazioni/coppia, momenti di cambiamento, stress lavoro e neo manager.
