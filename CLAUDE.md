@@ -40,6 +40,8 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - `/psicologo-online/` guida al colloquio online
 - `/ansia-online/`
 - `/relazioni-coppia-online/`, `/autostima-online/`, `/momenti-di-cambiamento-online/`, `/stress-lavoro-burnout-online/`, `/psicologo-per-manager/`, `/psicologo-online-italiani-estero/`, `/psicologo-online-milano/`
+- Pagine città per italiani all'estero sotto `/psicologo-online-italiani-estero/<slug>/` (Londra, Germania, Svizzera, Parigi, Bruxelles, Amsterdam, Dublino, Spagna, Dubai, Stati Uniti, Canada, Australia). GENERATE da `scripts/build-citta.py`: per modificarle o aggiungerne una, cambia i dati nello script e rilancialo (non editare gli HTML a mano). Ogni nuova città deve avere contenuto davvero locale (fuso, servizi, numeri di emergenza verificati), mai pagine fotocopia. Non vanno in `nav.topics`: le linka l'hub (blocco "Dove vivi?").
+- Fusi orari: Francesco lavora con clienti in fusi diversi e trova spazio anche in orari meno consueti (si può dire, senza indicare orari precisi).
 - Il footer di home e pagine servizio contiene l'elenco dei temi (`nav.topics`): aggiungere ogni nuova pagina servizio anche lì, in sitemap e nei blocchi "Altri temi".
 - `/approfondimenti/` (articoli; elenco STATICO: per ogni nuovo articolo aggiungere la card in `approfondimenti/index.html`, la voce nell'ItemList JSON-LD e in `sitemap.xml`)
 - `/supervisione` (statica, pre-renderizzata da React; modificare l'HTML direttamente)
