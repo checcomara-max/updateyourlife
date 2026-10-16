@@ -38,7 +38,8 @@ for (const file of files) {
   const robots = meta(html, 'name', 'robots') || '';
   const noindex = /noindex/i.test(robots);
   const isLegal = /^(privacy-policy|cookie-policy|note-legali)\.html$/.test(r);
-  const isService = serviceFiles.has(r);
+  // pagine città sotto l'hub italiani all'estero: stesse regole delle pagine servizio
+  const isService = serviceFiles.has(r) || /^psicologo-online-italiani-estero\/[^/]+\/index\.html$/.test(r);
   const isArticle = /^approfondimenti\/(?!index)/.test(r);
   const expectedCanonical = canonicalFor(file);
 
