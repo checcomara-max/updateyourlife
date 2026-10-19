@@ -39,6 +39,7 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - Immagini Open Graph: `python3 scripts/build-og.py` genera `img/og/<pagina>.jpg` (aggiungi la pagina nuova alla lista PAGES).
 - Controllo mobile (nessuno scroll orizzontale) prima di proporre.
 - Contatti: WhatsApp +39 331 498 0002, email [francescomaragliulo@gmail.com](mailto:francescomaragliulo@gmail.com).
+- Link "Leggi le recensioni" (home e /chi-sono/): apre direttamente la vista Recensioni della scheda Google (ricerca con parametri `si` e `uds` forniti da Francesco il 19/10/2026). Se smette di funzionare, chiedere a Francesco di riaprire le recensioni dalla scheda e copiare il nuovo indirizzo (togliendo client, sxsrf, ved, biw, bih, dpr).
 
 ## Struttura pagine
 
