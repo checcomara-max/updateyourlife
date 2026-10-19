@@ -24,13 +24,19 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - Se la connessione cade: "troviamo subito un modo per proseguire senza intoppi, la sessione non si perde".
 - Colloqui non registrati, piattaforma di videochiamata sicura con link, frequenza di solito settimanale o quindicinale, niente pacchetti.
 - Stile testi: asciutto, diretto, dare del "tu", FAQ brevi.
+- Bottoni e link WhatsApp: l'etichetta è sempre "Scrivimi su WhatsApp" (mai "Prenota la call", mai "Call gratuita su WhatsApp"). Accanto, la promessa: "Ci organizziamo per una call conoscitiva di 20 minuti, gratuita e senza impegno." Testo precompilato: "Ciao Francesco, vorrei organizzare la call conoscitiva di 20 minuti."
+- Posizionamento: Francesco si presenta prima di tutto su emozioni e relazioni (ansia, autostima, coppia, cambiamenti), poi anche su lavoro e leadership. Home e pagine generali devono restare equilibrate: il tema manager/lavoro e il tema estero hanno le loro pagine, non vanno messi al centro della home.
+- "Ti ascolto in italiano" e frasi simili sulla lingua: solo nelle pagine per italiani all'estero (hub e città), non in home.
 
 ## Regole tecniche SEO
 
 - Ogni pagina nuova: `<title>` ≤ 60-65 caratteri, meta description ≤ 160 caratteri (Bing segnala errore oltre), un solo H1 con keyword, canonical, Open Graph, JSON-LD (WebPage, BreadcrumbList, Service, FAQPage coerente con le FAQ visibili), link interni, voce in `sitemap.xml`.
 - Pagina statica HTML pre-renderizzata (niente rendering lato client). Immagini WebP leggere (<200 KB), `width`/`height`, `loading="lazy"`.
 - Ogni pagina servizio/articolo deve linkare almeno 2 altre pagine del sito con anchor descrittivi (blocco "Altri temi" o CTA finale).
-- Riusare CSS, nav, footer, cookie banner e script contatti della home / di `psicologo-online/index.html`. Eventi contatto con `data-contatto`.
+- Design condiviso (ottobre 2026): stile in `/assets/site.css`, script in `/assets/site.js` (cookie + GA, eventi `data-contatto`, menu mobile, barra WhatsApp mobile), font locali in `/assets/fonts/` (Newsreader per titoli e frasi, Lexend per il testo). Niente `<style>` di pagina se non serve, niente Google Fonts, niente animazioni di ingresso (`.reveal`): la pagina deve essere leggibile appena caricata.
+- Per una pagina nuova copia testata (`<a class="skip">` … `</header>`), footer, banner cookie, barra `#sticky` e `<script src="/assets/site.js">` da `ansia-online/index.html`. Classi body: `home`, `svc` (pagine tema e città), `about-page`, `list-page`, `art` (articoli), `legal-page`. Hero con `data-hero`, fascia contatti con `data-contact` (servono alla barra mobile).
+- Pagine tema: hero con breadcrumb, H1, `.lead`, riquadro `.author` (avatar `img/francesco-maragliulo-avatar.webp`), bottone WhatsApp + `.note`, e a destra `.opening` con la frase in prima persona del tema; riquadro `.whobox` "Chi ti risponde"; blocco `.frasi` con 3 temi collegati in "Altri temi"; `.byline` con data di aggiornamento uguale a `dateModified`.
+- Immagini Open Graph: `python3 scripts/build-og.py` genera `img/og/<pagina>.jpg` (aggiungi la pagina nuova alla lista PAGES).
 - Controllo mobile (nessuno scroll orizzontale) prima di proporre.
 - Contatti: WhatsApp +39 331 498 0002, email [francescomaragliulo@gmail.com](mailto:francescomaragliulo@gmail.com).
 
@@ -43,6 +49,7 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - Pagine città per italiani all'estero sotto `/psicologo-online-italiani-estero/<slug>/` (Londra, Germania, Svizzera, Parigi, Bruxelles, Amsterdam, Dublino, Spagna, Dubai, Stati Uniti, Canada, Australia). GENERATE da `scripts/build-citta.py`: per modificarle o aggiungerne una, cambia i dati nello script e rilancialo (non editare gli HTML a mano). Ogni nuova città deve avere contenuto davvero locale (fuso, servizi, numeri di emergenza verificati), mai pagine fotocopia. Non vanno in `nav.topics`: le linka l'hub (blocco "Dove vivi?").
 - Fusi orari: Francesco lavora con clienti in fusi diversi e trova spazio anche in orari meno consueti (si può dire, senza indicare orari precisi).
 - Il footer di home e pagine servizio contiene l'elenco dei temi (`nav.topics`): aggiungere ogni nuova pagina servizio anche lì, in sitemap e nei blocchi "Altri temi".
+- `/chi-sono/` (profilo, formazione, approccio; schema ProfilePage + Person)
 - `/approfondimenti/` (articoli; elenco STATICO: per ogni nuovo articolo aggiungere la card in `approfondimenti/index.html`, la voce nell'ItemList JSON-LD e in `sitemap.xml`)
 - `/supervisione` (statica, pre-renderizzata da React; modificare l'HTML direttamente)
 - `vercel.json`: header noindex sul dominio project-30hc5.vercel.app (duplicato). Immagini sempre WebP in `img/`, mai PNG pesanti nel repo.

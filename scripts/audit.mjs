@@ -28,6 +28,8 @@ const FORBIDDEN = [
   [/risultati garantit|garantiamo|garantisco/i, 'nessuna promessa di risultato'],
   [/\bpsicoterap/i, 'non offrire psicoterapia (ok solo nelle FAQ "non sono psicoterapeuta")'],
   [/\bterapia\b/i, 'evita "terapia" come servizio'],
+  [/Prenota la call|Call gratuita su WhatsApp/i, 'etichetta CTA superata: usa "Scrivimi su WhatsApp"'],
+  [/ti ascolto in italiano/i, 'frase sulla lingua: solo nelle pagine italiani all\'estero'],
 ];
 
 const ALLOWED = /\b0 €|terapia farmacologica|in psicoterapia, coaching|non è terapia/gi;
@@ -160,7 +162,9 @@ for (const file of files) {
   if (!noindex && !isLegal) {
     // FAQ (<details>) e frasi note e legittime sono escluse dal controllo
     const text = stripTags(html.replace(/<details[\s\S]*?<\/details>/gi, ' ')).replace(ALLOWED, ' ');
+    const isEstero = r.startsWith('psicologo-online-italiani-estero/');
     for (const [re, why] of FORBIDDEN) {
+      if (isEstero && /lingua/.test(why)) continue;
       const m = text.match(re);
       if (m) warn(r, `"${m[0]}" — ${why}`);
     }

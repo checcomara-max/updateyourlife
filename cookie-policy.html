@@ -14,36 +14,30 @@
 <meta property="og:image" content="https://www.updateyourlife.it/img/og-psicologo-online.jpg">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Update Your Life">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: oklch(97.5% 0.008 80); color: oklch(20% 0.02 80); line-height: 1.75; }
-  nav { position: sticky; top: 0; background: oklch(97.5% 0.008 80 / 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid oklch(88% 0.012 80); padding: 0 5%; height: 68px; display: flex; align-items: center; justify-content: space-between; z-index: 100; }
-  .logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; text-decoration: none; color: inherit; }
-  .back { font-size: 13px; color: oklch(50% 0.015 80); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
-  .back:hover { color: oklch(52% 0.14 145); }
-  main { max-width: 780px; margin: 0 auto; padding: 64px 5% 100px; }
-  h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 300; margin-bottom: 8px; }
-  .subtitle { font-size: 13px; color: oklch(55% 0.015 80); margin-bottom: 48px; }
-  h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; margin: 48px 0 16px; }
-  p { font-size: 15px; font-weight: 300; margin-bottom: 16px; color: oklch(30% 0.02 80); }
-  ul { padding-left: 20px; margin-bottom: 16px; }
-  li { font-size: 15px; font-weight: 300; color: oklch(30% 0.02 80); margin-bottom: 8px; }
-  a { color: oklch(52% 0.14 145); }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px; }
-  th { background: oklch(92% 0.01 80); padding: 10px 14px; text-align: left; font-weight: 500; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid oklch(85% 0.01 80); }
-  td { padding: 10px 14px; border-bottom: 1px solid oklch(90% 0.01 80); font-weight: 300; vertical-align: top; }
-  .divider { height: 1px; background: oklch(88% 0.012 80); margin: 32px 0; }
-  footer { text-align: center; padding: 32px; font-size: 12px; color: oklch(60% 0.01 80); }
-</style>
+
+<link rel="preload" href="/assets/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css?v=20261019">
 </head>
-<body>
-<nav>
-  <a href="index.html" class="logo">Update Your Life</a>
-  <a href="index.html" class="back">← Torna al sito</a>
-</nav>
-<main>
+<body class="legal-page">
+
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><b>Francesco Maragliulo</b><span>Psicologo online</span></a>
+    <nav class="menu" id="menu" aria-label="Menu principale">
+      <a href="/#temi">Temi</a>
+      <a href="/psicologo-online/">Come funziona</a>
+      <a href="/chi-sono/">Chi sono</a>
+      <a href="/approfondimenti/">Approfondimenti</a>
+      <a class="btn btn-wa menu-cta" data-contatto="whatsapp-menu" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a>
+    </nav>
+    <a class="btn btn-wa top-cta" data-contatto="whatsapp-nav" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a>
+    <button class="burger" id="burger" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu"><svg class="bars" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg><svg class="x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+</header>
+
+<main id="main">
   <h1>Cookie Policy</h1>
   <p class="subtitle">Ultimo aggiornamento: aprile 2025 · ai sensi del Provv. Garante Privacy 8 maggio 2014 e Reg. UE 2016/679</p>
 
@@ -86,8 +80,53 @@
   <p>Per disabilitare il tracciamento di Google Analytics è possibile installare il <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">componente aggiuntivo del browser</a> fornito da Google.</p>
 
   <div class="divider"></div>
-  <p style="font-size: 13px; color: oklch(55% 0.015 80);">Per ulteriori informazioni sul trattamento dei dati personali, consultare la <a href="privacy-policy.html">Privacy Policy</a>. Per qualsiasi domanda: <a href="mailto:francescomaragliulo@gmail.com">francescomaragliulo@gmail.com</a>.</p>
+  <p style="font-size: 13px; color: oklch(55% 0.015 80);">Per ulteriori informazioni sul trattamento dei dati personali, consultare la <a href="/privacy-policy.html">Privacy Policy</a>. Per qualsiasi domanda: <a href="mailto:francescomaragliulo@gmail.com">francescomaragliulo@gmail.com</a>.</p>
 </main>
-<footer>© 2026 Francesco Maragliulo — Update Your Life · <a href="privacy-policy.html">Privacy Policy</a> · <a href="note-legali.html">Note Legali</a></footer>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-id">
+        <p class="foot-name">Francesco Maragliulo</p>
+        <p>Psicologo iscritto all'Ordine degli Psicologi della Lombardia n. 27664. Colloqui individuali online, in videochiamata.</p>
+        <p><a href="tel:+393314980002" data-contatto="telefono-footer">+39 331 498 0002</a></p>
+      </div>
+      <nav class="topics" aria-label="Temi trattati">
+        <p class="foot-h">Temi</p>
+        <a href="/psicologo-online/">Psicologo online</a>
+        <a href="/ansia-online/">Ansia</a>
+        <a href="/relazioni-coppia-online/">Relazioni e coppia</a>
+        <a href="/autostima-online/">Autostima</a>
+        <a href="/momenti-di-cambiamento-online/">Momenti di cambiamento</a>
+        <a href="/stress-lavoro-burnout-online/">Stress da lavoro</a>
+        <a href="/psicologo-per-manager/">Per manager</a>
+        <a href="/psicologo-online-italiani-estero/">Italiani all'estero</a>
+        <a href="/psicologo-online-milano/">Milano</a>
+        <a href="/approfondimenti/">Approfondimenti</a>
+      </nav>
+      <nav class="foot-links" aria-label="Il sito">
+        <p class="foot-h">Il sito</p>
+        <a href="/chi-sono/">Chi sono</a>
+        <a href="/psicologo-online/">Come funziona</a>
+        <a href="https://www.instagram.com/updateyourlife_" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/francescomaragliulo/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Update Your Life. Dott. Francesco Maragliulo, psicologo</span>
+      <nav aria-label="Note legali"><a href="/privacy-policy.html">Privacy Policy</a><a href="/cookie-policy.html">Cookie Policy</a><a href="/note-legali.html">Note legali</a></nav>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie" id="cookie" role="dialog" aria-label="Preferenze cookie">
+  <div class="wrap">
+    <p>Utilizziamo cookie tecnici e, previo consenso, cookie analitici. <a href="/cookie-policy.html">Cookie Policy</a>, <a href="/privacy-policy.html">Privacy Policy</a></p>
+    <button class="ok" id="cookie-ok" type="button">Accetta</button>
+    <button class="no" id="cookie-no" type="button">Solo necessari</button>
+  </div>
+</div>
+
+<script src="/assets/site.js?v=20261019" defer></script>
 </body>
 </html>

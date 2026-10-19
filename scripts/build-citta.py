@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Genera le pagine città sotto /psicologo-online-italiani-estero/<slug>/ e il blocco
 "Dove vivi?" dell'hub. Uso: python3 scripts/build-citta.py
-CSS, nav, footer e script vengono presi dall'hub, così restano allineati al resto del sito."""
+Asset in <head>, testata, footer, banner cookie e script vengono presi dall'hub, così restano allineati al resto del sito
+(stile condiviso in /assets/site.css)."""
 import json, html, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HUB = 'psicologo-online-italiani-estero'
 ORIGIN = 'https://www.updateyourlife.it'
-WA = 'https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20prenotare%20la%20call%20conoscitiva%20gratuita.'
+WA = 'https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti.'
+NOTE = 'Ci organizziamo per una call conoscitiva di 20 minuti, gratuita e senza impegno.'
+OPENING = 'Vivo all\'estero da anni, ma certe cose riesco a dirle solo in italiano.'
 
 # ---------------------------------------------------------------------------
 # DATI DELLE PAGINE CITTÀ. Per aggiungere una città: aggiungi un blocco qui e
@@ -328,10 +331,24 @@ CITIES = [
 
 
 def esc(s): return html.escape(s, quote=True)
-def A(href, text): return f'<a href="{href}" style="color:var(--accent)">{text}</a>'
+def A(href, text): return f'<a href="{href}">{text}</a>'
 def join_it(items): return items[0] if len(items) == 1 else ', '.join(items[:-1]) + ' e ' + items[-1]
 
 BY_SLUG = {c['slug']: c for c in CITIES}
+
+# Frasi in prima persona per i temi collegati (stesse della home)
+FRASI = {
+    '/ansia-online/': ('Ho la testa sempre piena, anche quando non succede niente.', 'Ansia', 'Pensieri che non si fermano, tensione nel corpo, allerta costante.'),
+    '/relazioni-coppia-online/': ('Parliamo tanto, ma non ci capiamo più.', 'Relazioni e coppia', 'Comunicazione, dipendenza affettiva, dinamiche familiari.'),
+    '/autostima-online/': ('Fuori sembra che vada tutto bene. Dentro mi sento sempre un passo indietro.', 'Autostima', 'Il giudizio su di sé che frena le scelte personali e professionali.'),
+    '/momenti-di-cambiamento-online/': ('Devo decidere se restare o cambiare, e non riesco a muovermi.', 'Momenti di cambiamento', 'Separazioni, trasferimenti, cambi di lavoro, scelte importanti.'),
+    '/stress-lavoro-burnout-online/': ('Il lavoro si è preso tutto, anche le domeniche.', 'Stress da lavoro e burnout', 'Sovraccarico, stanchezza, la sensazione di non staccare mai.'),
+    '/psicologo-per-manager/': ('Mi hanno dato un team. Nessuno mi ha spiegato come si guida.', 'Psicologo per manager', 'Neo manager e ruoli di responsabilità: decisioni, persone, pressione.'),
+}
+MESI = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
+def data_it(iso):
+    y, m, d = iso.split('-')
+    return f'{int(d)} {MESI[int(m) - 1]} {y}'
 
 
 def faq_of(c):
@@ -344,11 +361,19 @@ def faq_of(c):
     ]
 
 
+def chrome(tpl):
+    """Pezzi presi dall'hub: asset nel <head>, testata, whobox, footer + cookie + script."""
+    assets = tpl[tpl.index('<link rel="preload"'):tpl.index('</head>')]
+    assets = assets[:assets.index('<link rel="stylesheet"')] + re.search(r'<link rel="stylesheet"[^>]*>', assets).group(0)
+    header = tpl[tpl.index('<a class="skip"'):tpl.index('</header>') + len('</header>')]
+    who = re.search(r'<aside class="whobox".*?</aside>', tpl, re.S).group(0)
+    wa_icon = re.search(r'<svg width="20" height="20".*?</svg>', tpl, re.S).group(0)
+    footer = tpl[tpl.index('<footer class="foot">'):]
+    return assets.strip(), header, who, wa_icon, footer
+
+
 def build(c, tpl, today):
-    css = tpl[tpl.index('<style>'):tpl.index('</style>') + len('</style>')]
-    fonts = tpl[tpl.index('<link rel="preconnect"'):tpl.index('<script type="application/ld+json">')].strip()
-    header = tpl[tpl.index('<header class="nav"'):tpl.index('</header>') + len('</header>')]
-    footer = tpl[tpl.index('<footer class="site-footer">'):]
+    assets, header, who, wa_icon, footer = chrome(tpl)
     s, url = c['slug'], f'{ORIGIN}/{HUB}/{c["slug"]}/'
     faq = faq_of(c)
     service_name = f"Sostegno psicologico online in italiano per italiani che vivono {c['prep']}"
@@ -370,6 +395,7 @@ def build(c, tpl, today):
     faq_html = '\n'.join(f'      <details{" open" if i == 0 else ""}><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for i, (q, a) in enumerate(faq))
     near = join_it([A(f'/{HUB}/{n}/', BY_SLUG[n]['prep']) for n in c['near']])
     rel = ' e '.join(A(h, t) for h, t in c['related'])
+    frasi = '\n'.join(f'      <li><a href="{h}"><q>{FRASI[h][0]}</q><span class="tema"><b>{FRASI[h][1]}</b><span>{FRASI[h][2]}</span></span></a></li>' for h, _ in c['related'] if h in FRASI)
     return f'''<!DOCTYPE html>
 <html lang="it">
 <head>
@@ -384,50 +410,53 @@ def build(c, tpl, today):
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{esc(c['h1'])}">
 <meta property="og:description" content="{esc(c['desc'])}">
-<meta property="og:image" content="https://www.updateyourlife.it/img/og-psicologo-online.jpg">
+<meta property="og:image" content="{ORIGIN}/img/og/{HUB}.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Update Your Life">
 <meta name="twitter:card" content="summary_large_image">
-{fonts}
+{assets}
+
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False, indent=2)}
 </script>
-{css}
-<script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
+<body class="svc">
 
 {header}
 
-<main>
+<main id="main">
 
-<section class="page-hero">
+<section class="page-hero" data-hero>
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/{HUB}/">Italiani all'estero</a> › <span>{esc(c['name'])}</span></nav>
-    <p class="tag">{esc(c['tag'])}</p>
-    <h1>{esc(c['h1'])}</h1>
-    <p class="lead">{esc(c['lead'])}</p>
-    <div class="trust">
-      <span>Psicologo iscritto all'Albo della Lombardia n. 27664</span>
-      <span>Colloqui online solo in italiano</span>
-      <span>Prima call gratuita di 20 minuti</span>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/{HUB}/">Italiani all'estero</a> / <span>{esc(c['name'])}</span></nav>
+    <div>
+      <h1>{esc(c['h1'])}</h1>
+      <p class="lead">{esc(c['lead'])}</p>
+      <div class="author">
+        <img src="/img/francesco-maragliulo-avatar.webp" width="240" height="240" alt="" fetchpriority="high">
+        <p><b>Francesco Maragliulo</b>, psicologo iscritto all'Albo della Lombardia n. 27664. Colloqui online solo in italiano.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-wa" data-contatto="whatsapp-hero-{s}" href="{WA}" target="_blank" rel="noopener">{wa_icon}Scrivimi su WhatsApp</a>
+        <p class="note">{NOTE}</p>
+      </div>
     </div>
-    <div class="cta-row">
-      <a class="btn" data-contatto="whatsapp-hero-{s}" href="{WA}" target="_blank" rel="noopener">Prenota la call gratuita</a>
-    </div>
+    <figure class="opening">
+      <q>{OPENING}</q>
+      <figcaption>Se ti suona familiare, possiamo iniziare a parlarne.</figcaption>
+    </figure>
   </div>
 </section>
 
 <section class="section" id="ti-riconosci">
   <div class="wrap">
-    <div class="reveal prose">
-      <p class="tag">Ti riconosci?</p>
+    <div class="prose">
       <h2>Quando la distanza si fa sentire</h2>
       <p>Ognuno la vive a modo suo. Alcune situazioni che capitano spesso:</p>
     </div>
-    <ul class="checks reveal">
+    <ul class="checks">
 {bullets}
     </ul>
   </div>
@@ -435,93 +464,91 @@ def build(c, tpl, today):
 
 <section class="section" id="vivere-qui" style="background:var(--bg-alt)">
   <div class="wrap">
-    <div class="reveal prose">
-      <p class="tag">Orari e servizi</p>
+    <div class="split">
+    <div class="prose">
       <h2>Vivere {esc(c['prep'])}, parlare in italiano</h2>
       <p>{esc(c['tz'])}</p>
       <p>{esc(LOCAL_P.format(svc=c['svc']))}</p>
       <p>Ci vediamo in videochiamata su una piattaforma sicura, tramite un link. I colloqui non vengono registrati. Se la connessione cade, troviamo subito un modo per proseguire senza intoppi: la sessione non si perde. Tutti i dettagli sono nella {A('/psicologo-online/', 'guida al colloquio online')}.</p>
     </div>
+    {who}
+    </div>
   </div>
 </section>
 
-<section class="section dark" id="cosa-facciamo">
+<section class="section tint" id="cosa-facciamo">
   <div class="wrap">
-    <div class="reveal prose">
-      <p class="tag">Il percorso</p>
+    <div class="prose">
       <h2>Cosa facciamo insieme</h2>
       <p class="lead">Parto da come stai vivendo la tua situazione, non da un modello fisso. Il lavoro si adatta alla tua vita e ai tuoi ritmi.</p>
     </div>
     <div class="cards three">
-      <article class="card reveal">
-        <p class="num" style="color:var(--accent-light)">01</p>
+      <article class="card">
         <h3>Fare spazio</h3>
         <p>Hai uno spazio in italiano dove dire ciò che negli altri contesti non dici, senza doverlo giustificare.</p>
       </article>
-      <article class="card reveal">
-        <p class="num" style="color:var(--warm)">02</p>
+      <article class="card">
         <h3>Capire</h3>
         <p>Guardiamo cosa ti ha portato lì, cosa ti trattiene e cosa è cambiato in te e nelle tue relazioni.</p>
       </article>
-      <article class="card reveal">
-        <p class="num" style="color:oklch(72% 0.10 330)">03</p>
+      <article class="card">
         <h3>Scegliere</h3>
         <p>Se hai una decisione aperta, la mettiamo a fuoco insieme, con più chiarezza su ciò di cui hai bisogno.</p>
       </article>
     </div>
-    <div class="reveal prose" style="margin-top:36px">
-      <p style="color:var(--on-dark-muted)">Lavoro con strumenti della Gestalt, dell'Analisi Transazionale, della mindfulness e del coaching, scelti in base a te. Se emerge un altro bisogno, lo valutiamo insieme e ti indico il professionista più adatto.</p>
+    <div class="prose" style="margin-top:36px">
+      <p>Lavoro con strumenti della Gestalt, dell'Analisi Transazionale, della mindfulness e del coaching, scelti in base a te. Se emerge un altro bisogno, lo valutiamo insieme e ti indico il professionista più adatto.</p>
     </div>
   </div>
 </section>
 
 <section class="section" id="come-iniziare">
   <div class="wrap">
-    <div class="reveal prose">
-      <p class="tag">Come iniziare</p>
-      <h2>Dalla call gratuita al percorso</h2>
+    <div class="prose">
+      <h2>Dalla call conoscitiva al percorso</h2>
     </div>
     <div class="steps">
-      <div class="step reveal"><h3>Mi scrivi</h3><p>Su WhatsApp, per telefono o via email. Ti rispondo personalmente.</p></div>
-      <div class="step reveal"><h3>Call gratuita</h3><p>20 minuti per raccontarmi cosa ti porta e trovare un orario che funzioni con il tuo.</p></div>
-      <div class="step reveal"><h3>Primi colloqui</h3><p>Mettiamo a fuoco la situazione e gli obiettivi del lavoro.</p></div>
-      <div class="step reveal"><h3>Il percorso</h3><p>Incontri settimanali o quindicinali, senza pacchetti, con un confronto periodico su come sta andando.</p></div>
+      <div class="step"><h3>Mi scrivi</h3><p>Su WhatsApp, per telefono o via email. Ti rispondo personalmente.</p></div>
+      <div class="step"><h3>Call conoscitiva</h3><p>Ci organizziamo per una call di 20 minuti, gratuita e senza impegno: mi racconti cosa ti porta e troviamo un orario che funzioni con il tuo.</p></div>
+      <div class="step"><h3>Primi colloqui</h3><p>Mettiamo a fuoco la situazione e gli obiettivi del lavoro.</p></div>
+      <div class="step"><h3>Il percorso</h3><p>Incontri settimanali o quindicinali, senza pacchetti, con un confronto periodico su come sta andando.</p></div>
     </div>
   </div>
 </section>
 
 <section class="section" id="altri-temi" style="background:var(--bg-alt)">
   <div class="wrap">
-    <div class="reveal prose">
-      <p class="tag">Altri temi</p>
+    <div class="prose">
       <h2>Vivere lontano dall'Italia</h2>
       <p>Tutto quello che riguarda la vita all'estero, in generale, è nella pagina sullo {A(f'/{HUB}/', "psicologo online per italiani all'estero")}. Colloqui in italiano anche per chi vive {near}.</p>
       <p>Temi che chi vive all'estero porta spesso: {rel}.</p>
     </div>
+    <ul class="frasi">
+{frasi}
+    </ul>
   </div>
 </section>
 
 <section class="section" id="domande">
   <div class="wrap">
-    <div class="reveal" style="text-align:center">
-      <p class="tag">Domande frequenti</p>
+    <div>
       <h2>Le domande più comuni</h2>
     </div>
-    <div class="faq reveal">
+    <div class="faq">
 {faq_html}
     </div>
   </div>
 </section>
 
-<section class="section dark" id="inizia">
+<section class="section contact" id="inizia" data-contact>
   <div class="wrap grid-2">
-    <div class="reveal">
-      <p class="tag">Il primo passo</p>
-      <h2>Parliamone in una call gratuita</h2>
-      <p class="lead">20 minuti, senza impegno. Mi racconti cosa stai vivendo e troviamo un orario che funzioni per te. Rispondo personalmente, di solito in giornata.</p>
+    <div>
+      <h2>Parliamone in una call conoscitiva</h2>
+      <p class="lead">Scrivimi e ci organizziamo per una call di 20 minuti, gratuita e senza impegno. Mi racconti cosa stai vivendo e troviamo un orario che funzioni per te. Rispondo personalmente, di solito in giornata.</p>
     </div>
-    <div class="reveal contact-list">
+    <div class="contact-list">
       <a class="contact-btn primary" data-contatto="whatsapp-{s}" href="{WA}" target="_blank" rel="noopener">
+        {wa_icon}
         <span><small>Il modo più rapido</small>Scrivimi su WhatsApp</span>
       </a>
       <a class="contact-btn" data-contatto="telefono-{s}" href="tel:+393314980002">
@@ -534,6 +561,7 @@ def build(c, tpl, today):
   </div>
 </section>
 
+<div class="wrap"><p class="byline">Scritto da <a href="/chi-sono/">Francesco Maragliulo</a>, psicologo iscritto all'Albo della Lombardia n. 27664. Ultimo aggiornamento: {data_it(today)}.</p></div>
 </main>
 
 {footer}'''
@@ -543,22 +571,21 @@ EUROPE = {'londra', 'germania', 'svizzera', 'parigi', 'bruxelles', 'amsterdam', 
 
 
 def hub_block():
-    def li(c): return f'        <li><a href="/{HUB}/{c["slug"]}/" style="color:var(--accent)">{esc(c["h1"])}</a></li>'
+    def li(c): return f'        <li><a href="/{HUB}/{c["slug"]}/">{esc(c["h1"])}</a></li>'
     eu = '\n'.join(li(c) for c in CITIES if c['slug'] in EUROPE)
     world = '\n'.join(li(c) for c in CITIES if c['slug'] not in EUROPE)
     return f'''<!-- citta:start (generato da scripts/build-citta.py) -->
 <section class="section" id="dove-vivi" style="background:var(--bg-alt)">
   <div class="wrap">
-    <div class="reveal prose">
-      <p class="tag">Dove vivi?</p>
+    <div class="prose">
       <h2>Colloqui in italiano, in qualsiasi Paese</h2>
       <p>Lavoro con italiani che vivono in tutto il mondo. Per alcune città e Paesi ho raccolto le informazioni pratiche: fuso orario, servizi locali, numeri utili.</p>
-      <h3 style="font-size:24px;margin:28px 0 8px">In Europa</h3>
-      <ul style="padding-left:20px">
+      <h3 style="margin-top:28px">In Europa</h3>
+      <ul>
 {eu}
       </ul>
-      <h3 style="font-size:24px;margin:28px 0 8px">Nel resto del mondo</h3>
-      <ul style="padding-left:20px">
+      <h3 style="margin-top:28px">Nel resto del mondo</h3>
+      <ul>
 {world}
       </ul>
       <p style="margin-top:20px">Vivi altrove? Va bene lo stesso: ti serve solo una connessione stabile.</p>

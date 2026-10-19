@@ -12,8 +12,13 @@
 <meta property="og:url" content="https://www.updateyourlife.it/approfondimenti/">
 <meta property="og:title" content="Approfondimenti — Update Your Life">
 <meta property="og:description" content="Approfondimenti di psicologia, coaching e crescita personale a cura di Francesco Maragliulo.">
-<meta property="og:image" content="https://www.updateyourlife.it/img/og-psicologo-online.jpg">
+<meta property="og:image" content="https://www.updateyourlife.it/img/og/approfondimenti.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="it_IT">
+<link rel="preload" href="/assets/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css?v=20261019">
 
 <script type="application/ld+json">
 {
@@ -48,339 +53,106 @@
   ]
 }
 </script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  :root {
-    --accent: oklch(52% 0.14 145);
-    --bg: oklch(97.5% 0.008 80);
-    --bg-alt: oklch(94% 0.012 80);
-    --bg-dark: oklch(26% 0.06 155);
-    --text: oklch(20% 0.02 80);
-    --text-muted: oklch(50% 0.015 80);
-    --border: oklch(88% 0.012 80);
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%; height: 72px;
-    background: oklch(97.5% 0.008 80 / 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; font-weight: 500;
-    color: var(--text); letter-spacing: 0.02em; line-height: 1.2;
-    text-decoration: none;
-  }
-  .logo-sub { font-size: 12px; font-weight: 300; color: var(--text-muted); display: block; letter-spacing: 0.06em; }
-
-  .nav-links { display: flex; gap: 36px; align-items: center; list-style: none; }
-  .nav-link {
-    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
-    text-decoration: none; letter-spacing: 0.04em;
-    transition: color 0.2s;
-  }
-  .nav-link:hover, .nav-link.active { color: var(--accent); }
-
-  .cta-btn {
-    padding: 10px 24px; background: var(--accent); color: #fff;
-    border: none; border-radius: 4px; font-size: 14px; font-weight: 500;
-    cursor: pointer; letter-spacing: 0.03em; transition: opacity 0.2s, transform 0.15s;
-    font-family: 'DM Sans'; text-decoration: none; display: inline-block;
-  }
-  .cta-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-
-  /* HAMBURGER */
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 8px;
-  }
-  .hamburger span {
-    display: block; width: 24px; height: 2px;
-    background: var(--text); border-radius: 2px; transition: transform 0.2s, opacity 0.2s;
-  }
-
-  /* HERO */
-  .hero {
-    padding: 140px 5% 80px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-  }
-  .hero-inner { max-width: 960px; margin: 0 auto; }
-  .section-tag {
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); font-weight: 500; margin-bottom: 16px;
-  }
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 300; line-height: 1.1;
-    color: var(--text); margin-bottom: 20px;
-  }
-  .hero p {
-    font-size: 17px; line-height: 1.8;
-    color: var(--text-muted); font-weight: 300;
-    max-width: 580px;
-  }
-
-  /* GRID */
-  .articles-section { padding: 80px 5%; }
-  .articles-inner { max-width: 960px; margin: 0 auto; }
-
-  .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-    gap: 2px;
-    margin-top: 48px;
-  }
-
-  /* CARD */
-  .card {
-    background: var(--bg-alt);
-    padding: 40px 36px;
-    text-decoration: none;
-    color: inherit;
-    display: flex; flex-direction: column; gap: 16px;
-    transition: background 0.3s ease, transform 0.25s ease;
-    border: 1px solid transparent;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-    background: var(--accent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .card:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 8px 32px oklch(0.2 0.01 80 / 0.08); }
-  .card:hover::before { transform: scaleX(1); }
-
-  .card-num {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--accent);
-  }
-  .card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px; font-weight: 400; line-height: 1.2;
-    color: var(--text);
-  }
-  .card-desc {
-    font-size: 14px; line-height: 1.7;
-    color: var(--text-muted); font-weight: 300;
-    flex: 1;
-  }
-  .card-cta {
-    font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
-    color: var(--accent);
-    display: flex; align-items: center; gap: 6px;
-    margin-top: 8px;
-  }
-  .card-cta svg { transition: transform 0.2s; }
-  .card:hover .card-cta svg { transform: translateX(4px); }
-
-  /* SKELETON */
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-  .skeleton {
-    background: linear-gradient(90deg, oklch(90% 0.01 80) 25%, oklch(93% 0.01 80) 50%, oklch(90% 0.01 80) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s ease-in-out infinite;
-    border-radius: 3px;
-  }
-  .skeleton-card { background: var(--bg-alt); padding: 40px 36px; display: flex; flex-direction: column; gap: 16px; }
-  .sk-tag { height: 12px; width: 60px; }
-  .sk-title { height: 28px; width: 80%; }
-  .sk-line { height: 13px; }
-  .sk-line-short { height: 13px; width: 65%; }
-  .sk-cta { height: 14px; width: 100px; margin-top: 8px; }
-
-  /* EMPTY / ERROR */
-  .state-box {
-    text-align: center; padding: 80px 40px;
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-    color: var(--text-muted);
-  }
-  .state-box svg { color: oklch(78% 0.01 80); }
-  .state-box h3 { color: var(--text); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; }
-  .state-box p { font-size: 15px; font-weight: 300; max-width: 36ch; }
-
-  /* FOOTER */
-  footer {
-    padding: 28px 5%;
-    background: var(--bg-dark);
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px;
-  }
-  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: oklch(68% 0.02 80); }
-  .footer-sub { font-size: 12px; color: oklch(65% 0.02 80); font-weight: 300; letter-spacing: 0.03em; }
-  .footer-links { display: flex; gap: 20px; }
-  .footer-link {
-    font-size: 12px; color: oklch(62% 0.02 80); text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-link:hover { color: oklch(70% 0.10 145); }
-
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
-
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .nav-links.open {
-      display: flex; flex-direction: column;
-      position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
-      background: var(--bg); padding: 32px 5%; gap: 24px;
-      z-index: 99; align-items: flex-start;
-    }
-    .hamburger { display: flex !important; }
-    .hero { padding: 110px 5% 60px; }
-    .articles-section { padding: 60px 5%; }
-    footer { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .footer-links { flex-wrap: wrap; }
-  }
-</style>
 </head>
-<body>
+<body class="list-page">
 
-<!-- NAV -->
-<nav>
-  <a href="/" class="logo-text">
-    Update Your Life
-    <span class="logo-sub">Francesco Maragliulo</span>
-  </a>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><b>Francesco Maragliulo</b><span>Psicologo online</span></a>
+    <nav class="menu" id="menu" aria-label="Menu principale">
+      <a href="/#temi">Temi</a>
+      <a href="/psicologo-online/">Come funziona</a>
+      <a href="/chi-sono/">Chi sono</a>
+      <a href="/approfondimenti/" aria-current="page">Approfondimenti</a>
+      <a class="btn btn-wa menu-cta" data-contatto="whatsapp-menu" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a>
+    </nav>
+    <a class="btn btn-wa top-cta" data-contatto="whatsapp-nav" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a>
+    <button class="burger" id="burger" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu"><svg class="bars" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg><svg class="x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+</header>
 
-  <!-- Hamburger -->
-  <button class="hamburger" id="hamburger" aria-label="Menu" style="display:none;">
-    <span id="hb1"></span>
-    <span id="hb2"></span>
-    <span id="hb3"></span>
-  </button>
-
-  <ul class="nav-links" id="nav-links">
-    <li><a href="/#chi-sono" class="nav-link">Chi Sono</a></li>
-    <li><a href="/#percorsi" class="nav-link">Percorsi</a></li>
-    <li><a href="/#dicono-di-me" class="nav-link">Dicono di me</a></li>
-    <li><a href="/psicologo-online/" class="nav-link">Psicologo online</a></li>
-    <li><a href="/approfondimenti/" class="nav-link active">Approfondimenti</a></li>
-    <li>
-      <a href="https://api.whatsapp.com/send/?phone=393314980002&text&type=phone_number&app_absent=0"
-         target="_blank" rel="noopener noreferrer" class="cta-btn">
-        Scrivimi su WhatsApp
-      </a>
-    </li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner reveal">
-    <p class="section-tag">Psicologia · Coaching · Crescita Personale</p>
+<main id="main">
+<section class="page-top" data-hero>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" style="font-size:15px;color:var(--graphite);margin-bottom:18px"><a href="/" style="color:var(--graphite)">Home</a> / Approfondimenti</nav>
     <h1>Approfondimenti</h1>
-    <p>Articoli e riflessioni su psicologia, benessere emotivo e crescita personale. Ogni approfondimento nasce da ricerche personali ed esperienza sul campo.</p>
+    <p>Articoli e riflessioni su emozioni, relazioni e lavoro. Ogni approfondimento nasce dalla ricerca e dall'esperienza sul campo.</p>
   </div>
 </section>
 
-<!-- ARTICOLI -->
-<section class="articles-section">
-  <div class="articles-inner">
-    <div class="reveal">
-      <p class="section-tag">Tutti gli articoli</p>
-    </div>
-    <div class="articles-grid" id="articles-grid">
-      <a class="card reveal" href="/approfondimenti/cervello-predittivo.html">
-        <span class="card-num">01</span>
-        <h2 class="card-title">Il Cervello Predittivo</h2>
-        <p class="card-desc">Come il nostro cervello costruisce la realtà anticipando continuamente il futuro, e cosa significa per la nostra salute mentale.</p>
-        <span class="card-cta">Leggi l'approfondimento <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-      <a class="card reveal" href="/approfondimenti/finestra-johari.html">
-        <span class="card-num">02</span>
-        <h2 class="card-title">La Finestra di Johari</h2>
-        <p class="card-desc">Uno strumento potente per aumentare la consapevolezza di sé e migliorare la qualità delle relazioni interpersonali.</p>
-        <span class="card-cta">Leggi l'approfondimento <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-      <a class="card reveal" href="/approfondimenti/dipendenza-affettiva.html">
-        <span class="card-num">03</span>
-        <h2 class="card-title">Dipendenza Affettiva</h2>
-        <p class="card-desc">Quando amare diventa bisogno: riconoscere le dinamiche relazionali disfunzionali e ritrovare il proprio centro di autonomia.</p>
-        <span class="card-cta">Leggi l'approfondimento <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-      <a class="card reveal" href="/approfondimenti/sindrome-impostore.html">
-        <span class="card-num">04</span>
-        <h2 class="card-title">La Sindrome dell'Impostore</h2>
-        <p class="card-desc">Perché manager e professionisti competenti dubitano delle proprie capacità, e come disinnescare la paura di essere smascherati.</p>
-        <span class="card-cta">Leggi l'approfondimento <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-    </div>
-    <p class="reveal" style="margin-top:48px;font-weight:300;line-height:1.8;color:var(--text-muted)">Cerchi un sostegno psicologico? Scopri come lavoro negli incontri online: <a href="/psicologo-online/" style="color:var(--accent)">psicologo online</a>, <a href="/ansia-online/" style="color:var(--accent)">ansia</a>, <a href="/relazioni-coppia-online/" style="color:var(--accent)">relazioni e coppia</a>.</p>
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <ul class="articles">
+      <li><a href="/approfondimenti/sindrome-impostore.html"><div><h2>La sindrome dell'impostore</h2><p>Perché manager e professionisti competenti dubitano delle proprie capacità, e come disinnescare la paura di essere smascherati.</p></div><span class="meta"><b>Leggi l'articolo</b>Lavoro e carriera, 14 ottobre 2026</span></a></li>
+      <li><a href="/approfondimenti/dipendenza-affettiva.html"><div><h2>Dipendenza affettiva</h2><p>Quando amare diventa bisogno: riconoscere le dinamiche relazionali disfunzionali e ritrovare il proprio centro di autonomia.</p></div><span class="meta"><b>Leggi l'articolo</b>Relazioni, 14 ottobre 2026</span></a></li>
+      <li><a href="/approfondimenti/cervello-predittivo.html"><div><h2>Il cervello predittivo</h2><p>Come il nostro cervello costruisce la realtà anticipando continuamente il futuro, e cosa significa per la nostra salute mentale.</p></div><span class="meta"><b>Leggi l'articolo</b>Emozioni e mente, 17 giugno 2026</span></a></li>
+      <li><a href="/approfondimenti/finestra-johari.html"><div><h2>La finestra di Johari</h2><p>Uno strumento potente per aumentare la consapevolezza di sé e migliorare la qualità delle relazioni interpersonali.</p></div><span class="meta"><b>Leggi l'articolo</b>Relazioni e consapevolezza, 16 giugno 2026</span></a></li>
+    </ul>
+    <p class="frasi-foot">Cerchi un sostegno psicologico? Scopri come lavoro negli incontri online: <a class="tlink" href="/psicologo-online/">psicologo online</a>, <a class="tlink" href="/ansia-online/">ansia</a>, <a class="tlink" href="/relazioni-coppia-online/">relazioni e coppia</a>.</p>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-brand">Update Your Life © 2026</span>
-  <span class="footer-sub">Francesco Maragliulo · Psicologo · Coach · Counselor</span>
-  <div class="footer-links">
-    <a href="/privacy-policy.html" class="footer-link">Privacy Policy</a>
-    <a href="/cookie-policy.html" class="footer-link">Cookie Policy</a>
-    <a href="/note-legali.html" class="footer-link">Note Legali</a>
+<section class="sec contact" id="contatti" data-contact>
+  <div class="wrap">
+    <div class="txt">
+      <h2>Vuoi parlarne con me?</h2>
+      <p>Ci organizziamo per una call conoscitiva di 20 minuti, gratuita e senza impegno. Ti rispondo io, di solito in giornata.</p>
+    </div>
+    <div class="contact-actions">
+      <a class="btn btn-wa" data-contatto="whatsapp-approfondimenti" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg><span><small>Il modo più rapido</small>Scrivimi su WhatsApp</span></a>
+      <a class="btn btn-line" data-contatto="telefono-approfondimenti" href="tel:+393314980002"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span><small>Telefono</small>+39 331 498 0002</span></a>
+    </div>
   </div>
-  <a href="tel:+393314980002" class="footer-link" style="font-size:13px; color:oklch(68% 0.05 155);">+39 331 498 000 2</a>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-id">
+        <p class="foot-name">Francesco Maragliulo</p>
+        <p>Psicologo iscritto all'Ordine degli Psicologi della Lombardia n. 27664. Colloqui individuali online, in videochiamata.</p>
+        <p><a href="tel:+393314980002" data-contatto="telefono-footer">+39 331 498 0002</a></p>
+      </div>
+      <nav class="topics" aria-label="Temi trattati">
+        <p class="foot-h">Temi</p>
+        <a href="/psicologo-online/">Psicologo online</a>
+        <a href="/ansia-online/">Ansia</a>
+        <a href="/relazioni-coppia-online/">Relazioni e coppia</a>
+        <a href="/autostima-online/">Autostima</a>
+        <a href="/momenti-di-cambiamento-online/">Momenti di cambiamento</a>
+        <a href="/stress-lavoro-burnout-online/">Stress da lavoro</a>
+        <a href="/psicologo-per-manager/">Per manager</a>
+        <a href="/psicologo-online-italiani-estero/">Italiani all'estero</a>
+        <a href="/psicologo-online-milano/">Milano</a>
+        <a href="/approfondimenti/">Approfondimenti</a>
+      </nav>
+      <nav class="foot-links" aria-label="Il sito">
+        <p class="foot-h">Il sito</p>
+        <a href="/chi-sono/">Chi sono</a>
+        <a href="/psicologo-online/">Come funziona</a>
+        <a href="https://www.instagram.com/updateyourlife_" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/francescomaragliulo/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Update Your Life. Dott. Francesco Maragliulo, psicologo</span>
+      <nav aria-label="Note legali"><a href="/privacy-policy.html">Privacy Policy</a><a href="/cookie-policy.html">Cookie Policy</a><a href="/note-legali.html">Note legali</a></nav>
+    </div>
+  </div>
 </footer>
 
-<script>
-// ── Hamburger ──────────────────────────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
-hamburger.style.display = 'none';
-hamburger.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  document.getElementById('hb1').style.transform = open ? 'rotate(45deg) translate(5px,5px)' : 'none';
-  document.getElementById('hb2').style.opacity = open ? '0' : '1';
-  document.getElementById('hb3').style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : 'none';
-});
+<div class="cookie" id="cookie" role="dialog" aria-label="Preferenze cookie">
+  <div class="wrap">
+    <p>Utilizziamo cookie tecnici e, previo consenso, cookie analitici. <a href="/cookie-policy.html">Cookie Policy</a>, <a href="/privacy-policy.html">Privacy Policy</a></p>
+    <button class="ok" id="cookie-ok" type="button">Accetta</button>
+    <button class="no" id="cookie-no" type="button">Solo necessari</button>
+  </div>
+</div>
 
-// ── Scroll reveal ──────────────────────────────────────────────
-function initReveal() {
-  const els = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  els.forEach(el => obs.observe(el));
-}
-initReveal();
+<div class="sticky-cta" id="sticky"><a class="btn btn-wa" data-contatto="whatsapp-sticky" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a></div>
 
-</script>
+<script src="/assets/site.js?v=20261019" defer></script>
 </body>
 </html>
