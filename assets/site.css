@@ -384,6 +384,8 @@ b,strong{font-weight:600}
 .pdd-check label{cursor:pointer}
 .pdd-check a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:2px;text-underline-offset:3px}
 .pdd-err{margin-top:14px;font-size:15px;font-weight:600;color:#A3352B}
+.pdd-err-wa{color:var(--ink);font-weight:400;background:var(--shirt);border-left:4px solid var(--amber);padding:14px 16px}
+.pdd-err-wa .btn{width:100%;margin-top:12px;text-align:center}
 .pdd-form .btn{width:100%;margin-top:22px}
 .pdd-done{margin-top:16px;padding:14px 16px;border-left:4px solid var(--amber);background:var(--shirt);font-size:15.5px}
 .pdd-done p+p{margin-top:6px}

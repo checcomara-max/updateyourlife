@@ -87,7 +87,7 @@
       <h1>Prima di dimenticare: 5 pagine del mio taccuino, in PDF</h1>
       <p class="lead">Ogni giorno scrivo una frase su un taccuino e la commento su Instagram. Ne ho scelte cinque e le ho raccolte in un PDF: la frase, una riflessione breve e una domanda da portare via. Lasciami nome e cellulare e te lo mando su WhatsApp.</p>
 
-      <form class="pdd-form" id="ricevi" action="https://formsubmit.co/francescomaragliulo@gmail.com" method="POST" novalidate>
+      <form class="pdd-form" id="ricevi" novalidate>
         <div class="pdd-names">
           <p class="pdd-field">
             <label for="pdd-nome">Nome</label>
@@ -321,10 +321,12 @@
 
 <script src="/assets/site.js?v=20261019" defer></script>
 <script>
-// Modulo "Prima di dimenticare": invia nome, cellulare e risposte facoltative all'email di Francesco (FormSubmit). Nessun dato resta sul sito.
+// Modulo "Prima di dimenticare": invia nome, cellulare e risposte facoltative all'email di Francesco
+// tramite la sua Google Apps Script (ENDPOINT). Nessun dato resta sul sito.
+// Se ENDPOINT è vuoto o l'invio non riesce, la richiesta parte su WhatsApp con gli stessi dati.
 (function () {
   var f = document.getElementById('ricevi'); if (!f) return;
-  var ENDPOINT = 'https://formsubmit.co/ajax/francescomaragliulo@gmail.com';
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzUWDOq456jIgnHDpLqP0yLeIJKy8nzI0vTncDwyPpjq00CrUvGrfHul950isjj41_1qw/exec';
   var err = document.getElementById('pdd-err'), done = document.getElementById('pdd-done');
   var btn = f.querySelector('button[type=submit]'), btnTxt = f.querySelector('.pdd-btn-txt');
   var paese = f.querySelector('.pdd-paese');
@@ -332,48 +334,56 @@
   function digits(t) { return t.replace(/[^\d+]/g, '').replace(/(?!^)\+/g, ''); }
   // Numero in formato internazionale: 3xx italiano senza prefisso diventa +39, 00 diventa +
   function intl(t) { var d = digits(t); if (d.indexOf('00') === 0) d = '+' + d.slice(2); if (d[0] !== '+') d = (/^3\d{8,9}$/.test(d) ? '+39' : '+') + d; return d; }
+  function waUrl(data) {
+    var m = 'Ciao Francesco, sono ' + data.Nome + ' ' + data.Cognome + '. Vorrei ricevere il PDF con le 5 riflessioni di "Prima di dimenticare".';
+    if (data.Temi !== '-') m += ' Temi che mi interessano: ' + data.Temi + '.';
+    if (data.NuovePagine.indexOf('Sì') === 0) m += ' Mi fa piacere ricevere ogni tanto una nuova pagina del taccuino.';
+    return 'https://wa.me/393314980002?text=' + encodeURIComponent(m);
+  }
+  function viaWhatsApp(data, intro) {
+    var url = waUrl(data);
+    if (window.gtag) gtag('event', 'generate_lead', { metodo: 'whatsapp', posizione: 'taccuino-pdf' });
+    err.hidden = false;
+    err.className = 'pdd-err pdd-err-wa';
+    err.innerHTML = intro + ' <a class="btn btn-wa" href="' + url + '" target="_blank" rel="noopener">Invia la richiesta su WhatsApp</a>';
+    btn.disabled = false; btnTxt.textContent = 'Ricevi il PDF su WhatsApp';
+  }
   f.addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid')) { e.target.removeAttribute('aria-invalid'); err.hidden = true; } });
   f.addEventListener('change', function (e) { if (e.target.name === 'dove') paese.hidden = e.target.value !== 'Estero'; });
   f.addEventListener('submit', function (e) {
     e.preventDefault();
+    err.className = 'pdd-err';
     var nome = f.nome.value.trim(), cognome = f.cognome.value.trim(), tel = f.cellulare.value.trim();
     if (!nome) return fail('Scrivi il tuo nome.', f.nome);
     if (!cognome) return fail('Scrivi il tuo cognome.', f.cognome);
     var num = intl(tel), n = num.replace(/\D/g, '');
-    if (n.length < 9 || n.length > 15) return fail('Controlla il numero di cellulare: servono almeno 9 cifre, con il prefisso se vivi all\'estero.', f.cellulare);
+    if (n.length < 9 || n.length > 15) return fail("Controlla il numero di cellulare: servono almeno 9 cifre, con il prefisso se vivi all'estero.", f.cellulare);
     if (!f.privacy.checked) return fail("Per ricevere il PDF spunta la casella sull'informativa privacy.", f.privacy);
-    if (f._honey.value) return;
     err.hidden = true;
-    var temi = [].map.call(f.querySelectorAll('input[name=temi]:checked'), function (i) { return i.value; }).join(', ');
-    var eta = (f.querySelector('input[name=eta]:checked') || {}).value || '';
     var dove = (f.querySelector('input[name=dove]:checked') || {}).value || '';
-    var risposta = 'Ciao ' + nome + ', sono Francesco Maragliulo. Ecco il PDF con le 5 pagine di "Prima di dimenticare" che hai chiesto sul sito.';
     var data = {
-      _subject: 'Prima di dimenticare: ' + nome + ' ' + cognome,
-      _template: 'table', _captcha: 'false',
+      _honey: f._honey.value,
       Nome: nome, Cognome: cognome, Cellulare: num,
-      'Scrivi su WhatsApp': 'https://wa.me/' + n + '?text=' + encodeURIComponent(risposta),
-      Temi: temi || '-', 'Fascia di eta': eta || '-',
-      'Dove vive': dove ? (dove === 'Estero' && f.paese.value.trim() ? 'Estero: ' + f.paese.value.trim() : dove) : '-',
-      'Nuove pagine': f.altre.checked ? 'Sì, ha dato il consenso' : 'No',
+      Temi: [].map.call(f.querySelectorAll('input[name=temi]:checked'), function (i) { return i.value; }).join(', ') || '-',
+      Eta: (f.querySelector('input[name=eta]:checked') || {}).value || '-',
+      Dove: dove ? (dove === 'Estero' && f.paese.value.trim() ? 'Estero: ' + f.paese.value.trim() : dove) : '-',
+      NuovePagine: f.altre.checked ? 'Sì, ha dato il consenso' : 'No',
       Privacy: 'Informativa accettata il ' + new Date().toLocaleString('it-IT'),
       Pagina: location.href.split('#')[0]
     };
+    if (!ENDPOINT) return viaWhatsApp(data, 'Ultimo passo: manda la richiesta su WhatsApp, il messaggio è già scritto.');
     btn.disabled = true; btnTxt.textContent = 'Invio in corso…';
-    fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
+    // text/plain evita la richiesta preliminare CORS, che Apps Script non gestisce
+    fetch(ENDPOINT, { method: 'POST', body: JSON.stringify(data) })
       .then(function (r) { return r.json(); })
       .then(function (j) {
-        if (String(j.success) !== 'true') throw new Error(j.message || 'invio non riuscito');
+        if (!j || j.success !== true) throw new Error((j && j.message) || 'invio non riuscito');
         if (window.gtag) gtag('event', 'generate_lead', { metodo: 'modulo', posizione: 'taccuino-pdf' });
         document.getElementById('pdd-done-nome').textContent = nome;
         document.getElementById('pdd-done-tel').textContent = num;
         f.hidden = true; done.hidden = false; done.focus();
       })
-      .catch(function () {
-        btn.disabled = false; btnTxt.textContent = 'Ricevi il PDF su WhatsApp';
-        var msg = 'Ciao Francesco, sono ' + nome + ' ' + cognome + '. Vorrei ricevere il PDF con le 5 riflessioni di "Prima di dimenticare".';
-        fail('L\'invio non è riuscito. Riprova tra poco oppure <a href="https://wa.me/393314980002?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">chiedimelo direttamente su WhatsApp</a>.');
-      });
+      .catch(function () { viaWhatsApp(data, "L'invio dal modulo non è riuscito, ma puoi chiedermelo subito: il messaggio è già scritto."); });
   });
 })();
 </script>
