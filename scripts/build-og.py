@@ -38,6 +38,7 @@ PAGES = [
     ('primo-colloquio-psicologo', "Primo colloquio: cosa dire, cosa aspettarsi"),
     ('burnout-sintomi-oms', "Burnout: cosa dice davvero l'OMS"),
     ('psicologo-online-funziona', "Lo psicologo online funziona?"),
+    ('prima-di-dimenticare', "Prima di dimenticare: 5 pagine del taccuino, in PDF"),
 ]
 
 
