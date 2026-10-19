@@ -30,6 +30,14 @@ PAGES = [
     ('dipendenza-affettiva', 'Dipendenza affettiva: quando amare diventa bisogno'),
     ('cervello-predittivo', 'Non vedi il mondo: lo anticipi'),
     ('finestra-johari', 'La finestra di Johari'),
+    ('solitudine-italiani-estero', "Solitudine all'estero: lo stress dell'espatrio"),
+    ('ansia-domenica-sera', "L'ansia della domenica sera"),
+    ('crisi-coppia-gottman', "Crisi di coppia: i 4 segnali di Gottman"),
+    ('come-scegliere-psicologo', "Come scegliere uno psicologo"),
+    ('rimuginio-overthinking', "Overthinking: quando la mente non si spegne"),
+    ('primo-colloquio-psicologo', "Primo colloquio: cosa dire, cosa aspettarsi"),
+    ('burnout-sintomi-oms', "Burnout: cosa dice davvero l'OMS"),
+    ('psicologo-online-funziona', "Lo psicologo online funziona?"),
 ]
 
 
