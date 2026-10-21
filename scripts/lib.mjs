@@ -1,8 +1,9 @@
 // Utilità condivise da audit.mjs, build-sitemap.mjs e live-check.mjs (solo Node, nessuna dipendenza).
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-export const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+export const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 export const ORIGIN = 'https://www.updateyourlife.it';
 
 const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'scripts', 'img']);
