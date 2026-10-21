@@ -23,6 +23,7 @@ PAGES = [
     ('momenti-di-cambiamento-online', 'Psicologo online per i momenti di cambiamento'),
     ('stress-lavoro-burnout-online', 'Psicologo online per stress da lavoro e burnout'),
     ('psicologo-per-manager', 'Psicologo online per manager e professionisti'),
+    ('coaching', 'Coaching online per chi lavora in azienda'),
     ('psicologo-online-italiani-estero', "Psicologo italiano online per chi vive all'estero"),
     ('psicologo-online-milano', 'Psicologo online a Milano'),
     ('approfondimenti', 'Approfondimenti di psicologia'),
