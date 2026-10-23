@@ -55,6 +55,14 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - `/supervisione` (statica, pre-renderizzata da React; modificare l'HTML direttamente)
 - `vercel.json`: header noindex sul dominio project-30hc5.vercel.app (duplicato). Immagini sempre WebP in `img/`, mai PNG pesanti nel repo.
 
+## Uno di Uno (`/uno-di-uno/`, anteprima riservata)
+
+- Prodotto separato: libro di auto-aiuto personalizzato («[Nome]. Istruzioni per l'uso») composto da un questionario di auto-osservazione. Guida completa, impianto teorico e inquadramento formale in `uno-di-uno/_sorgenti/LEGGIMI.md`: leggerla prima di toccare la sezione.
+- `/uno-di-uno/` è pubblica e mostra solo "Work in progress · Available soon" + password; le sottopagine (`scopri`, `metodo`, `inizia`, `questionario`, `profilo`, `libro`) caricano `assets/gate.js` nel `<head>` e rimandano al gate senza accesso. Nel repo c'è solo l'impronta SHA-256 della password, mai la password in chiaro.
+- Tutte le pagine: `noindex, nofollow`, fuori sitemap, niente `site.js`/GA, niente risorse esterne (stile proprio in `uno-di-uno/assets/udu.css`, font Fraunces/Literata/Inter locali). Le risposte restano nel browser: non aggiungere invii di dati o statistiche senza aggiornare pagina metodo, avvertenze e privacy.
+- Testi in `uno-di-uno/_sorgenti/contenuti/*.md`; dopo ogni modifica `node scripts/build-uno-di-uno.mjs` (rigenera `assets/content.js`, il CI fallisce se non è allineato). Domande e punteggi solo in `assets/engine.js` (se cambiano, nuova `VERSION`).
+- Regole di contenuto: mai "test", "valutazione", "diagnosi" come cosa che il prodotto fa; linguaggio di tendenza ("ti descrivi come"); nessun prezzo finché non ci sono P.IVA e pagamenti; 112 sempre presente nelle avvertenze.
+
 ## Automazione e controlli (GitHub Actions)
 
 - `node scripts/audit.mjs`: audit statico (title/description, canonical, H1 unico, JSON-LD valido e FAQPage coerente con le FAQ visibili, immagini, link interni/ancore rotti, ≥2 link interni, footer `nav.topics`, sitemap, termini vietati dal profilo). Gira su ogni push/PR (`site-audit.yml`); gli errori bloccano, i warning no. Lanciarlo in locale PRIMA di ogni push su `main`.

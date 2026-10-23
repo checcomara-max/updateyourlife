@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/uno-di-uno/assets/gate.js"></script>
+<title>Uno di Uno · Prima di iniziare</title>
+<meta name="description" content="Prima di iniziare il questionario di Uno di Uno: cosa è, cosa non è, come vengono usate le tue risposte.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2317404A%22/%3E%3Ccircle cx=%2222%22 cy=%2216%22 r=%223.5%22 fill=%22%23B4603A%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261023">
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="wrap top">
+  <a class="brand" href="/uno-di-uno/scopri/">Uno di Uno</a>
+  <nav aria-label="Uno di Uno"><a href="/uno-di-uno/scopri/">Il libro</a><a href="/uno-di-uno/metodo/">Il metodo</a><a href="/uno-di-uno/inizia/" aria-current="page">Inizia</a><span class="badge">Anteprima riservata</span></nav>
+</header>
+
+<main id="main" class="wrap narrow">
+  <div class="r-head">
+    <p class="mono">Prima di iniziare</p>
+    <h1>Tre cose da sapere, poi si parte.</h1>
+    <p>Il questionario dura circa 10 minuti. Puoi interromperlo e riprenderlo: le risposte restano salvate su questo dispositivo.</p>
+  </div>
+
+  <div id="resume" class="notice" hidden style="margin:12px 0 24px">
+    <p><b>Hai un questionario in sospeso.</b> <span id="resume-t"></span></p>
+    <p><a class="btn small" href="/uno-di-uno/questionario/">Riprendi da dove eri</a> <button class="linkbtn" type="button" id="restart">Ricomincia da capo</button></p>
+  </div>
+
+  <form id="f" novalidate>
+    <div class="checks" style="margin-top:20px">
+      <label class="check"><input type="checkbox" name="c1" required><span><b>È un libro di auto-aiuto, non un test.</b> Il questionario serve solo a scegliere i capitoli del mio libro: non è una valutazione psicologica, non formula diagnosi e nessuno esamina le mie risposte.</span></label>
+      <label class="check"><input type="checkbox" name="c2" required><span><b>Ho almeno 18 anni.</b></span></label>
+      <label class="check"><input type="checkbox" name="c3" required><span><b>So a chi rivolgermi se sto male.</b> Se sto attraversando un momento di forte sofferenza, un libro non basta: ne parlo con il mio medico o con uno psicologo. In caso di emergenza chiamo il 112.</span></label>
+    </div>
+    <p class="muted" style="font-size:14px;margin-top:12px">Le risposte restano nel tuo browser e non vengono inviate a nessuno. <a href="/uno-di-uno/metodo/#privacy">Come funziona</a>.</p>
+
+    <div class="field" style="margin-top:32px">
+      <label for="nome">Come ti chiami? <span style="text-transform:none;letter-spacing:0">(facoltativo, lo puoi cambiare alla fine)</span></label>
+      <input id="nome" maxlength="40" autocomplete="given-name">
+    </div>
+
+    <fieldset style="border:0;padding:0;margin:28px 0 0">
+      <legend class="label" style="margin-bottom:10px">Come preferisci che sia scritto il tuo libro?</legend>
+      <div class="seg">
+        <label><input type="radio" name="genere" value="F" required> Al femminile <span class="muted">(«sei pronta»)</span></label>
+        <label><input type="radio" name="genere" value="M"> Al maschile <span class="muted">(«sei pronto»)</span></label>
+        <label><input type="radio" name="genere" value="N"> In forma neutra <span class="muted">(«sei pronto/a»)</span></label>
+      </div>
+    </fieldset>
+
+    <div class="cta-row">
+      <button class="btn" type="submit" id="go" disabled>Inizia il questionario</button>
+      <p class="note" id="why">Spunta le tre caselle e scegli la forma del libro.</p>
+    </div>
+  </form>
+</main>
+
+<footer class="wrap foot">
+  <p><b>Uno di Uno</b> · Un progetto di <a href="/chi-sono/">Francesco Maragliulo</a>, psicologo iscritto all'Ordine degli Psicologi della Lombardia (n. 27664) e coach.</p>
+  <p><a href="/uno-di-uno/metodo/">Il metodo</a> · <a href="#" data-cancella>Cancella le mie risposte</a> · <a href="#" data-esci>Esci dall'anteprima</a></p>
+</footer>
+<script src="/uno-di-uno/assets/udu.js"></script>
+<script src="/uno-di-uno/assets/engine.js"></script>
+<script>
+(function () {
+  var f = document.getElementById('f'), go = document.getElementById('go'), why = document.getElementById('why');
+  var s = UDUStore.get();
+  if (s.nome) f.nome.value = s.nome;
+  if (s.genere) (f.querySelector('input[name=genere][value="' + s.genere + '"]') || {}).checked = true;
+  if (s.consenso) f.querySelectorAll('.check input').forEach(function (c) { c.checked = true; });
+  var answered = s.risposte ? Object.keys(s.risposte).length : 0;
+  if (answered && !s.completato) {
+    document.getElementById('resume').hidden = false;
+    document.getElementById('resume-t').textContent = 'Hai risposto a ' + answered + ' domande su ' + UDU.QUESTIONS.length + '.';
+  }
+  document.getElementById('restart').addEventListener('click', function () {
+    UDUStore.set({ risposte: {}, pos: 0, completato: null });
+    document.getElementById('resume').hidden = true;
+  });
+  function check() {
+    var ok = [].every.call(f.querySelectorAll('.check input'), function (c) { return c.checked; }) && !!f.querySelector('input[name=genere]:checked');
+    go.disabled = !ok;
+    why.hidden = ok;
+  }
+  f.addEventListener('change', check);
+  check();
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    check();
+    if (go.disabled) return;
+    var prev = UDUStore.get();
+    var patch = { consenso: new Date().toISOString(), genere: f.querySelector('input[name=genere]:checked').value, nome: f.nome.value.trim() };
+    if (prev.completato) { patch.risposte = {}; patch.pos = 0; patch.completato = null; }
+    UDUStore.set(patch);
+    location.href = '/uno-di-uno/questionario/';
+  });
+})();
+</script>
+</body>
+</html>

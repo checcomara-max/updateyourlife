@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Uno di Uno · Work in progress</title>
+<meta name="description" content="Uno di Uno: work in progress, available soon.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2317404A%22/%3E%3Ccircle cx=%2222%22 cy=%2216%22 r=%223.5%22 fill=%22%23B4603A%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preload" href="/uno-di-uno/assets/fonts/fraunces-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261023">
+</head>
+<body>
+<main class="wrap gate">
+  <p class="mono">Uno di Uno</p>
+  <div>
+    <h1>Work in progress</h1>
+    <p class="soon">Available soon</p>
+  </div>
+  <form id="gate" autocomplete="off" novalidate>
+    <div class="field">
+      <label for="pw">Accesso riservato</label>
+      <input id="pw" name="pw" type="password" autocomplete="current-password" required aria-describedby="msg">
+    </div>
+    <button class="btn" type="submit">Entra</button>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </form>
+</main>
+<script>
+(function () {
+  var TOKEN = '3229c601a46ada7237481d94fe4bcf0ec856cdd5070db332e5577f84561eed3b';
+  var form = document.getElementById('gate'), pw = document.getElementById('pw'), msg = document.getElementById('msg');
+  function dest() {
+    var d = new URLSearchParams(location.search).get('da') || '';
+    return /^\/uno-di-uno\/[a-z-]+\/$/.test(d) ? d : '/uno-di-uno/scopri/';
+  }
+  async function hash(s) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('udu|' + s));
+    return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    msg.textContent = '';
+    var v = pw.value.trim();
+    if (!v) { msg.textContent = 'Inserisci la password.'; pw.focus(); return; }
+    if ((await hash(v)) === TOKEN) {
+      try { localStorage.setItem('udu-accesso', TOKEN); } catch (err) {}
+      location.href = dest();
+    } else {
+      msg.textContent = 'Password non corretta.';
+      pw.select();
+    }
+  });
+})();
+</script>
+</body>
+</html>

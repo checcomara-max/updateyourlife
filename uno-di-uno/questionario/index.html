@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/uno-di-uno/assets/gate.js"></script>
+<title>Uno di Uno · Il questionario</title>
+<meta name="description" content="Il questionario di auto-osservazione di Uno di Uno: cinque parti, circa 10 minuti.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2317404A%22/%3E%3Ccircle cx=%2222%22 cy=%2216%22 r=%223.5%22 fill=%22%23B4603A%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261023">
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="/uno-di-uno/scopri/">Uno di Uno</a>
+  <span class="badge">Questionario</span>
+</header>
+<main class="wrap quiz" id="main">
+  <h1 class="mono" style="max-width:780px;margin:0 auto">Il questionario</h1>
+  <div class="qbar"><div class="progress" aria-hidden="true"><i id="bar"></i></div><span class="mono" id="count" aria-live="polite"></span></div>
+  <div class="qcard" id="card"></div>
+  <div class="qnav">
+    <button class="linkbtn" type="button" id="back">← Indietro</button>
+    <span class="mono" id="hint">Puoi usare i tasti numerici</span>
+  </div>
+  <noscript><p>Per compilare il questionario serve JavaScript.</p></noscript>
+</main>
+<script src="/uno-di-uno/assets/udu.js"></script>
+<script src="/uno-di-uno/assets/engine.js"></script>
+<script>
+(function () {
+  var s = UDUStore.get();
+  if (!s.consenso || !s.genere) { location.replace('/uno-di-uno/inizia/'); return; }
+  var answers = s.risposte || {};
+  var Q = UDU.QUESTIONS, P = UDU.PARTS;
+  // Schermate: per ogni parte una presentazione, poi le domande
+  var screens = [];
+  P.forEach(function (p, pi) {
+    screens.push({ intro: true, part: pi });
+    Q.forEach(function (q, qi) { if (q.part === pi) screens.push({ q: q, qi: qi, part: pi }); });
+  });
+  var pos = Math.min(s.pos || 0, screens.length - 1);
+  var card = document.getElementById('card'), bar = document.getElementById('bar'), count = document.getElementById('count'),
+    back = document.getElementById('back'), hint = document.getElementById('hint');
+  var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var lock = false;
+
+  function done() { return Q.filter(function (q) { return answers[q.id] !== undefined; }).length; }
+  function save() { UDUStore.set({ risposte: answers, pos: pos }); }
+
+  function render() {
+    var sc = screens[pos], p = P[sc.part];
+    var n = done();
+    bar.style.width = (n / Q.length * 100) + '%';
+    count.textContent = n + ' / ' + Q.length;
+    back.style.visibility = pos > 0 ? 'visible' : 'hidden';
+    var kind = 'Parte ' + (sc.part + 1) + ' di ' + P.length + ' · ' + p.titolo;
+    if (sc.intro) {
+      hint.style.visibility = 'hidden';
+      card.innerHTML = '<p class="qkind">' + esc(kind) + '</p><h2 tabindex="-1">' + esc(p.titolo) + '</h2><p class="qintro">' + esc(p.intro) + '</p>' +
+        '<div><button class="btn" type="button" id="next">' + (pos === 0 ? 'Cominciamo' : 'Continua') + '</button></div>';
+      document.getElementById('next').addEventListener('click', function () { go(pos + 1); });
+    } else {
+      hint.style.visibility = 'visible';
+      var q = sc.q, cur = answers[q.id];
+      var opts = q.opts.map(function (o, i) {
+        var v = q.type === 'likert' ? o.v : o.v;
+        return '<button class="opt" type="button" data-v="' + esc(v) + '" aria-pressed="' + (String(cur) === String(v)) + '"><span class="k">' + (i + 1) + '</span><span>' + esc(o.t) + '</span></button>';
+      }).join('');
+      card.innerHTML = '<p class="qkind">' + esc(kind) + '</p><h2 tabindex="-1">' + esc(q.t) + '</h2>' +
+        '<div class="opts' + (q.type === 'likert' ? ' likert' : '') + '" role="group" aria-label="Risposte">' + opts + '</div>';
+      card.querySelectorAll('.opt').forEach(function (b) { b.addEventListener('click', function () { pick(b.dataset.v); }); });
+    }
+    var h = card.querySelector('h2'); if (h) h.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }
+
+  function pick(v) {
+    if (lock) return;
+    var q = screens[pos].q;
+    answers[q.id] = q.type === 'likert' ? Number(v) : v;
+    card.querySelectorAll('.opt').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === String(v))); });
+    lock = true;
+    save();
+    setTimeout(function () { lock = false; next(); }, 170);
+  }
+
+  function next() {
+    if (pos < screens.length - 1) return go(pos + 1);
+    // fine: controlla che manchi nulla, altrimenti torna alla prima domanda senza risposta
+    var miss = screens.findIndex(function (sc) { return sc.q && answers[sc.q.id] === undefined; });
+    if (miss >= 0) return go(miss);
+    var a = Object.assign({ genere: s.genere }, answers);
+    UDUStore.set({ risposte: answers, pos: pos, completato: new Date().toISOString(), codice: UDU.encode(a) });
+    location.href = '/uno-di-uno/profilo/';
+  }
+  function go(i) { pos = Math.max(0, Math.min(screens.length - 1, i)); save(); render(); }
+
+  back.addEventListener('click', function () { go(pos - 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var sc = screens[pos];
+    if (sc.intro && (e.key === 'Enter')) { e.preventDefault(); go(pos + 1); return; }
+    if (e.key === 'Backspace' || e.key === 'ArrowLeft') { if (pos > 0) { e.preventDefault(); go(pos - 1); } return; }
+    if (!sc.q) return;
+    var k = parseInt(e.key, 10);
+    if (k >= 1 && k <= sc.q.opts.length) { e.preventDefault(); pick(String(sc.q.opts[k - 1].v)); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -20,3 +20,5 @@ jobs:
         run: node scripts/audit.mjs
       - name: Sitemap allineata alle pagine
         run: node scripts/build-sitemap.mjs --check
+      - name: Uno di Uno, libreria contenuti valida e allineata
+        run: node scripts/build-uno-di-uno.mjs --check

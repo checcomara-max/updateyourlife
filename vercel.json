@@ -17,6 +17,15 @@
       ]
     },
     {
+      "source": "/uno-di-uno/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/assets/fonts/:path*",
       "headers": [
         {
@@ -68,6 +77,13 @@
           "value": "strict-origin-when-cross-origin"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/uno-di-uno/_sorgenti/:path*",
+      "destination": "/uno-di-uno/",
+      "permanent": false
     }
   ]
 }

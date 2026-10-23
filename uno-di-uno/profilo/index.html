@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/uno-di-uno/assets/gate.js"></script>
+<title>Uno di Uno · Anteprima del tuo profilo</title>
+<meta name="description" content="L'anteprima del tuo profilo Uno di Uno: i cinque grandi tratti, il modo di reagire sotto carico e le specifiche del tuo libro.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2317404A%22/%3E%3Ccircle cx=%2222%22 cy=%2216%22 r=%223.5%22 fill=%22%23B4603A%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261023">
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="wrap top">
+  <a class="brand" href="/uno-di-uno/scopri/">Uno di Uno</a>
+  <nav aria-label="Uno di Uno"><a href="/uno-di-uno/scopri/">Il libro</a><a href="/uno-di-uno/metodo/">Il metodo</a><span class="badge">Anteprima del profilo</span></nav>
+</header>
+
+<main id="main" class="wrap narrow">
+  <div class="r-head">
+    <p class="mono">Anteprima del profilo</p>
+    <h1 id="h1">Il tuo profilo</h1>
+    <p id="lead"></p>
+  </div>
+  <div id="notes" style="display:grid;gap:12px;margin:8px 0 24px"></div>
+
+  <h2 class="mono" style="margin:24px 0 10px">Le specifiche del tuo libro</h2>
+  <div class="spec" id="spec"></div>
+
+  <h2 class="mono" style="margin:40px 0 6px">I cinque grandi tratti</h2>
+  <p class="muted" style="font-size:15px;margin-bottom:10px">Dove si collocano le tue risposte sulla scala da 1 a 5. Non è un confronto con altre persone: è come ti descrivi oggi. <a href="/uno-di-uno/metodo/">Come si leggono</a>.</p>
+  <div class="spec" id="tratti"></div>
+
+  <form class="teaser" id="f" style="margin-top:40px" novalidate>
+    <p class="mono">Il tuo libro</p>
+    <h2>Componi «<span id="tn">Il tuo nome</span>. Istruzioni per l'uso»</h2>
+    <p>Circa 50 pagine in 11 capitoli, con il piano di 90 giorni, le cinque pratiche, la pagina da condividere e le domande scelte per te.</p>
+    <div class="field" style="max-width:none">
+      <label for="nome">Nome da stampare in copertina</label>
+      <input id="nome" maxlength="40" required autocomplete="given-name">
+    </div>
+    <div class="field" style="max-width:none">
+      <label for="obiettivo">Il tuo obiettivo per i prossimi 90 giorni (facoltativo)</label>
+      <textarea id="obiettivo" maxlength="255" placeholder="Es. un traguardo professionale, un cambiamento di ritmo, una conversazione da fare"></textarea>
+      <span class="hint">Compare nella lettera iniziale e nel piano personale. Resta su questo dispositivo.</span>
+    </div>
+    <p class="msg" id="msg" role="status" style="min-height:1.4em"></p>
+    <div><button class="btn" type="submit">Componi il mio libro</button></div>
+  </form>
+
+  <div style="margin-top:32px;display:grid;gap:10px">
+    <p class="label">Il tuo codice profilo</p>
+    <div class="codebox"><code id="code"></code><button class="btn ghost small" type="button" id="copy">Copia</button></div>
+    <p class="muted" style="font-size:14px">Contiene solo le tue risposte, in forma anonima: niente nome, niente email. Con questo codice il libro si può ricomporre identico.</p>
+  </div>
+  <p style="margin-top:24px"><a href="/uno-di-uno/inizia/" id="redo">Rifai il questionario</a></p>
+</main>
+
+<footer class="wrap foot">
+  <p><b>Uno di Uno</b> · Un progetto di <a href="/chi-sono/">Francesco Maragliulo</a>, psicologo iscritto all'Ordine degli Psicologi della Lombardia (n. 27664) e coach.</p>
+  <p>Uno di Uno è un libro di auto-aiuto personalizzato: non è un test psicologico, non è una valutazione e non sostituisce un percorso con un professionista. In caso di emergenza chiama il 112.</p>
+  <p><a href="/uno-di-uno/metodo/">Il metodo</a> · <a href="#" data-cancella>Cancella le mie risposte</a> · <a href="#" data-esci>Esci dall'anteprima</a></p>
+</footer>
+<script src="/uno-di-uno/assets/udu.js"></script>
+<script src="/uno-di-uno/assets/engine.js"></script>
+<script src="/uno-di-uno/assets/content.js"></script>
+<script src="/uno-di-uno/assets/book.js"></script>
+<script>
+(function () {
+  var s = UDUStore.get();
+  var a = Object.assign({ genere: s.genere }, s.risposte || {});
+  if (!s.completato || !UDU.complete(a)) { location.replace(s.consenso ? '/uno-di-uno/questionario/' : '/uno-di-uno/inizia/'); return; }
+  var p = UDU.score(a), M = window.UDU_CONTENT.moduli, g = p.genere;
+  var X = function (t) { return UDUBook.inline(t, g); };
+  var lab = function (id) { return X(M[id].etichetta); };
+  var low = function (h) { return h.replace(/^(Il|La|Lo) /, function (m) { return m.toLowerCase(); }); };
+  var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var meter = function (x, l, r) { return '<div class="meter"><i style="left:' + (Math.max(0, Math.min(1, x)) * 100).toFixed(1) + '%"></i></div><div class="meter-l"><span>' + l + '</span><span>' + r + '</span></div>'; };
+  var INT = { marcato: 'tendenza marcata', moderato: 'tendenza moderata', bilanciato: 'profilo bilanciato' };
+
+  var S = M[p.moduli.stress];
+  document.getElementById('h1').innerHTML = (s.nome ? esc(s.nome) + ', sotto' : 'Sotto') + ' pressione il tuo modo prevalente è <span class="hl">' + low(X(S.etichetta)) + '</span>';
+  document.getElementById('lead').innerHTML = X(S.sintesi) + (p.moduli.secondario ? ' Accanto a questo emerge anche ' + low(X(M[p.moduli.secondario].etichetta)) + ', come modo secondario.' : '');
+
+  var notes = [];
+  if (p.attenzione) notes.push('<div class="callout"><p><b>Una nota sul tuo momento.</b> Hai indicato un carico ' + (p.carico >= 4 ? 'molto pesante' : 'pesante') + '. Un libro può aiutarti a mettere ordine, ma non è fatto per reggere da solo un peso vicino al limite. Se da settimane sonno, umore o energia non tornano, parlane con il tuo medico o con uno psicologo. In caso di emergenza chiama il 112.</p></div>');
+  if (!p.qualita.nitida) notes.push('<div class="notice"><p><b>Un profilo poco nitido.</b> ' + (p.qualita.uguali ? 'Hai dato la stessa risposta a tutte le affermazioni.' : 'In diversi punti le risposte si contraddicono: alcune affermazioni dicono la stessa cosa in positivo e in negativo.') + ' Succede, soprattutto se si risponde in fretta. Il libro si può comporre lo stesso, ma ti descriverà meno bene: se vuoi, <a href="/uno-di-uno/inizia/">rifai il questionario</a> con calma.</p></div>');
+  document.getElementById('notes').innerHTML = notes.join('');
+
+  var D = M[p.moduli.decisione], C = M[p.moduli.conflitto], E = M[p.moduli.energia], MO = M[p.moduli.motivazione], MI = M[p.moduli.missione];
+  var row = function (l, v, syn, extra) { return '<div class="row"><div class="lab">' + l + '</div><div><div class="v">' + v + '</div><div class="s">' + syn + '</div>' + (extra || '') + '</div></div>'; };
+  var bip = function (d, a, b) { return meter((1 - d.n) / 2, lab(a), lab(b)) + '<div class="s" style="font-size:13px">' + INT[d.intensita] + '</div>'; };
+  document.getElementById('spec').innerHTML = [
+    row('Alimentazione · cap. 2', lab(p.moduli.energia), X(E.sintesi), bip(p.energia, 'energia-E', 'energia-I')),
+    row('Sotto carico · cap. 3', lab(p.moduli.stress), X(S.sintesi)),
+    row('Decisioni · cap. 4', lab(p.moduli.decisione), X(D.sintesi), bip(p.decisione, 'decisione-A', 'decisione-N')),
+    row('Disaccordi · cap. 5', lab(p.moduli.conflitto), X(C.sintesi), bip(p.conflitto, 'conflitto-D', 'conflitto-P')),
+    row('Carburante · cap. 6', lab(p.moduli.motivazione), X(MO.sintesi)),
+    row('Missione in corso · cap. 7', lab(p.moduli.missione), X(MI.sintesi)),
+  ].join('');
+
+  var FASCIA = { basso: 'Fascia bassa', medio: 'Fascia centrale', alto: 'Fascia alta' };
+  document.getElementById('tratti').innerHTML = ['E', 'A', 'C', 'N', 'O'].map(function (t) {
+    var m = M['tratto-' + t], tr = p.tratti[t];
+    return row(X(m.titolo), FASCIA[tr.fascia], X(m.fascia[tr.fascia]), meter((tr.media - 1) / 4, X(m.basso), X(m.alto)));
+  }).join('');
+
+  var f = document.getElementById('f'), tn = document.getElementById('tn');
+  f.nome.value = s.nome || '';
+  f.obiettivo.value = s.obiettivo || '';
+  var paint = function () { tn.textContent = f.nome.value.trim() || 'Il tuo nome'; };
+  paint();
+  f.nome.addEventListener('input', paint);
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nome = f.nome.value.trim();
+    if (!nome) { document.getElementById('msg').textContent = 'Scrivi il nome da stampare in copertina.'; f.nome.focus(); return; }
+    UDUStore.set({ nome: nome, obiettivo: f.obiettivo.value.trim() });
+    location.href = '/uno-di-uno/libro/';
+  });
+
+  var code = s.codice || UDU.encode(a);
+  document.getElementById('code').textContent = code;
+  document.getElementById('copy').addEventListener('click', function () {
+    var b = this;
+    (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.reject()).then(function () { b.textContent = 'Copiato'; }, function () { b.textContent = 'Selezionalo e copia'; });
+  });
+})();
+</script>
+</body>
+</html>

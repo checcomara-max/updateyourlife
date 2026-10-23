@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/uno-di-uno/assets/gate.js"></script>
+<title>Uno di Uno · Il tuo libro</title>
+<meta name="description" content="Il tuo libro Uno di Uno è pronto: leggilo qui o scarica il PDF in formato A5.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2317404A%22/%3E%3Ccircle cx=%2222%22 cy=%2216%22 r=%223.5%22 fill=%22%23B4603A%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preload" href="/uno-di-uno/assets/fonts/literata-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261023">
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="wrap top">
+  <a class="brand" href="/uno-di-uno/scopri/">Uno di Uno</a>
+  <nav aria-label="Uno di Uno"><a href="/uno-di-uno/profilo/">Il tuo profilo</a><a href="/uno-di-uno/metodo/">Il metodo</a><span class="badge">Il tuo libro</span></nav>
+</header>
+<div class="toolbar">
+  <div class="wrap">
+    <span class="mono" id="meta"></span>
+    <span style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn ghost small" href="/uno-di-uno/profilo/">Modifica nome o obiettivo</a>
+      <button class="btn small" type="button" id="dl">Scarica il PDF</button>
+    </span>
+  </div>
+</div>
+<main id="main" class="wrap">
+  <div class="r-head narrow" style="margin:24px auto 0">
+    <p class="mono">Edizione 1 di 1</p>
+    <h1 id="h1">Il tuo libro è pronto.</h1>
+    <p>Puoi leggerlo qui sotto oppure scaricarlo in PDF, formato A5, pronto da stampare. Il file si compone su questo dispositivo: nessuna risposta lascia il tuo browser.</p>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </div>
+  <div class="book" id="book" aria-label="Anteprima del libro"></div>
+  <div class="cta-row narrow" style="margin:40px auto 0;justify-content:center">
+    <button class="btn" type="button" id="dl2">Scarica il PDF</button>
+    <a class="btn ghost" href="/uno-di-uno/inizia/">Rifai il questionario</a>
+  </div>
+</main>
+<footer class="wrap foot">
+  <p><b>Uno di Uno</b> · Un progetto di <a href="/chi-sono/">Francesco Maragliulo</a>, psicologo iscritto all'Ordine degli Psicologi della Lombardia (n. 27664) e coach.</p>
+  <p>Uno di Uno è un libro di auto-aiuto personalizzato: non è un test psicologico, non è una valutazione e non sostituisce un percorso con un professionista. In caso di emergenza chiama il 112.</p>
+  <p><a href="/uno-di-uno/metodo/">Il metodo</a> · <a href="#" data-cancella>Cancella le mie risposte</a> · <a href="#" data-esci>Esci dall'anteprima</a></p>
+</footer>
+<script src="/uno-di-uno/assets/udu.js"></script>
+<script src="/uno-di-uno/assets/engine.js"></script>
+<script src="/uno-di-uno/assets/content.js"></script>
+<script src="/uno-di-uno/assets/book.js"></script>
+<script>
+(function () {
+  var s = UDUStore.get();
+  var a = Object.assign({ genere: s.genere }, s.risposte || {});
+  if (!s.completato || !UDU.complete(a)) { location.replace(s.consenso ? '/uno-di-uno/questionario/' : '/uno-di-uno/inizia/'); return; }
+  if (!s.nome) { location.replace('/uno-di-uno/profilo/'); return; }
+  var status = document.getElementById('status');
+  var show = function (cls, t) { status.className = 'status ' + cls; status.textContent = t; };
+  var code = s.codice || UDU.encode(a);
+  // La data di composizione resta quella del primo libro composto con queste risposte
+  var when = s.composto && s.composto.codice === code ? new Date(s.composto.data) : new Date();
+  if (!s.composto || s.composto.codice !== code) UDUStore.set({ composto: { codice: code, data: when.toISOString() } });
+  var book;
+  try {
+    book = UDUBook.compose(UDU.score(a), { nome: s.nome, obiettivo: s.obiettivo }, { code: code, now: when });
+  } catch (e) { show('err', 'Non sono riuscito a comporre il libro: ' + e.message); return; }
+  document.getElementById('book').innerHTML = UDUBook.toHTML(book);
+  document.getElementById('h1').textContent = book.user.nome + ', il tuo libro è pronto.';
+  document.getElementById('meta').textContent = 'N. ' + book.opts.serie + ' · ' + book.opts.data;
+  document.title = 'Uno di Uno · ' + book.user.nome + '. Istruzioni per l’uso';
+
+  var loading = null;
+  function loadPdfmake() {
+    if (window.pdfMake) return Promise.resolve();
+    if (loading) return loading;
+    loading = new Promise(function (res, rej) {
+      var sc = document.createElement('script');
+      sc.src = '/uno-di-uno/assets/vendor/pdfmake.min.js';
+      sc.onload = res; sc.onerror = function () { loading = null; rej(new Error('impossibile caricare il generatore PDF')); };
+      document.head.appendChild(sc);
+    });
+    return loading;
+  }
+  var busy = false;
+  async function download() {
+    if (busy) return;
+    busy = true;
+    var btns = [document.getElementById('dl'), document.getElementById('dl2')];
+    btns.forEach(function (b) { b.disabled = true; b.textContent = 'Preparo il PDF…'; });
+    show('ok', 'Sto componendo il PDF: ci vogliono pochi secondi.');
+    try {
+      await loadPdfmake();
+      await UDUBook.downloadPDF(book, location.origin + '/uno-di-uno/assets/fonts/');
+      show('ok', 'Fatto: il file ' + book.filename + ' è nei tuoi download.');
+    } catch (e) {
+      show('err', 'Il PDF non è stato creato (' + e.message + '). Riprova; se il problema resta, prova con un altro browser.');
+    }
+    btns.forEach(function (b) { b.disabled = false; b.textContent = 'Scarica il PDF'; });
+    busy = false;
+  }
+  document.getElementById('dl').addEventListener('click', download);
+  document.getElementById('dl2').addEventListener('click', download);
+  // Per i test automatici
+  window.__UDU_BOOK = book;
+})();
+</script>
+</body>
+</html>
