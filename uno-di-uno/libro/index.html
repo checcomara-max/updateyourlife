@@ -49,7 +49,7 @@
 <script src="/uno-di-uno/assets/content.js"></script>
 <script src="/uno-di-uno/assets/book.js"></script>
 <script>
-(function () {
+UDUContent.load().then(function () {
   var s = UDUStore.get();
   var a = Object.assign({ genere: s.genere }, s.risposte || {});
   if (!s.completato || !UDU.complete(a)) { location.replace(s.consenso ? '/uno-di-uno/questionario/' : '/uno-di-uno/inizia/'); return; }
@@ -102,7 +102,7 @@
   document.getElementById('dl2').addEventListener('click', download);
   // Per i test automatici
   window.__UDU_BOOK = book;
-})();
+}).catch(function (e) { var m = document.getElementById('main'); if (m) m.insertAdjacentHTML('afterbegin', '<p class="status err" style="display:block;margin-top:16px">Non riesco ad aprire la libreria (' + e.message + '). Torna alla <a href="/uno-di-uno/">pagina di accesso</a> e inserisci di nuovo la password.</p>'); });
 </script>
 </body>
 </html>

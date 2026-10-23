@@ -2,7 +2,29 @@
 
 Sezione riservata di updateyourlife.it: `www.updateyourlife.it/uno-di-uno/`. La pagina pubblica mostra solo "Work in progress · Available soon" con un campo password; con la password si entra nel percorso completo.
 
-Questa cartella (`_sorgenti/`) non viene pubblicata da GitHub Pages (Jekyll ignora le cartelle che iniziano con `_`) e su Vercel rimanda a `/uno-di-uno/`. Il repository però è **pubblico**: tutto ciò che sta qui è leggibile su GitHub.
+Questa cartella (`_sorgenti/`) non viene pubblicata da GitHub Pages (Jekyll ignora le cartelle che iniziano con `_`) e su Vercel rimanda a `/uno-di-uno/`.
+
+## Libreria cifrata (da ottobre 2026)
+
+I testi del libro non sono più in chiaro né nel repository né sul sito. Nel repo ci sono solo due file cifrati con la password dell'anteprima (PBKDF2-SHA256, 310.000 iterazioni → AES-256-GCM):
+
+- `uno-di-uno/assets/content.js` — la libreria che il browser decifra dopo la password;
+- `uno-di-uno/_sorgenti/contenuti.enc` — i file `.md` originali, per poterli riaprire e modificare.
+
+La password **non è scritta da nessuna parte nel repository**: chi deve modificare i testi la chiede a Francesco. Dalla password si ricavano sia la chiave sia l'impronta che sta in `assets/gate.js`, quindi l'impronta non permette di risalire alla password in tempi utili.
+
+Per modificare i testi:
+
+```
+UDU_PASSWORD='...' node scripts/build-uno-di-uno.mjs --apri     # decifra in _sorgenti/contenuti/ (cartella esclusa da git)
+# modifica i file .md
+UDU_PASSWORD='...' node scripts/build-uno-di-uno.mjs            # valida e ricifra content.js e contenuti.enc
+node scripts/build-uno-di-uno.mjs --check                       # controllo senza password (lo fa anche il CI)
+```
+
+Per cambiare password: `UDU_PASSWORD='nuova' node scripts/build-uno-di-uno.mjs --imposta-password`, poi apri con la vecchia e ricifra con la nuova (`--apri` con la vecchia, poi build con la nuova dopo `--imposta-password`).
+
+Attenzione: le versioni dei testi committate **prima** della cifratura (commit del 23 ottobre 2026 sul ramo `main`) restano leggibili nella cronologia di GitHub finché il repository è pubblico. Per chiuderle davvero: repository privato (GitHub Pro), oppure riscrittura della cronologia (operazione distruttiva, da fare solo consapevolmente).
 
 ## Pagine
 
@@ -24,17 +46,14 @@ Tutte le pagine hanno `noindex, nofollow` (anche via header su Vercel), non sono
 
 - `assets/engine.js` — domande, punteggi, codice profilo (versione `U2`). Unico punto in cui cambiano domande e regole.
 - `assets/book.js` — composizione del libro: modello a blocchi → HTML (schermo) e pdfmake (PDF).
-- `assets/content.js` — **generato**: non si modifica a mano.
-- `_sorgenti/contenuti/*.md` — la libreria dei testi (stessa sintassi del kit: `=== modulo: id ===`, `@@ sezioni`, `[[m|f|n]]`, `{{variabili}}`). Nuovo file `09-tratti.md` (cinque tratti × tre fasce) e nuovi moduli in `00-cornice.md`: `nota-carico`, `nota-metodo`, `@@ bilanciato | decisione-entrambi`.
+- `assets/content.js` — **generato e cifrato**: non si modifica a mano.
+- `_sorgenti/contenuti/*.md` — la libreria dei testi, solo in locale dopo `--apri` (stessa sintassi del kit: `=== modulo: id ===`, `@@ sezioni`, `[[m|f|n]]`, `{{variabili}}`). File `09-tratti.md` (cinque tratti × tre fasce, con `@@ lavoro` e `@@ idea` per fascia) e moduli di cornice: `nota-carico`, `nota-metodo`, `curva-pressione`, `matrice-decisione`, `matrice-conflitto`, `fonti-intro`.
+- Sezioni di arricchimento in ogni modulo di capitolo: `@@ inbreve` (3 righe), `@@ citazione` (una frase), `@@ curiosita | Titolo` (testo + riga finale `Fonte: ...`). Lo script controlla che ci siano. Le fonti finiscono da sole nella pagina "Le fonti delle curiosità" in fondo al libro.
+- Regola per le curiosità: solo ricerche pubblicate e verificabili, fonte completa, nessun numero non presente nello studio, e se un risultato famoso è stato ridimensionato va detto (vedi le marmellate).
 - `assets/vendor/pdfmake.min.js` — pdfmake 0.2.20 (licenza MIT), caricato solo al clic su "Scarica il PDF".
 - `assets/fonts/` — Fraunces, Literata, Inter (SIL OFL): woff2 per lo schermo, ttf per il PDF.
 
-Dopo ogni modifica ai testi:
-
-```
-node scripts/build-uno-di-uno.mjs        # rigenera assets/content.js e controlla moduli, sezioni, parentesi
-node scripts/audit.mjs                   # audit del sito (controlla anche che content.js sia allineato)
-```
+Dopo ogni modifica ai testi: build con la password (sopra) e `node scripts/audit.mjs`.
 
 ## L'impianto teorico (v2)
 
@@ -80,9 +99,9 @@ Da verificare prima del lancio pubblico (non sono pareri legali):
 - **Pagamenti** (fase 2): servono P.IVA/posizione fiscale, termini di vendita, recesso (art. 59 Codice del Consumo per contenuti digitali personalizzati), informativa privacy per Stripe e per il codice profilo (che diventa un dato trattato).
 - **Marchio "Uno di Uno"** e dominio.
 
-## Rischio da conoscere: la libreria è pubblica
+## Rischio residuo
 
-Il repository è pubblico e il libro si compone nel browser: oggi chiunque può leggere l'intera libreria (in `_sorgenti/` su GitHub e in `assets/content.js` dopo aver aperto l'anteprima). Per l'anteprima riservata va bene; prima di vendere conviene:
+La libreria è cifrata, ma chi conosce la password la decifra nel browser, e la cronologia pubblica di GitHub contiene ancora le versioni in chiaro precedenti alla cifratura. Prima di vendere conviene:
 
 1. rendere privato il repository (Vercel funziona anche con repository privati; GitHub Pages da repository privato richiede un piano a pagamento), e
 2. con i pagamenti, spostare la composizione del PDF su una funzione server (Vercel) che riceve il codice profilo dopo il pagamento, così la libreria completa non arriva più al browser. `book.js` è già separato da pagine e motore proprio per questo: gira identico in Node.

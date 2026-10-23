@@ -88,6 +88,17 @@ const UDUBook = (() => {
     const L = (id) => plain(T(mod(id).etichetta));
     const sections = [];
     const sec = (type, blocks, extra = {}) => sections.push({ type, blocks, ...extra });
+    const fonti = [];
+    const addFonte = (cap, titolo, fonte) => fonte.split(/;\s+(?=[A-ZÀ-Ý][\p{L}'-]+,)/u).forEach((f) => { if (!fonti.some((x) => x.f === f)) fonti.push({ cap, t: titolo, f }); });
+    const curios = (M0, cap) => (M0.curiosita || []).map((c) => { addFonte(cap, plain(T(c.titolo)), c.fonte); return { k: 'curio', title: T(c.titolo), b: md(c.testo), fonte: c.fonte }; });
+    // la citazione del capitolo va dopo il secondo paragrafo del testo
+    const bodyWithQuote = (M0) => {
+      const bs = md(M0.body);
+      if (!M0.citazione) return [{ k: 'md', b: bs }];
+      let n = 0, at = bs.length;
+      for (let i = 0; i < bs.length; i++) if (bs[i].t === 'p' && ++n === 2) { at = i + 1; break; }
+      return [{ k: 'md', b: bs.slice(0, at) }, { k: 'quote', r: T(M0.citazione) }, { k: 'md', b: bs.slice(at) }];
+    };
 
     // Copertina
     sec('cover', [{ k: 'cover', nome: user.nome, line: [S, D, C, MO].map((m) => plain(T(m.etichetta))).join(' · '), data: opts.data, serie: opts.serie }]);
@@ -129,29 +140,36 @@ const UDUBook = (() => {
     ];
     const traits = ['E', 'A', 'C', 'N', 'O'].map((t) => {
       const m = mod('tratto-' + t), tr = p.tratti[t];
-      return { name: plain(T(m.titolo)), def: T(m.body), low: plain(T(m.basso)), high: plain(T(m.alto)), x: (tr.media - 1) / 4, band: FASCIA[tr.fascia], text: T(m.fascia[tr.fascia]) };
+      return { name: plain(T(m.titolo)), def: T(m.body), low: plain(T(m.basso)), high: plain(T(m.alto)), x: (tr.media - 1) / 4, band: FASCIA[tr.fascia], text: T(m.fascia[tr.fascia]),
+        lavoro: T(m.lavoro[tr.fascia]), idea: T(m.idea[tr.fascia]) };
     });
     sec('chapter', [chHead(1, 'Il tuo profilo in sintesi', 'Scheda tecnica', ''), { k: 'md', b: md(F('scheda').body) }, { k: 'spec', rows }, ...bilNotes,
-      { k: 'newpage' }, { k: 'h2', r: T(F('tratti-intro').titolo) }, { k: 'md', b: md(F('tratti-intro').body) }, { k: 'traits', rows: traits }]);
+      { k: 'newpage' }, { k: 'h2', r: T(F('tratti-intro').titolo) }, { k: 'md', b: md(F('tratti-intro').body) }, { k: 'traits', rows: traits }, ...curios(F('tratti-intro'), 1)]);
 
-    // 2-6
-    sec('chapter', [chHead(2, 'Alimentazione', E.titolo, E.sintesi), { k: 'md', b: md(E.body) }]);
-    sec('chapter', [chHead(3, 'Comportamento sotto carico', S.titolo, S.sintesi), { k: 'md', b: md(S.body) }, { k: 'box', b: md(S.ruolo[p.ruolo]) },
-      ...(S2 ? [{ k: 'box', b: md(S2.secondario) }] : [])]);
+    // 2-6: ogni capitolo ha In breve, il testo con una citazione, le curiosità dalla ricerca
+    const open = (n, kicker, M0, title, sintesi) => [chHead(n, kicker, title, sintesi), ...(M0.inbreve ? [{ k: 'inbreve', items: M0.inbreve.map(T) }] : [])];
+    const diagram = (id, svg, cap) => { addFonte(cap, plain(T(F(id).titolo)), F(id).fonte); return { k: 'diagram', title: T(F(id).titolo), b: md(F(id).body), svg, fonte: F(id).fonte }; };
+    sec('chapter', [...open(2, 'Alimentazione', E, E.titolo, E.sintesi), ...bodyWithQuote(E), ...curios(E, 2)]);
+    sec('chapter', [...open(3, 'Comportamento sotto carico', S, S.titolo, S.sintesi), ...bodyWithQuote(S),
+      diagram('curva-pressione', svgCurve(plain(T(S.etichetta))), 3), { k: 'box', b: md(S.ruolo[p.ruolo]) },
+      ...(S2 ? [{ k: 'box', b: md(S2.secondario) }] : []), ...curios(S, 3)]);
     const combo = (X, a, b) => ({ k: 'combo', title: T(X.titolo), cx: `${plain(T(a))} × ${plain(T(b))}`, b: md(X.body) });
-    sec('chapter', [chHead(4, 'Sistema decisionale', D.titolo, D.sintesi), { k: 'md', b: md(D.body) },
-      ...(p.decisione.entrambi && bil['decisione-entrambi'] ? [{ k: 'box', b: md(bil['decisione-entrambi']) }] : []), combo(SD, S.etichetta, D.etichetta)]);
-    sec('chapter', [chHead(5, 'Interfacce: relazioni e disaccordi', C.titolo, C.sintesi), { k: 'md', b: md(C.body) }, combo(SC, S.etichetta, C.etichetta)]);
-    sec('chapter', [chHead(6, 'Carburante', MO.titolo.replace('Carburante: ', ''), MO.sintesi), { k: 'md', b: md(MO.body) }]);
+    sec('chapter', [...open(4, 'Sistema decisionale', D, D.titolo, D.sintesi), ...bodyWithQuote(D),
+      diagram('matrice-decisione', svgMatrix('decisione', p.decisione.intuitivo, p.decisione.razionale), 4),
+      ...(p.decisione.entrambi && bil['decisione-entrambi'] ? [{ k: 'box', b: md(bil['decisione-entrambi']) }] : []), ...curios(D, 4), combo(SD, S.etichetta, D.etichetta)]);
+    sec('chapter', [...open(5, 'Interfacce: relazioni e disaccordi', C, C.titolo, C.sintesi), ...bodyWithQuote(C),
+      diagram('matrice-conflitto', svgMatrix('conflitto', p.conflitto.relazione, p.conflitto.assertivita), 5), ...curios(C, 5), combo(SC, S.etichetta, C.etichetta)]);
+    sec('chapter', [...open(6, 'Carburante', MO, MO.titolo.replace('Carburante: ', ''), MO.sintesi), ...bodyWithQuote(MO), ...curios(MO, 6)]);
 
     // 7. Missione + piano personale
     const PP = F('piano-personale');
-    sec('chapter', [chHead(7, 'Missione in corso', MI.etichetta, MI.sintesi), { k: 'md', b: md(MI.body) }, { k: 'box', b: md(MI.rischio[p.stress.primary]) },
+    sec('chapter', [...open(7, 'Missione in corso', MI, MI.etichetta, MI.sintesi), { k: 'md', b: md(MI.body) }, { k: 'box', b: md(MI.rischio[p.stress.primary]) }, ...curios(MI, 7),
       { k: 'newpage' }, { k: 'h3', r: T(PP.titolo) }, { k: 'md', b: md(PP.body.split('\n1.')[0]) },
       { k: 'plan', items: [
         { q: '1. Il risultato a 90 giorni: come ti accorgerai di averlo raggiunto?', h: 4 },
-        { q: '2. L’indicatore da controllare ogni due settimane', h: 3 },
-        { q: '3. La prima azione, entro sette giorni', h: 3 }] }]);
+        { q: '2. L’indicatore da controllare ogni due settimane', h: 2 },
+        { q: '3. La prima azione, entro sette giorni', h: 2 },
+        { q: '4. Il tuo «se… allora…»: se succede ______, allora io ______', h: 3 }] }, ...curios(PP, 7)]);
 
     // 8. Protocollo
     const prac = [[S, 3], [E, 2], [D, 4], [C, 5], [MO, 6]];
@@ -176,6 +194,7 @@ const UDUBook = (() => {
 
     // Chiusura, metodo, avvertenze
     sec('page', letter('lettera-chiusura'));
+    sec('page', [{ k: 'title', r: T(F('fonti-intro').titolo) }, { k: 'small', b: md(F('fonti-intro').body) }, { k: 'fonti', items: fonti }]);
     sec('page', [{ k: 'title', r: T(F('nota-metodo').titolo) }, { k: 'small', b: md(F('nota-metodo').body) }]);
     sec('page', [{ k: 'title', r: T(F('avvertenze').titolo) }, { k: 'small', b: md(F('avvertenze').body) },
       { k: 'colophon', lines: [
@@ -189,6 +208,52 @@ const UDUBook = (() => {
     return { sections, user, opts, filename: `UnodiUno_${user.nome.replace(/[^\p{L}\p{N}]+/gu, '')}_${opts.serie}.pdf` };
   }
   function chHead(n, kicker, title, sintesi) { return { k: 'chhead', n: pad(n), kicker, title: T(title), sintesi: sintesi ? T(sintesi) : null }; }
+
+  // ---------- Diagrammi (SVG unico per schermo e PDF) ----------
+  const xesc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const SV = { teal: '#17404A', acc: '#B4603A', muted: '#6C7478', rule: '#D8D2C8', tint: '#EAF1F0', paper: '#F7F2EB' };
+  const txt = (x, y, t, o = {}) => `<text x="${x}" y="${y}" font-family="${o.f || 'Inter'}" font-size="${o.s || 8}"${o.i ? ' font-style="italic"' : ''}${o.w ? ` font-weight="${o.w}"` : ''} fill="${o.c || SV.muted}"${o.a ? ` text-anchor="${o.a}"` : ''}${o.ls ? ` letter-spacing="${o.ls}"` : ''}>${xesc(t)}</text>`;
+  // Curva di Yerkes-Dodson con il punto in cui si accende il pattern del lettore
+  function svgCurve(pattern) {
+    const name = pattern.length > 16 ? pattern.slice(0, 16) + '…' : pattern;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 196" width="320" height="196">
+<rect x="118" y="16" width="104" height="144" fill="${SV.tint}"/>
+<line x1="30" y1="160" x2="308" y2="160" stroke="${SV.muted}" stroke-width="0.8"/>
+<line x1="30" y1="160" x2="30" y2="14" stroke="${SV.muted}" stroke-width="0.8"/>
+<path d="M40 155 C110 -5 230 -5 300 155" fill="none" stroke="${SV.teal}" stroke-width="2"/>
+<circle cx="240" cy="65" r="5" fill="${SV.acc}"/>
+<line x1="242" y1="60" x2="258" y2="48" stroke="${SV.acc}" stroke-width="0.8"/>
+${txt(316, 31, 'Qui si accende', { s: 7.5, c: SV.acc, a: 'end' })}
+${txt(316, 44, name, { f: 'Fraunces', s: 10, i: 1, c: SV.acc, a: 'end' })}
+${txt(36, 12, 'PRESTAZIONE', { s: 6.5, ls: 1 })}
+${txt(308, 186, 'PRESSIONE', { s: 6.5, ls: 1, a: 'end' })}
+${txt(74, 173, 'Troppo poca', { s: 7.5, a: 'middle' })}
+${txt(170, 173, 'Zona utile', { f: 'Fraunces', s: 10, i: 1, c: SV.teal, a: 'middle' })}
+${txt(266, 173, 'Oltre il picco', { s: 7.5, a: 'middle' })}
+</svg>`;
+  }
+  // Matrice a due assi (scala 1-5 su entrambi) con il punto del lettore
+  function svgMatrix(kind, xv, yv) {
+    const L = kind === 'decisione'
+      ? { x: 'INTUITO', y: 'ANALISI', q: ['Analisi', 'Doppio motore', 'Cerca conferme', 'Intuito'], c: null }
+      : { x: 'ATTENZIONE ALLA RELAZIONE', y: 'ASSERTIVITÀ', q: ['Competere', 'Collaborare', 'Evitare', 'Accomodare'], c: 'Compromesso' };
+    const x0 = 46, x1 = 290, y0 = 12, y1 = 212, W = x1 - x0, H = y1 - y0;
+    const cx = x0 + W / 2, cy = y0 + H / 2;
+    const px = x0 + Math.max(0.04, Math.min(0.96, (xv - 1) / 4)) * W, py = y1 - Math.max(0.04, Math.min(0.96, (yv - 1) / 4)) * H;
+    const q = (t, x, y, a) => txt(x, y, t, { f: 'Fraunces', s: 11, i: 1, c: SV.teal, a });
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240">
+<rect x="${x0}" y="${y0}" width="${W}" height="${H}" fill="${SV.paper}" stroke="${SV.rule}" stroke-width="0.8"/>
+<line x1="${cx}" y1="${y0}" x2="${cx}" y2="${y1}" stroke="${SV.rule}" stroke-width="0.8" stroke-dasharray="3 3"/>
+<line x1="${x0}" y1="${cy}" x2="${x1}" y2="${cy}" stroke="${SV.rule}" stroke-width="0.8" stroke-dasharray="3 3"/>
+${q(L.q[0], x0 + 8, y0 + 18)}${q(L.q[1], x1 - 8, y0 + 18, 'end')}${q(L.q[2], x0 + 8, y1 - 9)}${q(L.q[3], x1 - 8, y1 - 9, 'end')}
+${L.c ? `<circle cx="${cx}" cy="${cy}" r="24" fill="none" stroke="${SV.rule}" stroke-width="0.8"/>${txt(cx, cy - 28, L.c, { f: 'Fraunces', s: 9, i: 1, c: SV.teal, a: 'middle' })}` : ''}
+<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="6.5" fill="${SV.acc}"/>
+${txt(px.toFixed(1), (py + 3).toFixed(1), 'tu', { s: 7, w: 'bold', c: '#FFFFFF', a: 'middle' })}
+${txt(x0, 228, 'poco', { s: 7 })}${txt(x1, 228, 'molto', { s: 7, a: 'end' })}${txt(cx, 228, L.x, { s: 6.5, ls: 1, a: 'middle' })}
+${txt(36, y1, 'poco', { s: 7, a: 'end' })}${txt(36, y0 + 7, 'molto', { s: 7, a: 'end' })}
+<g transform="rotate(-90 26 ${cy})">${txt(26, cy, L.y, { s: 6.5, ls: 1, a: 'middle' })}</g>
+</svg>`;
+  }
 
   // ---------- HTML ----------
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -223,15 +288,28 @@ const UDUBook = (() => {
       case 'spec': return `<div class="spec">${b.rows.map((r) => `<div class="row"><div class="lab">${esc(r.lab)}</div><div><div class="val">${hr(r.val)}</div><div class="syn">${hr(r.syn)}</div>${hviz(r.viz)}</div><div class="ref">${esc(r.ref)}</div></div>`).join('')}</div>`;
       case 'traits': return `<div class="traits">${b.rows.map((r) => `<div class="trait"><div class="tn">${esc(r.name)}</div><div class="td">${hr(r.def)}</div>
         <div class="bar"><span class="line"></span><span class="mk" style="left:${pct(r.x)}"></span></div><div class="bar-l"><span>${esc(r.low)}</span><span>${esc(r.high)}</span></div>
-        <div class="int">${esc(r.band)}</div><p>${hr(r.text)}</p></div>`).join('')}</div>`;
+        <div class="int">${esc(r.band)}</div><p>${hr(r.text)}</p><p class="tl">${hr(r.lavoro)}</p><p class="ti">${hr(ideaRuns(r.idea))}</p></div>`).join('')}</div>`;
       case 'prac': return b.items.map((i) => `<div class="prac"><div class="f">${esc(i.f)}</div><div><div class="pt">${hr(i.title)}</div><p>${hr(i.text)}</p><div class="pr">${esc(i.from)}</div></div></div>`).join('');
       case 'probs': return b.groups.map((g) => `<div class="pgroup">${esc(g.g)}</div>${g.items.map((i) => `<div class="prob"><p class="q">${hr(i.q)}</p><p class="a">${hr(i.a)}</p></div>`).join('')}`).join('');
       case 'card': return `<div class="card"><div class="ch">${esc(b.title)}</div><div class="cs">${esc(b.sub)}</div>${b.secs.map((s) => `<div class="sec">${esc(s.t)}</div><ul>${s.items.map((i) => `<li>${hr(i)}</li>`).join('')}</ul>`).join('')}<div class="cf">${esc(b.foot)}</div></div>`;
       case 'work': return b.items.map((i) => `<div class="wq"><p class="qq">${i.n}. ${hr(i.q)}</p><div class="lines"></div></div>`).join('');
       case 'plan': return b.items.map((i) => `<div class="wq"><p class="qq">${esc(i.q)}</p><div class="lines" style="--n:${i.h}"></div></div>`).join('');
       case 'colophon': return `<div class="colophon">${b.lines.map(esc).join('<br>')}</div>`;
+      case 'inbreve': return `<div class="inbreve"><div class="k">In breve</div><ol>${b.items.map((i) => `<li>${hr(i)}</li>`).join('')}</ol></div>`;
+      case 'quote': return `<blockquote class="quote">${hr(b.r)}</blockquote>`;
+      case 'curio': return `<aside class="curio"><div class="k">Lo sapevi? · Dalla ricerca</div><div class="ct">${hr(b.title)}</div>${hblocks(b.b)}<div class="src">${esc(b.fonte)}</div></aside>`;
+      case 'diagram': return `<figure class="diagram"><h3>${hr(b.title)}</h3>${hblocks(b.b)}<div class="svg">${b.svg}</div><figcaption>${esc(b.fonte)}</figcaption></figure>`;
+      case 'fonti': return `<ol class="fonti">${b.items.map((i) => `<li><span class="ft">Cap. ${i.cap} · ${esc(i.t)}</span>${esc(i.f)}</li>`).join('')}</ol>`;
       default: return '';
     }
+  }
+  // "Un'idea per te:" in grassetto
+  function ideaRuns(r) {
+    const first = r[0];
+    if (!first || first.b || first.i) return r;
+    const i = first.text.indexOf(':');
+    if (i < 0) return r;
+    return [{ text: first.text.slice(0, i + 1), b: true }, { text: first.text.slice(i + 1) }, ...r.slice(1)];
   }
   const toHTML = (book) => book.sections.map((s) => `<section class="bk-${s.type}">${s.blocks.map(hblock).join('')}</section>`).join('');
 
@@ -250,7 +328,7 @@ const UDUBook = (() => {
       InterMid: { normal: f('inter-latin-500-normal'), bold: f('inter-latin-600-normal'), italics: f('inter-latin-500-normal'), bolditalics: f('inter-latin-600-normal') },
     };
   }
-  const pr = (r) => r.map((x) => ({ text: x.text, bold: !!x.b, italics: !!x.i }));
+  const pr = (r) => r.map((x) => ({ text: x.text, ...(x.b ? { bold: true } : {}), ...(x.i ? { italics: true } : {}) }));
   const up = (s) => String(s).toUpperCase();
   const kick = (s, color = COL.muted, size = 7, extra = {}) => ({ text: up(s), font: 'Inter', bold: true, fontSize: size, characterSpacing: 1.1, color, ...extra });
   const rule = (w = W, m = [0, 4, 0, 4], color = COL.rule) => ({ canvas: [{ type: 'line', x1: 0, y1: 0, x2: w, y2: 0, lineWidth: 0.5, lineColor: color }], margin: m });
@@ -336,7 +414,9 @@ const UDUBook = (() => {
         { text: pr(r.def), italics: true, fontSize: 8, lineHeight: 1.2, color: COL.muted, margin: [0, 1, 0, 0] },
         ...pbar(r.x, r.low, r.high, W),
         { text: r.band, font: 'InterMid', fontSize: 6.8, color: COL.accent, margin: [0, 2, 0, 3] },
-        { text: pr(r.text), fontSize: 9, lineHeight: 1.25 }, rule(W, [0, 7, 0, 7])], unbreakable: true }));
+        { text: pr(r.text), fontSize: 9, lineHeight: 1.25 },
+        { text: pr(r.lavoro), fontSize: 8.6, lineHeight: 1.25, color: COL.ink, margin: [0, 3, 0, 0] },
+        { text: pr(ideaRuns(r.idea)), fontSize: 8.6, lineHeight: 1.25, color: COL.teal, margin: [0, 3, 0, 0] }, rule(W, [0, 7, 0, 7])], unbreakable: true }));
       case 'prac': return b.items.map((i) => ({ stack: [{ columns: [
         { width: 70, text: up(i.f), font: 'Inter', bold: true, fontSize: 6.6, characterSpacing: 0.8, color: COL.accent, margin: [0, 2, 0, 0] },
         { stack: [{ text: pr(i.title), font: 'Fraunces', bold: true, fontSize: 10.5, color: COL.teal, margin: [0, 0, 0, 3] }, { text: pr(i.text), fontSize: 9.4 }, { text: i.from, font: 'InterMid', fontSize: 7, color: COL.muted, margin: [0, 3, 0, 0] }] }], columnGap: 10 },
@@ -355,6 +435,31 @@ const UDUBook = (() => {
       case 'work': return b.items.map((i) => ({ stack: [{ text: [`${i.n}. `, ...pr(i.q)], bold: true, fontSize: 9.8, margin: [0, 0, 0, 2] }, linesCanvas(5)], unbreakable: true }));
       case 'plan': return b.items.map((i) => ({ stack: [{ text: i.q, bold: true, fontSize: 9.6, margin: [0, 0, 0, 2] }, linesCanvas(i.h)], unbreakable: true }));
       case 'colophon': return [rule(W, [0, 24, 0, 8]), { text: b.lines.join('\n'), font: 'Inter', fontSize: 7, lineHeight: 1.45, color: COL.muted }];
+      case 'inbreve': return [{ stack: [
+        rule(W, [0, 0, 0, 7], COL.accent), kick('In breve', COL.accent, 7, { margin: [0, 0, 0, 5] }),
+        ...b.items.map((r, i) => ({ columns: [{ width: 16, text: String(i + 1), font: 'Fraunces', fontSize: 12, color: COL.accent, lineHeight: 1 }, { text: pr(r), fontSize: 9.4, lineHeight: 1.25 }], margin: [0, 0, 0, 4] })),
+        rule(W, [0, 4, 0, 14])], unbreakable: true }];
+      case 'quote': return [{ stack: [
+        { canvas: [{ type: 'line', x1: (W - 60) / 2 - 20, y1: 0, x2: (W - 60) / 2 + 20, y2: 0, lineWidth: 1, lineColor: COL.accent }], margin: [30, 0, 30, 8] },
+        { text: pr(b.r).map((x) => ({ ...x, italics: true })), font: 'Fraunces', fontSize: 15, lineHeight: 1.2, color: COL.teal, alignment: 'center' }],
+        margin: [30, 10, 30, 16], unbreakable: true }];
+      case 'curio': return [{ table: { widths: ['*'], body: [[{ stack: [
+        kick('Lo sapevi? · Dalla ricerca', COL.teal, 6.4, { margin: [0, 0, 0, 3] }),
+        { text: pr(b.title), font: 'Fraunces', bold: true, fontSize: 11, color: COL.teal, lineHeight: 1.15, margin: [0, 0, 0, 4] },
+        ...pblocks(b.b, 9).map((x) => ({ ...x, lineHeight: 1.28 })),
+        { text: b.fonte, font: 'Inter', fontSize: 6.4, lineHeight: 1.3, color: COL.muted, margin: [0, 1, 0, 0] }], fillColor: '#EAF1F0' }]] },
+        layout: { hLineWidth: () => 0, vLineWidth: (i) => (i === 0 ? 2.4 : 0), vLineColor: () => COL.teal, paddingLeft: () => 12, paddingRight: () => 10, paddingTop: () => 9, paddingBottom: () => 8 },
+        margin: [0, 8, 0, 8], unbreakable: true }];
+      case 'diagram': {
+        // titolo e testo scorrono; solo il disegno con la sua fonte resta intero sulla stessa pagina
+        const [first, ...rest] = pblocks(b.b, 9.4);
+        return [{ stack: [{ text: pr(b.title), font: 'Fraunces', bold: true, fontSize: 12, color: COL.teal, margin: [0, 10, 0, 4] }, first], unbreakable: true }, ...rest,
+          { stack: [{ svg: b.svg, width: Math.min(W, 290), alignment: 'center', margin: [0, 4, 0, 4] },
+            { text: b.fonte, font: 'Inter', fontSize: 6.4, color: COL.muted, lineHeight: 1.3 }, rule(W, [0, 10, 0, 6])], unbreakable: true }];
+      }
+      case 'fonti': return b.items.map((i, n) => ({ stack: [
+        { text: `${n + 1}. Cap. ${i.cap} · ${i.t}`, font: 'Inter', bold: true, fontSize: 7, color: COL.ink },
+        { text: i.f, font: 'Inter', fontSize: 7, lineHeight: 1.3, color: COL.muted, margin: [0, 1, 0, 6] }], unbreakable: true }));
       default: return [];
     }
   }

@@ -35,7 +35,7 @@
   <form class="teaser" id="f" style="margin-top:40px" novalidate>
     <p class="mono">Il tuo libro</p>
     <h2>Componi «<span id="tn">Il tuo nome</span>. Istruzioni per l'uso»</h2>
-    <p>Circa 50 pagine in 11 capitoli, con il piano di 90 giorni, le cinque pratiche, la pagina da condividere e le domande scelte per te.</p>
+    <p>Circa 70 pagine in 11 capitoli: il piano di 90 giorni, le cinque pratiche, tre mappe del tuo profilo, una quindicina di curiosità dalla ricerca, la pagina da condividere e le domande scelte per te.</p>
     <div class="field" style="max-width:none">
       <label for="nome">Nome da stampare in copertina</label>
       <input id="nome" maxlength="40" required autocomplete="given-name">
@@ -67,7 +67,7 @@
 <script src="/uno-di-uno/assets/content.js"></script>
 <script src="/uno-di-uno/assets/book.js"></script>
 <script>
-(function () {
+UDUContent.load().then(function () {
   var s = UDUStore.get();
   var a = Object.assign({ genere: s.genere }, s.risposte || {});
   if (!s.completato || !UDU.complete(a)) { location.replace(s.consenso ? '/uno-di-uno/questionario/' : '/uno-di-uno/inizia/'); return; }
@@ -86,6 +86,8 @@
   var notes = [];
   if (p.attenzione) notes.push('<div class="callout"><p><b>Una nota sul tuo momento.</b> Hai indicato un carico ' + (p.carico >= 4 ? 'molto pesante' : 'pesante') + '. Un libro può aiutarti a mettere ordine, ma non è fatto per reggere da solo un peso vicino al limite. Se da settimane sonno, umore o energia non tornano, parlane con il tuo medico o con uno psicologo. In caso di emergenza chiama il 112.</p></div>');
   if (!p.qualita.nitida) notes.push('<div class="notice"><p><b>Un profilo poco nitido.</b> ' + (p.qualita.uguali ? 'Hai dato la stessa risposta a tutte le affermazioni.' : 'In diversi punti le risposte si contraddicono: alcune affermazioni dicono la stessa cosa in positivo e in negativo.') + ' Succede, soprattutto se si risponde in fretta. Il libro si può comporre lo stesso, ma ti descriverà meno bene: se vuoi, <a href="/uno-di-uno/inizia/">rifai il questionario</a> con calma.</p></div>');
+  var cur = (S.curiosita || [])[0];
+  if (cur) notes.push('<div class="card" style="margin-top:4px"><p class="mono">Lo sapevi? · Dal tuo capitolo 3</p><h3>' + X(cur.titolo) + '</h3><p>' + X(cur.testo) + '</p><p style="font-size:13px">' + esc(cur.fonte) + '</p></div>');
   document.getElementById('notes').innerHTML = notes.join('');
 
   var D = M[p.moduli.decisione], C = M[p.moduli.conflitto], E = M[p.moduli.energia], MO = M[p.moduli.motivazione], MI = M[p.moduli.missione];
@@ -126,7 +128,7 @@
     var b = this;
     (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.reject()).then(function () { b.textContent = 'Copiato'; }, function () { b.textContent = 'Selezionalo e copia'; });
   });
-})();
+}).catch(function (e) { var m = document.getElementById('main'); if (m) m.insertAdjacentHTML('afterbegin', '<p class="status err" style="display:block;margin-top:16px">Non riesco ad aprire la libreria (' + e.message + '). Torna alla <a href="/uno-di-uno/">pagina di accesso</a> e inserisci di nuovo la password.</p>'); });
 </script>
 </body>
 </html>
