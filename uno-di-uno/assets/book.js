@@ -134,7 +134,7 @@ const UDUBook = (() => {
       .filter(([, d]) => d.intensita === 'bilanciato').map(([k]) => ({ k: 'box', b: md(bil[k]) }));
     const rows = [
       { lab: 'Alimentazione', val: T(E.etichetta), syn: T(E.sintesi), ref: 'cap. 2', viz: bip(p.energia, 'energia-E', 'energia-I') },
-      { lab: 'Sotto carico', val: T(S.etichetta), syn: T(S.sintesi), ref: 'cap. 3', viz: { type: 'bars4', items: bars4, note: S2 ? 'Pattern secondario: ' + plain(T(S2.etichetta)) : '' } },
+      { lab: 'Sotto carico', val: T(S.etichetta), syn: T(S.sintesi), ref: 'cap. 3', viz: { type: 'bars4', items: bars4, note: S2 ? 'Pattern secondario · ' + plain(T(S2.etichetta)) : '' } },
       { lab: 'Sistema decisionale', val: T(D.etichetta), syn: T(D.sintesi), ref: 'cap. 4', viz: bip(p.decisione, 'decisione-A', 'decisione-N') },
       { lab: 'Interfacce', val: T(C.etichetta), syn: T(C.sintesi), ref: 'cap. 5', viz: bip(p.conflitto, 'conflitto-D', 'conflitto-P') },
       { lab: 'Carburante', val: T(MO.etichetta), syn: T(MO.sintesi), ref: 'cap. 6', viz: { type: 'dots', items: dots } },
@@ -168,10 +168,10 @@ const UDUBook = (() => {
     sec('chapter', [...open(7, 'Missione in corso', MI, MI.etichetta, MI.sintesi), { k: 'md', b: md(MI.body) }, { k: 'box', b: md(MI.rischio[p.stress.primary]) }, ...curios(MI, 7),
       { k: 'newpage' }, { k: 'h3', r: T(PP.titolo) }, { k: 'md', b: md(PP.body.split('\n1.')[0]) },
       { k: 'plan', items: [
-        { q: '1. Il risultato a 90 giorni: come ti accorgerai di averlo raggiunto?', h: 4 },
-        { q: '2. L’indicatore da controllare ogni due settimane', h: 2 },
-        { q: '3. La prima azione, entro sette giorni', h: 2 },
-        { q: '4. Il tuo «se… allora…»: se succede ______, allora io ______', h: 3 }] }, ...curios(PP, 7)]);
+        { q: '1. Tra 90 giorni, da che cosa capirai di aver raggiunto il risultato?', h: 4 },
+        { q: '2. Quale segnale controllerai ogni due settimane?', h: 2 },
+        { q: '3. Qual è la prima cosa che farai nei prossimi sette giorni?', h: 2 },
+        { q: '4. Completa la frase. Se succede ______, allora io ______.', h: 3 }] }, ...curios(PP, 7)]);
 
     // 8. Protocollo
     const prac = [[S, 3], [E, 2], [D, 4], [C, 5], [MO, 6]];
@@ -204,8 +204,8 @@ const UDUBook = (() => {
         `Composto il ${opts.data} a partire dal profilo ${code}.`,
         `Testi di ${CONFIG.AUTORE_ESTESO}.`,
         `${CONFIG.BRAND} · ${CONFIG.SITO}`,
-        `Prossima revisione consigliata: ${opts.revisione}.`,
-        'Caratteri: Fraunces, Literata, Inter (SIL Open Font License).'] }]);
+        `Ti consiglio di rileggerlo e di rifare il percorso intorno al ${opts.revisione}.`,
+        'Caratteri Fraunces, Literata e Inter, distribuiti con licenza SIL Open Font License.'] }]);
 
     return { sections, user, opts, filename: `UnodiUno_${user.nome.replace(/[^\p{L}\p{N}]+/gu, '')}_${opts.serie}.pdf` };
   }
@@ -299,20 +299,14 @@ ${txt(36, y1, 'poco', { s: 7, a: 'end' })}${txt(36, y0 + 7, 'molto', { s: 7, a: 
       case 'colophon': return `<div class="colophon">${b.lines.map(esc).join('<br>')}</div>`;
       case 'inbreve': return `<div class="inbreve"><div class="k">In breve</div><ol>${b.items.map((i) => `<li>${hr(i)}</li>`).join('')}</ol></div>`;
       case 'quote': return `<blockquote class="quote">${hr(b.r)}</blockquote>`;
-      case 'curio': return `<aside class="curio"><div class="k">Lo sapevi? · Dalla ricerca</div><div class="ct">${hr(b.title)}</div>${hblocks(b.b)}<div class="src">${esc(b.fonte)}</div></aside>`;
+      case 'curio': return `<aside class="curio"><div class="k">Dalla ricerca</div><div class="ct">${hr(b.title)}</div>${hblocks(b.b)}<div class="src">${esc(b.fonte)}</div></aside>`;
       case 'diagram': return `<figure class="diagram"><h3>${hr(b.title)}</h3>${hblocks(b.b)}<div class="svg">${b.svg}</div><figcaption>${esc(b.fonte)}</figcaption></figure>`;
       case 'fonti': return `<ol class="fonti">${b.items.map((i) => `<li><span class="ft">Cap. ${i.cap} · ${esc(i.t)}</span>${esc(i.f)}</li>`).join('')}</ol>`;
       default: return '';
     }
   }
-  // "Un'idea per te:" in grassetto
-  function ideaRuns(r) {
-    const first = r[0];
-    if (!first || first.b || first.i) return r;
-    const i = first.text.indexOf(':');
-    if (i < 0) return r;
-    return [{ text: first.text.slice(0, i + 1), b: true }, { text: first.text.slice(i + 1) }, ...r.slice(1)];
-  }
+  // etichetta in grassetto davanti al suggerimento del tratto
+  const ideaRuns = (r) => [{ text: 'Da provare. ', b: true }, ...r];
   const toHTML = (book) => book.sections.map((s) => `<section class="bk-${s.type}">${s.blocks.map(hblock).join('')}</section>`).join('');
 
   // ---------- PDF (pdfmake) ----------
@@ -446,7 +440,7 @@ ${txt(36, y1, 'poco', { s: 7, a: 'end' })}${txt(36, y0 + 7, 'molto', { s: 7, a: 
         { text: pr(b.r).map((x) => ({ ...x, italics: true })), font: 'Fraunces', fontSize: 15, lineHeight: 1.2, color: COL.teal, alignment: 'center' }],
         margin: [30, 10, 30, 16], unbreakable: true }];
       case 'curio': return [{ table: { widths: ['*'], body: [[{ stack: [
-        kick('Lo sapevi? · Dalla ricerca', COL.teal, 6.4, { margin: [0, 0, 0, 3] }),
+        kick('Dalla ricerca', COL.teal, 6.4, { margin: [0, 0, 0, 3] }),
         { text: pr(b.title), font: 'Fraunces', bold: true, fontSize: 11, color: COL.teal, lineHeight: 1.15, margin: [0, 0, 0, 4] },
         ...pblocks(b.b, 9).map((x) => ({ ...x, lineHeight: 1.28 })),
         { text: b.fonte, font: 'Inter', fontSize: 6.4, lineHeight: 1.3, color: COL.muted, margin: [0, 1, 0, 0] }], fillColor: '#EAF1F0' }]] },
