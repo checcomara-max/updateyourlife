@@ -41,6 +41,16 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - Contatti: WhatsApp +39 331 498 0002, email [francescomaragliulo@gmail.com](mailto:francescomaragliulo@gmail.com).
 - Link "Leggi le recensioni" (home e /chi-sono/): apre direttamente la vista Recensioni della scheda Google (ricerca con parametri `si` e `uds` forniti da Francesco il 19/10/2026). Se smette di funzionare, chiedere a Francesco di riaprire le recensioni dalla scheda e copiare il nuovo indirizzo (togliendo client, sxsrf, ved, biw, bih, dpr).
 
+## Principi di design (adottati da Francesco, ottobre 2026)
+
+Lavorare come un direttore creativo: codice di produzione, un punto di vista chiaro, cura del dettaglio.
+- Il brief vince: estetica, font e palette indicati da Francesco si rispettano anche contro il gusto personale.
+- Rifinire conserva (identità, comportamento, testi esistenti); riprogettare sostituisce davvero, senza mezze misure. Chiedere prima di cambiare testi fattuali o aggiungere affermazioni.
+- Scegliere la modalità dalla pagina, non dal prodotto: **Persuadere** (landing, pagine servizio: attenzione e azione, impegno pieno), **Operare** (questionari, strumenti: leggibilità, coerenza, nessuna sorpresa), **Leggere** (articoli, metodo, guide: struttura per capire, piacere di leggere), **Esperienza** (vetrine: il contenuto guida).
+- Verificare sempre guardando il risultato renderizzato alle misure reali (telefono 360 px, tablet ~820 px, desktop 1280 px), raggruppando i controlli: prima si corregge tutto ciò che una schermata mostra, poi si riguarda.
+- Finire il lavoro: niente consegne a metà, salvo materiali che deve fornire Francesco.
+- Il kit completo "impeccable" (comandi critique/audit/polish/…) non è installato in questo repository: se serve, va aggiunto come skill in `.claude/skills/`.
+
 ## Struttura pagine
 
 - `/` home

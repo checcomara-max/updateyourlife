@@ -34,6 +34,35 @@
     return loading;
   }
   window.UDUContent = { load: loadContent };
+
+  // Compone il libro dalle risposte salvate (richiede engine.js, book.js e la libreria decifrata).
+  // La data di composizione resta quella del primo libro composto con le stesse risposte.
+  function composeBook() {
+    var s = get();
+    var a = Object.assign({ genere: s.genere }, s.risposte || {});
+    var code = s.codice || window.UDU.encode(a);
+    var when = s.composto && s.composto.codice === code ? new Date(s.composto.data) : new Date();
+    if (!s.composto || s.composto.codice !== code) set({ composto: { codice: code, data: when.toISOString() } });
+    return window.UDUBook.compose(window.UDU.score(a), { nome: s.nome, obiettivo: s.obiettivo }, { code: code, now: when });
+  }
+  var pdfLoading = null;
+  function loadPdfmake() {
+    if (window.pdfMake) return Promise.resolve();
+    if (pdfLoading) return pdfLoading;
+    pdfLoading = new Promise(function (res, rej) {
+      var sc = document.createElement('script');
+      sc.src = '/uno-di-uno/assets/vendor/pdfmake.min.js';
+      sc.onload = res;
+      sc.onerror = function () { pdfLoading = null; rej(new Error('impossibile caricare il generatore PDF')); };
+      document.head.appendChild(sc);
+    });
+    return pdfLoading;
+  }
+  async function downloadBook(book) {
+    await loadPdfmake();
+    await window.UDUBook.downloadPDF(book, location.origin + '/uno-di-uno/assets/fonts/');
+  }
+  window.UDUFlow = { composeBook: composeBook, downloadBook: downloadBook };
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-esci]');
     if (t) { e.preventDefault(); exit(); }

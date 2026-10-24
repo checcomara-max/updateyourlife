@@ -3,58 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<script src="/uno-di-uno/assets/gate.js"></script>
-<title>Uno di Uno · Anteprima del tuo profilo</title>
-<meta name="description" content="L'anteprima del tuo profilo Uno di Uno: i cinque grandi tratti, il modo di reagire sotto carico e le specifiche del tuo libro.">
+<script src="/uno-di-uno/assets/gate.js?v=20261024"></script>
+<title>Uno di Uno · La tua scheda tecnica</title>
+<meta name="description" content="La tua scheda tecnica Uno di Uno: dove ti collochi su sette dimensioni, e il libro completo da scaricare.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2317404A%22/%3E%3Ccircle cx=%2222%22 cy=%2216%22 r=%223.5%22 fill=%22%23B4603A%22/%3E%3C/svg%3E">
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261023">
+<link rel="stylesheet" href="/uno-di-uno/assets/udu.css?v=20261024">
 </head>
 <body>
 <a class="skip" href="#main">Vai al contenuto</a>
 <header class="wrap top">
   <a class="brand" href="/uno-di-uno/scopri/">Uno di Uno</a>
-  <nav aria-label="Uno di Uno"><a href="/uno-di-uno/scopri/">Il libro</a><a href="/uno-di-uno/metodo/">Il metodo</a><span class="badge">Anteprima del profilo</span></nav>
+  <nav aria-label="Uno di Uno"><a href="/uno-di-uno/scopri/">Il libro</a><a href="/uno-di-uno/metodo/">Il metodo</a><span class="badge">La tua scheda tecnica</span></nav>
 </header>
 
-<main id="main" class="wrap narrow">
-  <div class="r-head">
-    <p class="mono">Anteprima del profilo</p>
-    <h1 id="h1">Il tuo profilo</h1>
-    <p id="lead"></p>
+<main id="main" class="wrap">
+  <div class="r-head sheet-head">
+    <p class="mono">La tua scheda tecnica</p>
+    <h1 id="h1">Ecco dove ti collochi.</h1>
+    <p>La sintesi delle tue risposte su sette dimensioni. Il libro completo spiega che cosa significano per te e che cosa farne.</p>
   </div>
-  <div id="notes" style="display:grid;gap:12px;margin:8px 0 24px"></div>
+  <div id="notes" class="notes"></div>
 
-  <h2 class="mono" style="margin:24px 0 10px">Le specifiche del tuo libro</h2>
-  <div class="spec" id="spec"></div>
-
-  <h2 class="mono" style="margin:40px 0 6px">I cinque grandi tratti</h2>
-  <p class="muted" style="font-size:15px;margin-bottom:10px">Dove si collocano le tue risposte sulla scala da 1 a 5. Non è un confronto con altre persone: è come ti descrivi oggi. <a href="/uno-di-uno/metodo/">Come si leggono</a>.</p>
-  <div class="spec" id="tratti"></div>
-
-  <form class="teaser" id="f" style="margin-top:40px" novalidate>
-    <p class="mono">Il tuo libro</p>
-    <h2>Componi «<span id="tn">Il tuo nome</span>. Istruzioni per l'uso»</h2>
-    <p>Circa 70 pagine in 11 capitoli: il piano di 90 giorni, le cinque pratiche, tre mappe del tuo profilo, una quindicina di curiosità dalla ricerca, la pagina da condividere e le domande scelte per te.</p>
-    <div class="field" style="max-width:none">
-      <label for="nome">Nome da stampare in copertina</label>
-      <input id="nome" maxlength="40" required autocomplete="given-name">
+  <!-- 1. Scheda tecnica -->
+  <section class="sheetcard" aria-labelledby="st-title">
+    <h2 id="st-title" class="visually-hidden">Scheda tecnica</h2>
+    <div class="st-hero" id="st-hero"></div>
+    <div class="st-grid">
+      <div>
+        <p class="st-k">Le specifiche</p>
+        <div id="st-spec"></div>
+      </div>
+      <div>
+        <p class="st-k">I cinque grandi tratti</p>
+        <div id="st-tratti"></div>
+        <p class="st-note">Le posizioni indicano come ti descrivi sulla scala da 1 a 5, non un confronto con altre persone. <a href="/uno-di-uno/metodo/">Come si leggono</a></p>
+      </div>
     </div>
-    <div class="field" style="max-width:none">
-      <label for="obiettivo">Il tuo obiettivo per i prossimi 90 giorni (facoltativo)</label>
-      <textarea id="obiettivo" maxlength="255" placeholder="Es. un traguardo professionale, un cambiamento di ritmo, una conversazione da fare"></textarea>
-      <span class="hint">Compare nella lettera iniziale e nel piano personale. Resta su questo dispositivo.</span>
-    </div>
-    <p class="msg" id="msg" role="status" style="min-height:1.4em"></p>
-    <div><button class="btn" type="submit">Componi il mio libro</button></div>
-  </form>
+  </section>
 
-  <div style="margin-top:32px;display:grid;gap:10px">
+  <!-- 2. Call to action -->
+  <section class="cta-book" aria-labelledby="cta-title">
+    <div class="cta-copy">
+      <p class="mono">Il libro completo</p>
+      <h2 id="cta-title">Vuoi sapere che cosa significa per te?</h2>
+      <p>Questa è la sintesi. In circa 70 pagine il libro ti spiega come funzioni sotto pressione, come decidi, cosa ti ricarica e cosa ti motiva, con un piano di 90 giorni per la fase che stai vivendo.</p>
+    </div>
+    <form id="f" class="cta-form" novalidate>
+      <div class="field">
+        <label for="nome">Il nome da stampare in copertina</label>
+        <input id="nome" maxlength="40" required autocomplete="given-name">
+      </div>
+      <details class="goal">
+        <summary>Aggiungi un obiettivo per i prossimi 90 giorni (facoltativo)</summary>
+        <div class="field">
+          <label for="obiettivo" class="visually-hidden">Il tuo obiettivo per i prossimi 90 giorni</label>
+          <textarea id="obiettivo" maxlength="255" placeholder="Es. un traguardo professionale, un cambiamento di ritmo, una conversazione da fare"></textarea>
+          <span class="hint">Compare nella lettera iniziale e nel piano personale.</span>
+        </div>
+      </details>
+      <button class="btn big" type="submit" id="dl">Scarica il libro completo</button>
+      <p class="cta-small">PDF in formato A5, pronto da stampare. Si compone su questo dispositivo in pochi secondi. <a href="/uno-di-uno/libro/" id="read">Oppure leggilo online</a></p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- 3. Com'è fatto il libro -->
+  <section class="made" aria-labelledby="made-title">
+    <div class="sec-head"><p class="mono">Com'è fatto il libro</p><h2 id="made-title">Undici capitoli scritti sulle tue risposte.</h2>
+      <p>Lo leggi una volta, poi lo riapri quando serve: prima di una conversazione difficile, dopo una settimana storta, davanti a una decisione importante.</p></div>
+    <div class="made-grid">
+      <ol class="toc toc-one" id="toc"></ol>
+      <div>
+        <p class="st-k">In ogni capitolo</p>
+        <ul class="formats">
+          <li><b>In breve.</b> Tre punti per ricordare il capitolo a colpo d'occhio.</li>
+          <li><b>Lo sapevi?</b> Curiosità dalla ricerca psicologica, con la fonte: esperimenti che spiegano perché funzioni così.</li>
+          <li><b>Mappe.</b> La curva della pressione, i tuoi due motori decisionali, il tuo modo di stare nei disaccordi, disegnati sul tuo profilo.</li>
+          <li><b>Istruzioni pratiche.</b> Cosa fare prima, durante e dopo i momenti difficili, e cinque pratiche dalla quotidiana alla mensile.</li>
+          <li><b>Una pagina da condividere.</b> «Come lavorare con te», da dare al team o a chi ti sta vicino.</li>
+          <li><b>Pagine di lavoro.</b> Le domande scelte per te, con lo spazio per scrivere.</li>
+        </ul>
+        <div id="taste"></div>
+      </div>
+    </div>
+    <figure class="figure" style="margin-top:28px">
+      <img src="/uno-di-uno/assets/img/pagine-esempio.webp" width="1500" height="542" loading="lazy" alt="Quattro pagine di un libro di esempio: copertina con il nome Giulia, scheda tecnica, capitolo sul comportamento sotto carico e pagina Come lavorare con Giulia">
+      <figcaption>Pagine da un libro di esempio: copertina, scheda tecnica, capitolo 3 e la pagina da condividere.</figcaption>
+    </figure>
+  </section>
+
+  <div class="code-row">
     <p class="label">Il tuo codice profilo</p>
     <div class="codebox"><code id="code"></code><button class="btn ghost small" type="button" id="copy">Copia</button></div>
-    <p class="muted" style="font-size:14px">Contiene solo le tue risposte, in forma anonima: niente nome, niente email. Con questo codice il libro si può ricomporre identico.</p>
+    <p class="muted" style="font-size:14px">Contiene solo le tue risposte, in forma anonima: niente nome, niente email. Con questo codice il libro si può ricomporre identico. <a href="/uno-di-uno/inizia/">Rifai il questionario</a></p>
   </div>
-  <p style="margin-top:24px"><a href="/uno-di-uno/inizia/" id="redo">Rifai il questionario</a></p>
 </main>
 
 <footer class="wrap foot">
@@ -62,10 +105,10 @@
   <p>Uno di Uno è un libro di auto-aiuto personalizzato: non è un test psicologico, non è una valutazione e non sostituisce un percorso con un professionista. In caso di emergenza chiama il 112.</p>
   <p><a href="/uno-di-uno/metodo/">Il metodo</a> · <a href="#" data-cancella>Cancella le mie risposte</a> · <a href="#" data-esci>Esci dall'anteprima</a></p>
 </footer>
-<script src="/uno-di-uno/assets/udu.js"></script>
-<script src="/uno-di-uno/assets/engine.js"></script>
-<script src="/uno-di-uno/assets/content.js"></script>
-<script src="/uno-di-uno/assets/book.js"></script>
+<script src="/uno-di-uno/assets/udu.js?v=20261024"></script>
+<script src="/uno-di-uno/assets/engine.js?v=20261024"></script>
+<script src="/uno-di-uno/assets/content.js?v=20261024"></script>
+<script src="/uno-di-uno/assets/book.js?v=20261024"></script>
 <script>
 UDUContent.load().then(function () {
   var s = UDUStore.get();
@@ -76,50 +119,85 @@ UDUContent.load().then(function () {
   var lab = function (id) { return X(M[id].etichetta); };
   var low = function (h) { return h.replace(/^(Il|La|Lo) /, function (m) { return m.toLowerCase(); }); };
   var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var meter = function (x, l, r) { return '<div class="meter"><i style="left:' + (Math.max(0, Math.min(1, x)) * 100).toFixed(1) + '%"></i></div><div class="meter-l"><span>' + l + '</span><span>' + r + '</span></div>'; };
+  var clamp = function (x) { return (Math.max(0, Math.min(1, x)) * 100).toFixed(1) + '%'; };
+  var meter = function (x, l, r) { return '<div class="meter"><i style="left:' + clamp(x) + '"></i></div><div class="meter-l"><span>' + l + '</span><span>' + r + '</span></div>'; };
   var INT = { marcato: 'tendenza marcata', moderato: 'tendenza moderata', bilanciato: 'profilo bilanciato' };
+  var FASCIA = { basso: 'Fascia bassa', medio: 'Fascia centrale', alto: 'Fascia alta' };
+  var S = M[p.moduli.stress], E = M[p.moduli.energia], D = M[p.moduli.decisione], C = M[p.moduli.conflitto], MO = M[p.moduli.motivazione], MI = M[p.moduli.missione];
 
-  var S = M[p.moduli.stress];
-  document.getElementById('h1').innerHTML = (s.nome ? esc(s.nome) + ', sotto' : 'Sotto') + ' pressione il tuo modo prevalente è <span class="hl">' + low(X(S.etichetta)) + '</span>';
-  document.getElementById('lead').innerHTML = X(S.sintesi) + (p.moduli.secondario ? ' Accanto a questo emerge anche ' + low(X(M[p.moduli.secondario].etichetta)) + ', come modo secondario.' : '');
+  if (s.nome) document.getElementById('h1').textContent = s.nome + ', ecco dove ti collochi.';
 
+  // Note di attenzione e di nitidezza: sempre in alto
   var notes = [];
   if (p.attenzione) notes.push('<div class="callout"><p><b>Una nota sul tuo momento.</b> Hai indicato un carico ' + (p.carico >= 4 ? 'molto pesante' : 'pesante') + '. Un libro può aiutarti a mettere ordine, ma non è fatto per reggere da solo un peso vicino al limite. Se da settimane sonno, umore o energia non tornano, parlane con il tuo medico o con uno psicologo. In caso di emergenza chiama il 112.</p></div>');
-  if (!p.qualita.nitida) notes.push('<div class="notice"><p><b>Un profilo poco nitido.</b> ' + (p.qualita.uguali ? 'Hai dato la stessa risposta a tutte le affermazioni.' : 'In diversi punti le risposte si contraddicono: alcune affermazioni dicono la stessa cosa in positivo e in negativo.') + ' Succede, soprattutto se si risponde in fretta. Il libro si può comporre lo stesso, ma ti descriverà meno bene: se vuoi, <a href="/uno-di-uno/inizia/">rifai il questionario</a> con calma.</p></div>');
-  var cur = (S.curiosita || [])[0];
-  if (cur) notes.push('<div class="card" style="margin-top:4px"><p class="mono">Lo sapevi? · Dal tuo capitolo 3</p><h3>' + X(cur.titolo) + '</h3><p>' + X(cur.testo) + '</p><p style="font-size:13px">' + esc(cur.fonte) + '</p></div>');
+  if (!p.qualita.nitida) notes.push('<div class="notice"><p><b>Un profilo poco nitido.</b> ' + (p.qualita.uguali ? 'Hai dato la stessa risposta a tutte le affermazioni.' : 'In diversi punti le risposte si contraddicono: alcune affermazioni dicono la stessa cosa in positivo e in negativo.') + ' Il libro si può comporre lo stesso, ma ti descriverà meno bene: se vuoi, <a href="/uno-di-uno/inizia/">rifai il questionario</a> con calma.</p></div>');
   document.getElementById('notes').innerHTML = notes.join('');
 
-  var D = M[p.moduli.decisione], C = M[p.moduli.conflitto], E = M[p.moduli.energia], MO = M[p.moduli.motivazione], MI = M[p.moduli.missione];
-  var row = function (l, v, syn, extra) { return '<div class="row"><div class="lab">' + l + '</div><div><div class="v">' + v + '</div><div class="s">' + syn + '</div>' + (extra || '') + '</div></div>'; };
-  var bip = function (d, a, b) { return meter((1 - d.n) / 2, lab(a), lab(b)) + '<div class="s" style="font-size:13px">' + INT[d.intensita] + '</div>'; };
-  document.getElementById('spec').innerHTML = [
-    row('Alimentazione · cap. 2', lab(p.moduli.energia), X(E.sintesi), bip(p.energia, 'energia-E', 'energia-I')),
-    row('Sotto carico · cap. 3', lab(p.moduli.stress), X(S.sintesi)),
-    row('Decisioni · cap. 4', lab(p.moduli.decisione), X(D.sintesi), bip(p.decisione, 'decisione-A', 'decisione-N')),
-    row('Disaccordi · cap. 5', lab(p.moduli.conflitto), X(C.sintesi), bip(p.conflitto, 'conflitto-D', 'conflitto-P')),
-    row('Carburante · cap. 6', lab(p.moduli.motivazione), X(MO.sintesi)),
-    row('Missione in corso · cap. 7', lab(p.moduli.missione), X(MI.sintesi)),
-  ].join('');
+  // Scheda: in evidenza il modo di reagire sotto pressione
+  var sc = p.stress.scores;
+  var bars = ['R', 'C', 'S', 'K'].map(function (k) {
+    var on = k === p.stress.primary;
+    return '<div class="b4' + (on ? ' on' : '') + '"><span>' + lab('stress-' + k) + '</span><span class="tr"><span class="fl" style="width:' + clamp((sc[k] - 3) / 14) + '"></span></span></div>';
+  }).join('');
+  document.getElementById('st-hero').innerHTML = '<div><p class="st-k">Sotto pressione · capitolo 3</p><p class="st-big">' + lab(p.moduli.stress) + '</p><p class="st-syn">' + X(S.sintesi) +
+    (p.moduli.secondario ? ' Accanto emerge anche ' + low(lab(p.moduli.secondario)) + ', come modo secondario.' : '') + '</p></div><div class="bars4">' + bars + '</div>';
 
-  var FASCIA = { basso: 'Fascia bassa', medio: 'Fascia centrale', alto: 'Fascia alta' };
-  document.getElementById('tratti').innerHTML = ['E', 'A', 'C', 'N', 'O'].map(function (t) {
+  var item = function (k, v, syn, viz) { return '<div class="st-item"><p class="st-lab">' + k + '</p><p class="st-val">' + v + '</p>' + (syn ? '<p class="st-syn">' + syn + '</p>' : '') + (viz || '') + '</div>'; };
+  var bip = function (d, l, r) { return meter((1 - d.n) / 2, lab(l), lab(r)) + '<p class="st-int">' + INT[d.intensita] + '</p>'; };
+  var dots = ['G', 'R', 'A', 'S'].map(function (k) {
+    var n = p.motivazione.counts[k], on = k === p.motivazione.top;
+    return '<span class="' + (on ? 'on' : '') + '">' + lab('motivazione-' + k) + ' <b aria-label="' + n + ' su 4">' + '●'.repeat(n) + '○'.repeat(4 - n) + '</b></span>';
+  }).join('');
+  document.getElementById('st-spec').innerHTML = [
+    item('Alimentazione · cap. 2', lab(p.moduli.energia), X(E.sintesi), bip(p.energia, 'energia-E', 'energia-I')),
+    item('Sistema decisionale · cap. 4', lab(p.moduli.decisione), X(D.sintesi), bip(p.decisione, 'decisione-A', 'decisione-N')),
+    item('Disaccordi · cap. 5', lab(p.moduli.conflitto), X(C.sintesi), bip(p.conflitto, 'conflitto-D', 'conflitto-P')),
+    item('Carburante · cap. 6', lab(p.moduli.motivazione), X(MO.sintesi), '<p class="st-dots">' + dots + '</p>'),
+    item('La fase che vivi · cap. 7', lab(p.moduli.missione), X(MI.sintesi)),
+  ].join('');
+  document.getElementById('st-tratti').innerHTML = ['E', 'A', 'C', 'N', 'O'].map(function (t) {
     var m = M['tratto-' + t], tr = p.tratti[t];
-    return row(X(m.titolo), FASCIA[tr.fascia], X(m.fascia[tr.fascia]), meter((tr.media - 1) / 4, X(m.basso), X(m.alto)));
+    return '<div class="st-item"><p class="st-lab">' + X(m.titolo) + ' · <span class="st-band">' + FASCIA[tr.fascia] + '</span></p>' + meter((tr.media - 1) / 4, X(m.basso), X(m.alto)) + '<p class="st-tsyn">' + X(m.fascia[tr.fascia]) + '</p></div>';
   }).join('');
 
-  var f = document.getElementById('f'), tn = document.getElementById('tn');
+  // Com'è fatto il libro: indice personalizzato + un assaggio
+  var toc = [['Scheda tecnica', 'Il profilo in sintesi e i cinque grandi tratti'], ['Alimentazione', X(E.titolo)], ['Comportamento sotto carico', X(S.titolo)],
+    ['Sistema decisionale', X(D.titolo)], ['Interfacce', X(C.titolo)], ['Carburante', X(MO.etichetta)], ['Missione in corso', X(MI.etichetta)],
+    ['Protocollo di manutenzione', 'Cinque pratiche per il tuo profilo'], ['Risoluzione dei problemi', 'Se succede questo, fai così'],
+    ['Istruzioni per gli altri', 'Una pagina da condividere'], ['Pagine di lavoro', 'Le domande scelte per te']];
+  document.getElementById('toc').innerHTML = toc.map(function (t, i) { return '<li><span class="n">' + String(i + 1).padStart(2, '0') + '</span><span><b>' + t[0] + '</b><span class="d">' + t[1] + '</span></span></li>'; }).join('');
+  var cur = (S.curiosita || [])[0];
+  if (cur) document.getElementById('taste').innerHTML = '<div class="taste"><p class="st-k">Un assaggio dal tuo capitolo 3 · Lo sapevi?</p><h3>' + X(cur.titolo) + '</h3><p>' + X(cur.testo) + '</p><p class="src">' + esc(cur.fonte) + '</p></div>';
+
+  // Call to action: un clic, il PDF
+  var f = document.getElementById('f'), st = document.getElementById('status'), btn = document.getElementById('dl');
+  var show = function (cls, t) { st.className = 'status ' + cls; st.innerHTML = t; };
   f.nome.value = s.nome || '';
   f.obiettivo.value = s.obiettivo || '';
-  var paint = function () { tn.textContent = f.nome.value.trim() || 'Il tuo nome'; };
-  paint();
-  f.nome.addEventListener('input', paint);
-  f.addEventListener('submit', function (e) {
+  if (s.obiettivo) f.querySelector('details').open = true;
+  var save = function () { UDUStore.set({ nome: f.nome.value.trim(), obiettivo: f.obiettivo.value.trim() }); };
+  f.nome.addEventListener('change', save);
+  f.obiettivo.addEventListener('change', save);
+  document.getElementById('read').addEventListener('click', function (e) {
+    if (!f.nome.value.trim()) { e.preventDefault(); show('err', 'Scrivi prima il nome da stampare in copertina.'); f.nome.focus(); return; }
+    save();
+  });
+  var busy = false;
+  f.addEventListener('submit', async function (e) {
     e.preventDefault();
-    var nome = f.nome.value.trim();
-    if (!nome) { document.getElementById('msg').textContent = 'Scrivi il nome da stampare in copertina.'; f.nome.focus(); return; }
-    UDUStore.set({ nome: nome, obiettivo: f.obiettivo.value.trim() });
-    location.href = '/uno-di-uno/libro/';
+    if (busy) return;
+    if (!f.nome.value.trim()) { show('err', 'Scrivi il nome da stampare in copertina.'); f.nome.focus(); return; }
+    save();
+    busy = true; btn.disabled = true; btn.textContent = 'Preparo il tuo libro…';
+    show('ok', 'Sto componendo il PDF: ci vogliono pochi secondi.');
+    try {
+      var book = UDUFlow.composeBook();
+      await UDUFlow.downloadBook(book);
+      show('ok', 'Fatto: <b>' + esc(book.filename) + '</b> è nei tuoi download. <a href="/uno-di-uno/libro/">Leggilo anche online</a>.');
+    } catch (err) {
+      show('err', 'Il PDF non è stato creato (' + esc(err.message) + '). Riprova; se il problema resta, prova con un altro browser.');
+    }
+    busy = false; btn.disabled = false; btn.textContent = 'Scarica il libro completo';
   });
 
   var code = s.codice || UDU.encode(a);

@@ -11,6 +11,8 @@ const UDUBook = (() => {
     AUTORE_ESTESO: 'Francesco Maragliulo, psicologo (Ordine degli Psicologi della Lombardia, n. 27664) e coach',
     BRAND: 'Uno di Uno',
     SITO: 'updateyourlife.it/uno-di-uno',
+    PIEDE: 'Francesco Maragliulo - Psicologo e Coach - ',
+    PIEDE_SITO: 'www.updateyourlife.it',
     MESI_REVISIONE: 6,
   };
   const M = () => window.UDU_CONTENT.moduli;
@@ -495,7 +497,14 @@ ${txt(36, y1, 'poco', { s: 7, a: 'end' })}${txt(36, y0 + 7, 'molto', { s: 7, a: 
       info: { title: `${book.user.nome}. Istruzioni per l’uso`, author: 'Francesco Maragliulo', subject: 'Uno di Uno · Edizione 1 di 1', creator: 'Uno di Uno' },
       defaultStyle: { font: 'Literata', fontSize: 10, lineHeight: 1.32, color: COL.ink },
       background: (page, size) => (page === 1 && cover ? coverLayer(cover, size) : null),
-      footer: (page) => (page <= 2 ? null : { text: String(page), alignment: 'center', font: 'Inter', fontSize: 7.5, color: COL.num, margin: [0, 8 * MM, 0, 0] }),
+      // Piè di pagina su TUTTE le pagine (copertina compresa): firma dell'autore + numero di pagina dalla 3
+      footer: (page) => {
+        const c = page === 1 ? '#A9BDBE' : COL.num;
+        return { columns: [
+          { text: [CONFIG.PIEDE, { text: CONFIG.PIEDE_SITO, link: 'https://' + CONFIG.PIEDE_SITO, color: c }], font: 'Inter', fontSize: 6.6, color: c, characterSpacing: 0.2 },
+          { width: 24, text: page <= 2 ? '' : String(page), alignment: 'right', font: 'Inter', fontSize: 7.5, color: c }],
+          margin: [MARG_X, 8 * MM, MARG_X, 0] };
+      },
       content,
       _fonts: fonts(fontBase),
     };
