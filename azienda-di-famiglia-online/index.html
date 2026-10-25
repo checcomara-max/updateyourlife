@@ -102,6 +102,14 @@
         },
         {
           "@type": "Question",
+          "name": "Cosa c'è nella guida gratuita?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dieci pagine pratiche con quattro strumenti e dieci domande per fare ordine tra ruolo e famiglia. Non è un test e non sostituisce un colloquio: è un punto di partenza da usare da soli."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "È coaching o sostegno psicologico?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -187,6 +195,7 @@
       <div class="actions">
         <a class="btn btn-wa" data-contatto="whatsapp-hero-famiglia" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a>
         <p class="note">Ci organizziamo per una call conoscitiva di 20 minuti, gratuita e senza impegno.</p>
+        <p class="note">Oppure <a href="#guida">ricevi la guida gratuita «Il tuo posto»</a>.</p>
       </div>
     </div>
     <figure class="opening">
@@ -212,6 +221,80 @@
       <li><b>Dire ciò che pensi</b>: difficoltà a esprimere un parere o un limite senza sentirti ingrato.</li>
       <li><b>Una scelta tua</b>: restare, cambiare ruolo o costruirti una strada diversa.</li>
     </ul>
+  </div>
+</section>
+
+<section class="section" id="guida">
+  <div class="wrap">
+    <div class="split">
+    <div class="prose">
+      <h2>La guida gratuita «Il tuo posto»</h2>
+      <p>Dieci pagine pratiche per chi lavora nell'azienda di famiglia: quattro strumenti e dieci domande da usare con carta e penna, al tuo ritmo. Lasciami nome e cellulare e te la mando su WhatsApp.</p>
+      <p><b>Cosa trovi</b></p>
+      <ul class="checks">
+        <li>Dove sei oggi, tra famiglia, proprietà e azienda</li>
+        <li>Chi decide cosa: la mappa delle decisioni</li>
+        <li>Perché sei lì: le ragioni che ti tengono in azienda</li>
+        <li>Il lavoro a tavola: piccole regole di confine</li>
+        <li>La conversazione che rimandi, in quattro passi</li>
+        <li>Dieci domande da portare con te</li>
+      </ul>
+    </div>
+    <div>
+      <form class="pdd-form" id="ricevi" novalidate>
+        <div class="pdd-names">
+          <p class="pdd-field">
+            <label for="pdd-nome">Nome</label>
+            <input id="pdd-nome" name="nome" type="text" autocomplete="given-name" required maxlength="40" aria-describedby="pdd-err">
+          </p>
+          <p class="pdd-field">
+            <label for="pdd-cognome">Cognome</label>
+            <input id="pdd-cognome" name="cognome" type="text" autocomplete="family-name" required maxlength="40" aria-describedby="pdd-err">
+          </p>
+        </div>
+        <p class="pdd-field pdd-tel">
+          <label for="pdd-tel">Cellulare con WhatsApp</label>
+          <input id="pdd-tel" name="cellulare" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="+39 333 123 4567" aria-describedby="pdd-tel-hint pdd-err">
+          <span class="pdd-hint" id="pdd-tel-hint">Se vivi all'estero, scrivi il prefisso del Paese.</span>
+        </p>
+
+        <fieldset class="pdd-opt">
+          <legend>Con chi lavori in azienda? <span>Facoltativo</span></legend>
+          <div class="pdd-chips">
+            <label><input type="checkbox" name="chi" value="Padre"><span>Padre</span></label>
+            <label><input type="checkbox" name="chi" value="Madre"><span>Madre</span></label>
+            <label><input type="checkbox" name="chi" value="Fratelli o sorelle"><span>Fratelli o sorelle</span></label>
+            <label><input type="checkbox" name="chi" value="Altri parenti"><span>Altri parenti</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="pdd-opt">
+          <legend>Da quanto lavori in azienda? <span>Facoltativo</span></legend>
+          <div class="pdd-chips">
+            <label><input type="radio" name="anni" value="Meno di 3 anni"><span>Meno di 3 anni</span></label>
+            <label><input type="radio" name="anni" value="Da 3 a 10 anni"><span>Da 3 a 10 anni</span></label>
+            <label><input type="radio" name="anni" value="Più di 10 anni"><span>Più di 10 anni</span></label>
+          </div>
+        </fieldset>
+
+        <p class="pdd-check">
+          <input id="pdd-privacy" name="privacy" type="checkbox" required aria-describedby="pdd-err">
+          <label for="pdd-privacy">Ho letto l'<a href="/privacy-policy.html#guida-il-tuo-posto">informativa privacy</a> e voglio ricevere la guida su WhatsApp.</label>
+        </p>
+        <p class="pdd-check">
+          <input id="pdd-altre" name="altre" type="checkbox">
+          <label for="pdd-altre">Mandami ogni tanto un nuovo spunto per chi lavora nell'azienda di famiglia. Smetti quando vuoi rispondendo STOP.</label>
+        </p>
+        <p class="pdd-honey" aria-hidden="true"><label>Lascia vuoto <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></p>
+        <p class="pdd-err" id="pdd-err" role="alert" hidden></p>
+        <button class="btn btn-wa" type="submit"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg><span class="pdd-btn-txt">Ricevi la guida su WhatsApp</span></button>
+        <p class="note">Ti scrivo io su WhatsApp con il PDF, di solito entro 24 ore. Il messaggio arriva da +39 331 498 0002: salvalo in rubrica per riconoscerlo.</p>
+      </form>
+      <div class="pdd-done" id="pdd-done" role="status" tabindex="-1" hidden>
+        <p class="pdd-done-h">Grazie <span id="pdd-done-nome"></span>.</p>
+        <p>Ti scrivo su WhatsApp al numero <b id="pdd-done-tel"></b> con la guida, di solito entro 24 ore.</p>
+      </div>
+    </div>
+    </div>
   </div>
 </section>
 
@@ -282,7 +365,7 @@
   <div class="wrap">
     <div class="prose">
       <h2>Altri temi collegati</h2>
-      <p>Se il tema è il tuo ruolo di responsabilità, leggi la pagina per <a href="/psicologo-per-manager/">manager e professionisti</a>. Se il lavoro ti sta consumando, trovi spunti in <a href="/stress-lavoro-burnout-online/">stress da lavoro e burnout</a>.</p>
+      <p>Se vuoi iniziare da solo, con carta e penna, <a href="#guida">richiedi la guida gratuita «Il tuo posto»</a>. Se il tema è il tuo ruolo di responsabilità, leggi la pagina per <a href="/psicologo-per-manager/">manager e professionisti</a>. Se il lavoro ti sta consumando, trovi spunti in <a href="/stress-lavoro-burnout-online/">stress da lavoro e burnout</a>.</p>
       <p>Per i rapporti con i familiari, vedi <a href="/relazioni-coppia-online/">relazioni e coppia</a>. Per una scelta sul restare o cambiare, i <a href="/momenti-di-cambiamento-online/">momenti di cambiamento</a>. Se cerchi un percorso più orientato agli obiettivi professionali, scopri il <a href="/coaching/">coaching online per chi lavora in azienda</a>.</p>
     </div>
     <ul class="frasi">
@@ -300,6 +383,7 @@
     </div>
     <div class="faq">
       <details open><summary>È un percorso per me o per tutta la famiglia?</summary><p>Per te. È un percorso individuale: lavoriamo sul tuo ruolo e su come stai, non sulla famiglia come gruppo. Gli altri non partecipano e non sono coinvolti.</p></details>
+      <details><summary>Cosa c'è nella guida gratuita?</summary><p>Dieci pagine pratiche con quattro strumenti e dieci domande per fare ordine tra ruolo e famiglia. Non è un test e non sostituisce un colloquio: è un punto di partenza da usare da soli.</p></details>
       <details><summary>È coaching o sostegno psicologico?</summary><p>Un percorso unico che usa strumenti di entrambi. Sono psicologo iscritto all'Albo e coach ICF: scelgo cosa usare in base a ciò che porti.</p></details>
       <details><summary>Quello che racconto resta riservato?</summary><p>Sì. I colloqui sono riservati, non vengono registrati e non c'è alcun legame con l'azienda o con la tua famiglia.</p></details>
       <details><summary>Devo essere in crisi con la mia famiglia per iniziare?</summary><p>No. Molte persone arrivano senza un conflitto aperto, ma con la sensazione di non avere uno spazio proprio. La call gratuita serve anche a capire se ha senso iniziare.</p></details>
@@ -384,5 +468,67 @@
 <div class="sticky-cta" id="sticky"><a class="btn btn-wa" data-contatto="whatsapp-sticky" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20la%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.535 5.875L0 24l6.334-1.507A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.303-1.41l-.381-.225-3.762.895.952-3.653-.248-.386A9.95 9.95 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm5.472-7.618c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Scrivimi su WhatsApp</a></div>
 
 <script src="/assets/site.js?v=20261019" defer></script>
+<script>
+// Modulo della guida «Il tuo posto»: invia nome, cellulare e risposte facoltative all'email di Francesco
+// tramite la sua Google Apps Script (ENDPOINT). Nessun dato resta sul sito.
+// Se ENDPOINT è vuoto o l'invio non riesce, la richiesta parte su WhatsApp con gli stessi dati.
+(function () {
+  var f = document.getElementById('ricevi'); if (!f) return;
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzUWDOq456jIgnHDpLqP0yLeIJKy8nzI0vTncDwyPpjq00CrUvGrfHul950isjj41_1qw/exec';
+  var err = document.getElementById('pdd-err'), done = document.getElementById('pdd-done');
+  var btn = f.querySelector('button[type=submit]'), btnTxt = f.querySelector('.pdd-btn-txt');
+  function fail(msg, el) { err.innerHTML = msg; err.hidden = false; if (el) { el.setAttribute('aria-invalid', 'true'); el.focus(); } }
+  function digits(t) { return t.replace(/[^\d+]/g, '').replace(/(?!^)\+/g, ''); }
+  // Numero in formato internazionale: 3xx italiano senza prefisso diventa +39, 00 diventa +
+  function intl(t) { var d = digits(t); if (d.indexOf('00') === 0) d = '+' + d.slice(2); if (d[0] !== '+') d = (/^3\d{8,9}$/.test(d) ? '+39' : '+') + d; return d; }
+  function waUrl(data) {
+    var m = 'Ciao Francesco, sono ' + data.Nome + ' ' + data.Cognome + '. Vorrei ricevere la guida «Il tuo posto» per chi lavora nell\'azienda di famiglia.';
+    return 'https://wa.me/393314980002?text=' + encodeURIComponent(m);
+  }
+  function viaWhatsApp(data, intro) {
+    var url = waUrl(data);
+    if (window.gtag) gtag('event', 'generate_lead', { metodo: 'whatsapp', posizione: 'guida-azienda-famiglia' });
+    err.hidden = false;
+    err.className = 'pdd-err pdd-err-wa';
+    err.innerHTML = intro + ' <a class="btn btn-wa" href="' + url + '" target="_blank" rel="noopener">Invia la richiesta su WhatsApp</a>';
+    btn.disabled = false; btnTxt.textContent = 'Ricevi la guida su WhatsApp';
+  }
+  f.addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid')) { e.target.removeAttribute('aria-invalid'); err.hidden = true; } });
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.className = 'pdd-err';
+    var nome = f.nome.value.trim(), cognome = f.cognome.value.trim(), tel = f.cellulare.value.trim();
+    if (!nome) return fail('Scrivi il tuo nome.', f.nome);
+    if (!cognome) return fail('Scrivi il tuo cognome.', f.cognome);
+    var num = intl(tel), n = num.replace(/\D/g, '');
+    if (n.length < 9 || n.length > 15) return fail("Controlla il numero di cellulare: servono almeno 9 cifre, con il prefisso se vivi all'estero.", f.cellulare);
+    if (!f.privacy.checked) return fail("Per ricevere la guida spunta la casella sull'informativa privacy.", f.privacy);
+    err.hidden = true;
+    var data = {
+      _honey: f._honey.value,
+      Nome: nome, Cognome: cognome, Cellulare: num,
+      Temi: (function () { var c = [].map.call(f.querySelectorAll('input[name=chi]:checked'), function (i) { return i.value; }).join(', '); return 'Guida Il tuo posto' + (c ? '. Con chi lavora: ' + c : ''); })(),
+      Eta: (function () { var a = (f.querySelector('input[name=anni]:checked') || {}).value; return a ? 'In azienda da: ' + a : '-'; })(),
+      Dove: '-',
+      NuovePagine: f.altre.checked ? 'Sì, ha dato il consenso' : 'No',
+      Privacy: 'Informativa accettata il ' + new Date().toLocaleString('it-IT'),
+      Pagina: location.href.split('#')[0]
+    };
+    if (!ENDPOINT) return viaWhatsApp(data, 'Ultimo passo: manda la richiesta su WhatsApp, il messaggio è già scritto.');
+    btn.disabled = true; btnTxt.textContent = 'Invio in corso…';
+    // text/plain evita la richiesta preliminare CORS, che Apps Script non gestisce
+    fetch(ENDPOINT, { method: 'POST', body: JSON.stringify(data) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j || j.success !== true) throw new Error((j && j.message) || 'invio non riuscito');
+        if (window.gtag) gtag('event', 'generate_lead', { metodo: 'modulo', posizione: 'guida-azienda-famiglia' });
+        document.getElementById('pdd-done-nome').textContent = nome;
+        document.getElementById('pdd-done-tel').textContent = num;
+        f.hidden = true; done.hidden = false; done.focus();
+      })
+      .catch(function () { viaWhatsApp(data, "L'invio dal modulo non è riuscito, ma puoi chiedermelo subito: il messaggio è già scritto."); });
+  });
+})();
+</script>
 </body>
 </html>
