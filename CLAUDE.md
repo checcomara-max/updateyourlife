@@ -17,7 +17,7 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 - Francesco Maragliulo, psicologo iscritto all'Albo Lombardia n. 27664. NON psicoterapeuta: mai offrire "psicoterapia" o "terapia" come servizio.
 - Non "strillare" ciò che non fa: comunicare cosa fa. "Non sono psicoterapeuta" compare solo nelle FAQ. Altrove, formula neutra: "se emerge un altro bisogno, lo valutiamo insieme e ti indico il professionista più adatto".
 - Colloqui solo online, solo in italiano (anche italiani all'estero).
-- Counselor Gestalt (BioGestalt) + Analisi Transazionale, docente SIBIG, coach ICF, mindfulness. Manager in multinazionale da 18 anni (Milano): percorsi personali + lavoro/leadership (futuro: neo manager / junior executive).
+- Counselor gestaltico ed analitico transazionale, docente SIBIG, coach ICF, mindfulness. Manager in multinazionale da 18 anni (Milano): percorsi personali + lavoro/leadership (futuro: neo manager / junior executive).
 - P.IVA non ancora aperta: niente "fattura", "spesa detraibile", tariffe. Il costo si comunica nella call gratuita. Tariffe e durata seduta: non disponibili (aggiornare quando Francesco le fornisce).
 - Prima call conoscitiva gratuita di 20 minuti.
 - Deontologia: nessuna promessa di risultato o guarigione, nessun numero di sedute garantito, nessun claim clinico. Testimonianze reali e già presenti in home; non inventarne.
