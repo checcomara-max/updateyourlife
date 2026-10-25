@@ -447,3 +447,11 @@ b,strong{font-weight:600}
   .pdd-pages .pg{font-size:16px;padding:22px 12px 22px 0}
   .pdd-pages p{padding:20px 0 22px 16px}
 }
+
+.guida-box{margin-top:32px;max-width:560px;background:var(--white);border:1px solid var(--rule);border-left:6px solid var(--amber);border-radius:6px;padding:24px 26px 26px;box-shadow:0 10px 30px -18px rgba(27,36,54,.35)}
+.guida-tag{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-deep)}
+.guida-t{margin:6px 0 10px;font:500 clamp(30px,4vw,40px)/1.1 var(--serif);color:var(--ink)}
+.guida-box p:not(.guida-tag):not(.guida-t){font-size:16.5px;line-height:1.55;color:var(--ink-2)}
+.guida-btn{margin-top:18px;background:var(--ink);color:var(--white)}
+.guida-btn:hover{background:var(--graphite)}
+@media (max-width:560px){.guida-box{padding:20px 20px 22px}.guida-btn{width:100%}}
