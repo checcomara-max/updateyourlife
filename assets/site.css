@@ -455,3 +455,8 @@ b,strong{font-weight:600}
 .guida-btn{margin-top:18px;background:var(--ink);color:var(--white)}
 .guida-btn:hover{background:var(--graphite)}
 @media (max-width:560px){.guida-box{padding:20px 20px 22px}.guida-btn{width:100%}}
+@media (min-width:901px){
+.svc .hero-guida>div{grid-row:2 / span 2}
+.svc .hero-guida .guida-box{grid-column:2;grid-row:2;align-self:start;margin-top:12px;max-width:none;padding:30px 32px 32px}
+.svc .hero-guida .opening{grid-column:2;grid-row:3}
+}
