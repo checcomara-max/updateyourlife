@@ -26,6 +26,15 @@
       ]
     },
     {
+      "source": "/noi/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/assets/fonts/:path*",
       "headers": [
         {
@@ -83,6 +92,11 @@
     {
       "source": "/uno-di-uno/_sorgenti/:path*",
       "destination": "/uno-di-uno/",
+      "permanent": false
+    },
+    {
+      "source": "/noi/_sorgenti/:path*",
+      "destination": "/noi/",
       "permanent": false
     }
   ]

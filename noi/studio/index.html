@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/noi/assets/gate.js?v=20261026"></script>
+<title>NOI · Studio</title>
+<meta name="description" content="Area di lavoro di Francesco: apertura delle risposte cifrate e preparazione dei documenti.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%234A2F45%22/%3E%3Ccircle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23F6EEE6%22 stroke-width=%221.6%22/%3E%3Ccircle cx=%2219%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23E39A7E%22 stroke-width=%221.6%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/noi/assets/noi.css?v=20261026">
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="wrap top">
+  <a class="brand" href="/noi/scopri/"><span class="logo" aria-hidden="true"></span>NOI</a>
+  <nav aria-label="NOI"><a href="/noi/scopri/">Il percorso</a><a href="/noi/metodo/">Metodo e riservatezza</a><a href="/noi/studio/" aria-current="page">Studio</a></nav>
+</header>
+
+<main id="main" class="wrap">
+  <div class="r-head">
+    <p class="mono">Studio · solo per Francesco</p>
+    <h1>Le risposte delle coppie.</h1>
+    <p>Qui apri le buste cifrate, leggi le risposte e prepari i tre documenti. Tutto avviene in questo browser: niente viene inviato da nessuna parte.</p>
+  </div>
+
+  <section class="sh-head" aria-labelledby="h-key">
+    <h2 id="h-key">1. La chiave privata</h2>
+    <div id="keybox"><p class="muted">Controllo la chiave…</p></div>
+  </section>
+
+  <section class="sh-head" aria-labelledby="h-paste">
+    <h2 id="h-paste">2. Incolla i messaggi ricevuti</h2>
+    <p>Copia da WhatsApp o dall’email il messaggio con la busta (la lunga sequenza che comincia con <code>NOI1.</code>) e incollalo qui. Puoi incollare più messaggi insieme.</p>
+    <label class="visually-hidden" for="paste">Messaggi con le buste</label>
+    <textarea class="paste" id="paste" spellcheck="false" placeholder="NOI · risposte di … · coppia …&#10;NOI1.a0dd021b.…"></textarea>
+    <div class="cta-row" style="margin-top:12px"><button class="btn" type="button" id="openBtn">Apri le buste</button><span class="note" id="openMsg" role="status"></span></div>
+  </section>
+
+  <section class="sh-head" aria-labelledby="h-couples">
+    <h2 id="h-couples">3. Le coppie</h2>
+    <div id="couples"><p class="muted">Nessuna busta ancora.</p></div>
+  </section>
+
+  <section id="preview" hidden aria-labelledby="h-prev" style="margin-top:32px">
+    <div class="cta-row" style="justify-content:space-between"><h2 id="h-prev" style="font-size:28px">Anteprima</h2><button class="btn small ghost" type="button" id="closePrev">Chiudi l’anteprima</button></div>
+    <div class="book" id="book"></div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Le buste restano salvate cifrate in questo browser; le risposte in chiaro esistono solo mentre la pagina è aperta. La chiave privata, una volta caricata, resta in questo browser in forma non esportabile.</p>
+  <p><a href="/noi/metodo/#riservatezza">Riservatezza</a> · <button class="linkbtn" type="button" id="wipeAll">Cancella tutte le buste da questo browser</button> · <a href="#" data-esci>Esci dall’area riservata</a></p>
+</footer>
+<script src="/noi/assets/noi.js?v=20261026"></script>
+<script src="/noi/assets/engine.js?v=20261026"></script>
+<script src="/noi/assets/content.js?v=20261026"></script>
+<script src="/noi/assets/book.js?v=20261026"></script>
+<script src="/noi/assets/chiave.js?v=20261026"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = window.NOIesc, NOI = window.NOI, S = window.NOIStore;
+  var BUSTE = 'noi-studio-buste', STATO = 'noi-studio-stato';
+
+  // ---------- chiave privata in IndexedDB (CryptoKey non esportabile) ----------
+  function db() {
+    return new Promise(function (res, rej) {
+      var r = indexedDB.open('noi-studio', 1);
+      r.onupgradeneeded = function () { r.result.createObjectStore('k'); };
+      r.onsuccess = function () { res(r.result); };
+      r.onerror = function () { rej(r.error); };
+    });
+  }
+  function idb(mode, fn) {
+    return db().then(function (d) {
+      return new Promise(function (res, rej) {
+        var tx = d.transaction('k', mode), st = tx.objectStore('k'), out = fn(st);
+        tx.oncomplete = function () { res(out && out.result); };
+        tx.onerror = function () { rej(tx.error); };
+      });
+    });
+  }
+  var KEY = null; // { id, key }
+  function loadKey() { return idb('readonly', function (s) { return s.get('priv'); }).then(function (k) { KEY = k || null; return KEY; }); }
+  function saveKey(k) { return idb('readwrite', function (s) { return s.put(k, 'priv'); }); }
+  function dropKey() { return idb('readwrite', function (s) { return s.delete('priv'); }); }
+
+  function renderKey() {
+    var pub = window.NOI_PUBKEY || {};
+    if (KEY) {
+      var ok = KEY.id === pub.id;
+      $('keybox').innerHTML = '<p>Chiave <b>' + esc(KEY.id) + '</b> caricata in questo browser.' +
+        (ok ? ' Corrisponde a quella pubblicata sul sito.' : '') + '</p>' +
+        (ok ? '' : '<div class="flag"><p><b>Attenzione.</b> Il sito cifra con la chiave ' + esc(pub.id || '?') + ': le buste nuove non si apriranno con questa.</p></div>') +
+        '<p><button class="linkbtn" type="button" id="dropKey">Togli la chiave da questo browser</button></p>' + genHTML();
+      $('dropKey').addEventListener('click', function () {
+        if (confirm('Togliere la chiave da questo browser? Per aprire altre buste dovrai caricare di nuovo il file.')) dropKey().then(function () { KEY = null; renderKey(); renderCouples(); });
+      });
+    } else {
+      $('keybox').innerHTML = '<p>Carica il file <code>NOI-chiave-privata-' + esc(pub.id || '…') + '.json</code> che custodisci fuori dal sito. Resta in questo browser, in una forma che non si può più esportare: puoi cancellare il file dal computer solo se ne hai una copia sicura altrove.</p>' +
+        '<div class="field" style="margin-top:12px"><label for="keyfile">File della chiave privata</label><input type="file" id="keyfile" accept=".json,application/json"></div><p class="err" id="keyerr" role="alert"></p>' + genHTML();
+      $('keyfile').addEventListener('change', function (e) {
+        var f = e.target.files[0]; if (!f) return;
+        f.text().then(function (t) {
+          var o = JSON.parse(t);
+          if (!o || !o.jwk || !o.jwk.d || !o.id) throw new Error('Il file non contiene una chiave privata NOI.');
+          var jwk = { kty: o.jwk.kty, crv: o.jwk.crv, x: o.jwk.x, y: o.jwk.y, d: o.jwk.d };
+          return crypto.subtle.importKey('jwk', jwk, { name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveBits']).then(function (key) { return saveKey({ id: o.id, key: key }); });
+        }).then(loadKey).then(function () { renderKey(); renderCouples(); })
+          .catch(function (x) { $('keyerr').textContent = x.message || 'File non valido.'; });
+      });
+    }
+    bindGen();
+  }
+
+  // Nuova coppia di chiavi (per cambiare chiave): scarica la privata, mostra la pubblica da mettere in assets/chiave.js
+  function genHTML() {
+    return '<details style="margin-top:16px"><summary class="muted" style="cursor:pointer;font-size:14px">Genera una nuova coppia di chiavi</summary>' +
+      '<p style="margin-top:8px;font-size:15px">Serve solo se la chiave attuale è stata persa o potrebbe essere stata vista da altri. Dopo averla generata, la chiave pubblica va messa nel sito (file <code>noi/assets/chiave.js</code>) e le buste già cifrate con la vecchia chiave si aprono solo con la vecchia.</p>' +
+      '<p><button class="btn small ghost" type="button" id="gen">Genera e scarica la chiave privata</button></p><div id="genout"></div></details>';
+  }
+  function bindGen() {
+    var b = $('gen'); if (!b) return;
+    b.addEventListener('click', async function () {
+      var pair = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+      var priv = await crypto.subtle.exportKey('jwk', pair.privateKey), pub = await crypto.subtle.exportKey('jwk', pair.publicKey);
+      var id = Array.from(crypto.getRandomValues(new Uint8Array(4))).map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
+      var file = { tipo: 'NOI chiave privata', id: id, creata: new Date().toISOString(), avviso: 'Chi ha questo file può leggere le risposte delle coppie. Non condividerlo, non metterlo nel repository.', jwk: priv };
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(file, null, 2)], { type: 'application/json' }));
+      a.download = 'NOI-chiave-privata-' + id + '.json'; a.click();
+      var line = "window.NOI_PUBKEY = { id: '" + id + "', jwk: " + JSON.stringify({ kty: pub.kty, crv: pub.crv, x: pub.x, y: pub.y }) + ' };';
+      $('genout').innerHTML = '<p style="font-size:15px">Scaricato <b>NOI-chiave-privata-' + id + '.json</b>. Conservalo in un posto sicuro. Questa è la riga da mettere in <code>noi/assets/chiave.js</code>:</p><div class="codebox"><code>' + esc(line) + '</code></div>';
+    });
+  }
+
+  // ---------- buste ----------
+  var DATA = {}; // envelope string -> decrypted object
+  function stored() { try { return JSON.parse(localStorage.getItem(BUSTE)) || []; } catch (e) { return []; } }
+  function store(list) { try { localStorage.setItem(BUSTE, JSON.stringify(list)); } catch (e) {} }
+  async function decryptAll(list) {
+    var errs = [];
+    for (var i = 0; i < list.length; i++) {
+      var env = list[i];
+      if (DATA[env]) continue;
+      try { DATA[env] = await window.NOISeal.open(env, KEY.key, KEY.id); } catch (e) { errs.push(e.message); }
+    }
+    return errs;
+  }
+  $('openBtn').addEventListener('click', async function () {
+    var found = window.NOISeal.find($('paste').value);
+    if (!found.length) { $('openMsg').textContent = 'Non trovo nessuna busta nel testo incollato.'; return; }
+    if (!KEY) { $('openMsg').textContent = 'Prima carica la chiave privata.'; return; }
+    var list = stored(), nuove = 0;
+    found.forEach(function (e) { if (list.indexOf(e) < 0) { list.push(e); nuove++; } });
+    var errs = await decryptAll(found);
+    var good = list.filter(function (e) { return DATA[e] || found.indexOf(e) < 0; });
+    store(good);
+    $('paste').value = '';
+    $('openMsg').textContent = found.length + (found.length === 1 ? ' busta trovata' : ' buste trovate') + ', ' + nuove + ' nuov' + (nuove === 1 ? 'a' : 'e') + '.' + (errs.length ? ' Non aperte: ' + errs.join(' ') : '');
+    renderCouples();
+  });
+  $('wipeAll').addEventListener('click', function () {
+    if (confirm('Cancellare tutte le buste salvate in questo browser? Le risposte non saranno più leggibili qui finché non le incolli di nuovo.')) {
+      S.del(BUSTE); S.del(STATO); DATA = {}; renderCouples();
+    }
+  });
+
+  // ---------- coppie ----------
+  function couples() {
+    var by = {};
+    Object.keys(DATA).forEach(function (env) {
+      var o = DATA[env]; if (!o || !o.c) return;
+      var c = by[o.c] || (by[o.c] = { c: o.c });
+      if (!c[o.r] || String(o.d) > String(c[o.r].d)) c[o.r] = o; // tiene l'invio più recente
+    });
+    return Object.keys(by).sort().map(function (k) { return by[k]; });
+  }
+  function person(o) {
+    var a = NOI.unpack(o.a);
+    return { nome: o.nome, g: o.g, p: NOI.score(a), a: a, share: o.s || {}, msg: o.m || '', grazie: o.t || '', d: o.d, v: o.v };
+  }
+  function label(id, v, o) {
+    var q = NOI.CHOICE[id]; if (!q) return v;
+    var op = q.opts.filter(function (x) { return x.v === v; })[0];
+    return op ? NOI.text(op.t, { altro: o.altro, g: o.g }) : v;
+  }
+  var VIC = { T: 'tranquill* (né molte conferme né molto spazio)', C: 'cerca conferme', S: 'cerca spazio', E: 'cerca conferme e spazio' };
+  var DIS = { I: 'tende a inseguire', R: 'tende a ritirarsi', B: 'equilibrato tra le due spinte' };
+  var LIV = { I: 'solo istruzioni', S: 'anche scheda', N: 'non usare' };
+  var QUO = { notizie: 'vuole entusiasmo per le buone notizie', novita: 'desidera novità insieme', apprezzamento: 'si sente poco apprezzat*', rituali: 'mancano momenti solo vostri', carico: 'divisione dei compiti squilibrata', perse: 'ha bisogno di tempo per sé', insieme: 'vorrebbe più tempo insieme' };
+  function sol(g) { return g === 'F' ? 'sola' : g === 'M' ? 'solo' : 'solo o da sola'; }
+  function fin(s, g) { return s.replace('*', g === 'F' ? 'a' : g === 'M' ? 'o' : 'o/a'); }
+
+  // Temi del percorso NOI suggeriti per la restituzione (solo per Francesco; l'ordine resta flessibile)
+  function temi(A, B) {
+    var P = [A.p, B.p], any = function (f) { return P.some(f); }, out = [];
+    function t(n, nome, ok, why) { out.push({ n: n, nome: nome, ok: ok, why: why }); }
+    t(1, 'Conoscersi di nuovo', any(function (p) { return p.fase === '3' || p.fase === '4'; }) || any(function (p) { return p.durata === '4'; }), 'fase di distanza o di cambiamento, o relazione lunga');
+    t(2, 'Stima e apprezzamento', any(function (p) { return p.quo.apprezzamento || p.imp.ferita === '1'; }), 'apprezzamento poco percepito, o ferita da critica e ironia');
+    t(3, 'Piccoli gesti quotidiani', any(function (p) { return p.quo.notizie || p.quo.rituali || p.quo.insieme || p.fase === '3'; }), 'richieste di attenzione, rituali o tempo insieme da curare');
+    var st = A.p.dis.stile + B.p.dis.stile;
+    t(4, 'Il ciclo che ci intrappola', st === 'IR' || st === 'RI' || any(function (p) { return p.fase === '2'; }), st === 'IR' || st === 'RI' ? 'uno insegue e l’altro si ritira' : 'litigi aumentati o peggiorati');
+    t(5, 'Litigare bene', any(function (p) { return p.dis.allaga || p.dis.duro; }), 'inondazione emotiva o avvio duro');
+    t(6, 'Problemi che si risolvono e problemi che restano', (A.p.dis.tema === B.p.dis.tema && A.p.dis.tema !== 'altro') || any(function (p) { return p.quo.carico; }), A.p.dis.tema === B.p.dis.tema && A.p.dis.tema !== 'altro' ? 'stesso tema ricorrente per entrambi: ' + A.p.dis.tema : 'divisione dei compiti percepita come squilibrata');
+    t(7, 'Riparare dopo una ferita', any(function (p) { return p.dis.dopo === 'E'; }) || !any(function (p) { return p.dis.ripara; }), 'serve sentire riconosciuta la parte dell’altro, o nessuno dei due fa spesso il primo passo');
+    t(8, 'Il senso del noi', true, 'consolidamento, per tutte le coppie');
+    var opz = [];
+    if (any(function (p) { return p.carico >= 3 || p.fase === '5'; })) opz.push('Stress esterno e coping di coppia');
+    if (any(function (p) { return p.dis.tema === 'figli'; })) opz.push('Diventare genitori');
+    if (any(function (p) { return p.dis.tema === 'intimita'; })) opz.push('Intimità e desiderio');
+    return { temi: out, opz: opz };
+  }
+
+  function getStato(c) { return S.get(STATO)[c] || {}; }
+  function setStato(c, patch) { var all = S.get(STATO); all[c] = Object.assign(all[c] || {}, patch); S.set(STATO, all); }
+
+  function personHTML(P, o) {
+    var p = P.p, sh = P.share;
+    var rows = [
+      ['Inviato', new Date(P.d).toLocaleString('it-IT')],
+      ['Insieme da', label('durata', p.durata, o)],
+      ['Momento', label('fase', p.fase, o)],
+      ['Carico', label('carico', String(p.carico), o)],
+      ['Vicinanza', fin(VIC[p.vic.tipo], P.g) + ' · conferme ' + p.vic.conferme + ', spazio ' + p.vic.spazio],
+      ['Disaccordi', DIS[p.dis.stile] + ' · insegue ' + p.dis.insegue + ', si ritira ' + p.dis.ritira + [p.dis.allaga ? fin(' · si sente travolt*', P.g) : '', p.dis.duro ? ' · avvio duro' : '', p.dis.ripara ? ' · fa spesso il primo passo' : ''].join('')],
+      ['Dopo un litigio', label('dopo', p.dis.dopo, o)],
+      ['Tema ricorrente', label('tema', p.dis.tema, o)],
+      ['Si sente importante', label('imp1', p.imp.via1, o) + ' / ' + label('imp2', p.imp.via2, o)],
+      ['Ferita', label('ferita', p.imp.ferita, o)],
+      ['Sotto pressione', label('segnale', p.pres.segnale, o) + ' · ' + label('bisogno', p.pres.bisogno, o) + ' · con l’altro: ' + label('reazione', p.pres.reazione, o)],
+      ['Quotidiano', Object.keys(p.quo).filter(function (k) { return p.quo[k]; }).map(function (k) { return fin(QUO[k] || k, P.g); }).join(' · ') || 'nessun segnale particolare'],
+      ['Condivisione', NOI.AREE.map(function (a) { return a.t + ': ' + LIV[sh[a.id] || 'I']; }).join(' · ')],
+      ['Messaggio per l’altro', P.msg || '—'],
+      ['Grazie', P.grazie || '—'],
+    ];
+    return '<div><h4 style="font:500 18px/1.3 var(--body);margin:0 0 8px">' + esc(P.nome) + '</h4>' +
+      (p.attenzione.sicurezza ? '<div class="flag" style="margin-bottom:10px"><p><b>Sicurezza: ' + (p.attenzione.sicurezzaRisposta === 'S' ? 'ha risposto sì' : 'preferisce parlarne a voce') + '.</b></p></div>' : '') +
+      (p.attenzione.carico ? '<div class="notice" style="margin-bottom:10px"><p>Carico molto pesante: vicino al limite.</p></div>' : '') +
+      '<dl>' + rows.map(function (r) { return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl></div>';
+  }
+
+  function renderCouples() {
+    var box = $('couples');
+    if (!KEY) { box.innerHTML = '<p class="muted">Carica la chiave privata per leggere le buste salvate.</p>'; return; }
+    var list = couples();
+    if (!list.length) { box.innerHTML = '<p class="muted">Nessuna busta ancora.</p>'; return; }
+    box.innerHTML = '<div class="studio-grid">' + list.map(function (c) {
+      var A = c.A && person(c.A), B = c.B && person(c.B), st = getStato(c.c);
+      var nomi = (c.A ? c.A.nome : (c.B ? c.B.altro : '?')) + ' e ' + (c.B ? c.B.nome : (c.A ? c.A.altro : '?'));
+      var h = '<article class="couple" data-c="' + esc(c.c) + '"><p class="mono">Coppia ' + esc(c.c) + '</p><h3>' + esc(nomi) + '</h3>';
+      if (!A || !B) {
+        var manca = !A ? c.B.altro : c.A.altro;
+        return h + '<p>Manca ancora il questionario di <b>' + esc(manca) + '</b>.</p>' + (A ? personHTML(A, c.A) : personHTML(B, c.B)) + '</article>';
+      }
+      var flag = A.p.attenzione.sicurezza || B.p.attenzione.sicurezza;
+      var flagged = [A, B].filter(function (x) { return x.p.attenzione.sicurezza; });
+      var who = flagged.map(function (x) { return x.nome; }).join(' e '), whoSol = flagged.length === 1 ? sol(flagged[0].g) : 'separatamente';
+      var screened = st.sentitoA && st.sentitoB, unlocked = screened && (!flag || st.override);
+      if (flag) h += '<div class="flag"><p><b>Prima la sicurezza.</b> ' + esc(who) + ' ha indicato paura, controllo o violenza, oppure di volerne parlare a voce. Niente documenti per la coppia: senti ' + esc(who) + ' da ' + whoSol + ', in un momento in cui può parlare liberamente, e segui il protocollo di screening del manuale (4.4). Con l’altra persona usa una formula neutra, senza mai citare il motivo.</p>' +
+        '<p>Se c’è paura, controllo coercitivo, minacce, armi o strangolamento anche una volta: niente lavoro di coppia, 1522 e centri antiviolenza, 112 in pericolo immediato.</p>' +
+        '<label class="check"><input type="checkbox" data-k="override"' + (st.override ? ' checked' : '') + '><span>Ho parlato con ' + esc(who) + ' da ' + whoSol + ' e ho valutato che si può procedere con i documenti di coppia.</span></label></div>';
+      h += '<div class="tabs"><button class="btn small ghost" type="button" aria-pressed="true" data-tab="ris">Risposte</button><button class="btn small ghost" type="button" aria-pressed="false" data-tab="temi">Restituzione</button><button class="btn small ghost" type="button" aria-pressed="false" data-tab="doc">Documenti</button></div>';
+      h += '<div data-pane="ris"><div class="pair">' + personHTML(A, c.A) + personHTML(B, c.B) + '</div></div>';
+      var T = temi(A, B);
+      h += '<div data-pane="temi" hidden><p>Temi del percorso NOI che le risposte suggeriscono di guardare per primi. È un’indicazione per la restituzione, non un ordine: la sicurezza si decide prima di tutto, e l’ordine si concorda con la coppia.</p><ol style="display:grid;gap:6px;padding-left:22px">' +
+        T.temi.map(function (t) { return '<li' + (t.ok ? '' : ' class="muted"') + '><b>' + esc(t.nome) + '</b>' + (t.ok ? ' · ' + esc(t.why) : '') + '</li>'; }).join('') + '</ol>' +
+        (T.opz.length ? '<p>Moduli facoltativi da considerare: ' + esc(T.opz.join(', ')) + '.</p>' : '') + '</div>';
+      var docs = [
+        { k: 'iB', t: 'Istruzioni per ' + B.nome, s: 'Su ' + A.nome + ', da inviare solo a ' + B.nome },
+        { k: 'iA', t: 'Istruzioni per ' + A.nome, s: 'Su ' + B.nome + ', da inviare solo a ' + A.nome },
+        { k: 'sc', t: 'Scheda di coppia', s: 'Per entrambi, nello stesso messaggio' },
+      ];
+      h += '<div data-pane="doc" hidden><div class="checks">' +
+        '<label class="check"><input type="checkbox" data-k="sentitoA"' + (st.sentitoA ? ' checked' : '') + '><span>Ho sentito ' + esc(A.nome) + ' da ' + sol(A.g) + ' (breve chiamata, domande sulla sicurezza).</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="sentitoB"' + (st.sentitoB ? ' checked' : '') + '><span>Ho sentito ' + esc(B.nome) + ' da ' + sol(B.g) + ' (breve chiamata, domande sulla sicurezza).</span></label></div>' +
+        (unlocked ? '' : '<p class="muted" style="font-size:14.5px">I documenti si sbloccano dopo le due chiamate' + (flag ? ' e la valutazione sulla sicurezza' : '') + '. Per fissarle puoi mandare a entrambi lo stesso messaggio neutro:</p><div class="codebox"><code>' + esc(msgCall()) + '</code></div>') +
+        docs.map(function (d) {
+          return '<div class="inv" style="margin-top:12px"><h3 style="font-size:20px">' + esc(d.t) + '</h3><p class="muted" style="font-size:14.5px">' + esc(d.s) + '</p><div class="row">' +
+            '<button class="btn small ghost" type="button" data-doc="' + d.k + '" data-act="prev"' + (unlocked ? '' : ' disabled') + '>Anteprima</button>' +
+            '<button class="btn small" type="button" data-doc="' + d.k + '" data-act="pdf"' + (unlocked ? '' : ' disabled') + '>Scarica il PDF</button>' +
+            '<button class="btn small ghost" type="button" data-doc="' + d.k + '" data-act="msg"' + (unlocked ? '' : ' disabled') + '>Copia il messaggio</button></div></div>';
+        }).join('') + '<p class="note" data-out role="status"></p></div>';
+      return h + '</article>';
+    }).join('') + '</div>';
+    bindCouples(list);
+  }
+
+  function msgCall() { return 'Ciao, ho ricevuto le risposte al questionario NOI, grazie. Prima di preparare i materiali mi piacerebbe sentirti per una decina di minuti, da solo o da sola. Quando ti è comodo?'; }
+  function msgFor(k, A, B) {
+    if (k === 'sc') return 'Ciao ' + A.nome + ' e ' + B.nome + ', ecco la vostra scheda di coppia del percorso NOI. Contiene solo quello che ciascuno ha scelto di condividere. Leggetela insieme, con calma, una sera senza fretta, e sceglietevi al massimo tre accordi. Se vi va, poi ne parliamo.';
+    var R = k === 'iB' ? B : A, Y = k === 'iB' ? A : B;
+    return 'Ciao ' + R.nome + ', ecco le tue istruzioni del percorso NOI. Sono scritte per te, a partire da quello che ' + Y.nome + ' ha scelto di farti arrivare: non contengono le sue risposte, ma indicazioni su come stare bene insieme. Leggile con calma, da ' + sol(R.g) + '. La scheda di coppia arriva a tutti e due nello stesso messaggio.';
+  }
+  function bindCouples(list) {
+    document.querySelectorAll('.couple').forEach(function (el) {
+      var c = list.filter(function (x) { return x.c === el.getAttribute('data-c'); })[0];
+      el.querySelectorAll('[data-tab]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          el.querySelectorAll('[data-tab]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+          el.querySelectorAll('[data-pane]').forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== b.getAttribute('data-tab'); });
+        });
+      });
+      el.querySelectorAll('input[data-k]').forEach(function (i) {
+        i.addEventListener('change', function () {
+          var p = {}; p[i.getAttribute('data-k')] = i.checked; setStato(c.c, p);
+          var cur = el.querySelector('[data-tab][aria-pressed="true"]'), tab = cur ? cur.getAttribute('data-tab') : 'ris';
+          renderCouples();
+          var again = document.querySelector('.couple[data-c="' + c.c + '"] [data-tab="' + tab + '"]'); if (again) again.click();
+        });
+      });
+      el.querySelectorAll('[data-doc]').forEach(function (b) {
+        b.addEventListener('click', async function () {
+          var out = el.querySelector('[data-out]');
+          var A = person(c.A), B = person(c.B), k = b.getAttribute('data-doc'), act = b.getAttribute('data-act');
+          if (act === 'msg') {
+            var t = msgFor(k, A, B);
+            (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { out.textContent = 'Messaggio copiato. Allega il PDF a mano.'; }, function () { window.prompt('Copia il messaggio:', t); });
+            return;
+          }
+          try {
+            out.textContent = 'Preparo il documento…';
+            await window.NOIContent.load();
+            var doc = k === 'iB' ? window.NOIBook.istruzioni(B, A, { seed: c.c }) : k === 'iA' ? window.NOIBook.istruzioni(A, B, { seed: c.c }) : window.NOIBook.scheda(A, B, { seed: c.c });
+            if (act === 'prev') {
+              $('book').innerHTML = window.NOIBook.toHTML(doc); $('preview').hidden = false; $('preview').scrollIntoView({ behavior: 'smooth' }); out.textContent = '';
+            } else {
+              await window.NOIContent.pdf();
+              await window.NOIBook.downloadPDF(doc, location.origin + window.NOIContent.FONTS);
+              out.textContent = 'Scaricato: ' + doc.filename;
+            }
+          } catch (x) { out.textContent = 'Non riesco a preparare il documento: ' + (x.message || x); }
+        });
+      });
+    });
+  }
+  $('closePrev').addEventListener('click', function () { $('preview').hidden = true; $('book').innerHTML = ''; window.scrollTo(0, 0); });
+
+  loadKey().catch(function () { return null; }).then(function () {
+    renderKey();
+    if (!KEY) { renderCouples(); return; }
+    return decryptAll(stored()).then(renderCouples);
+  });
+})();
+</script>
+</body>
+</html>

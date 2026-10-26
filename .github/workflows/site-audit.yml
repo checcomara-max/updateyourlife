@@ -22,3 +22,5 @@ jobs:
         run: node scripts/build-sitemap.mjs --check
       - name: Uno di Uno, libreria contenuti valida e allineata
         run: node scripts/build-uno-di-uno.mjs --check
+      - name: NOI, libreria contenuti valida e allineata
+        run: node scripts/build-noi.mjs --check
