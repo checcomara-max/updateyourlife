@@ -76,6 +76,14 @@ Lavorare come un direttore creativo: codice di produzione, un punto di vista chi
 - Ogni modulo di capitolo ha `@@ inbreve`, `@@ citazione`, `@@ curiosita` (con `Fonte:`): curiosità solo da ricerche pubblicate e verificabili, mai numeri inventati.
 - Regole di contenuto: mai "test", "valutazione", "diagnosi" come cosa che il prodotto fa; linguaggio di tendenza ("ti descrivi come"); nessun prezzo finché non ci sono P.IVA e pagamenti; 112 sempre presente nelle avvertenze.
 
+## NOI (`/noi/`, percorso per coppie, area riservata)
+
+- Due questionari separati (lei e lui, o qualunque coppia), istruzioni personali per ciascuno e una scheda di coppia. Guida completa in `noi/_sorgenti/LEGGIMI.md`: leggerla prima di toccare la sezione. Allineato al «Manuale operativo per i colloqui di coppia» (percorso NOI in otto temi).
+- Stesse regole di Uno di Uno: `noindex, nofollow`, fuori sitemap, niente `site.js`/GA, niente risorse esterne (stile `noi/assets/noi.css`, font e pdfmake di Uno di Uno). Tutte le pagine caricano `noi/assets/gate.js`.
+- La password dell'area non va mai scritta in file, commit o messaggi: chiederla a Francesco. Libreria testi cifrata (`noi/assets/content.js`, `noi/_sorgenti/contenuti.enc`); per modificarla `NOI_PASSWORD='...' node scripts/build-noi.mjs --apri`, modifica i `.md` in `noi/_sorgenti/contenuti/` (esclusi da git), poi `NOI_PASSWORD='...' node scripts/build-noi.mjs`. Il CI esegue `--check`.
+- Le risposte partono cifrate con la chiave pubblica di Francesco (`noi/assets/chiave.js`); la chiave privata (`NOI-chiave-privata-<id>.json`) non va MAI nel repository né nel sito. Lo studio (`/noi/studio/`) apre le buste e genera i PDF.
+- Linguaggio: «colloqui di coppia», «sostegno», «percorso psicoeducativo», mai «terapia di coppia». Domanda riservata sulla sicurezza: se c'è paura, controllo o violenza niente documenti di coppia (1522, 112). Prima dei documenti Francesco sente ciascuno da solo. Niente prezzi; informativa privacy in `/noi/metodo/#privacy` ancora da validare.
+
 ## Automazione e controlli (GitHub Actions)
 
 - `node scripts/audit.mjs`: audit statico (title/description, canonical, H1 unico, JSON-LD valido e FAQPage coerente con le FAQ visibili, immagini, link interni/ancore rotti, ≥2 link interni, footer `nav.topics`, sitemap, termini vietati dal profilo). Gira su ogni push/PR (`site-audit.yml`); gli errori bloccano, i warning no. Lanciarlo in locale PRIMA di ogni push su `main`.

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/noi/assets/gate.js?v=20261026"></script>
+<title>NOI · Il tuo questionario</title>
+<meta name="description" content="Il questionario personale del percorso NOI: sette parti, circa dieci minuti.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%234A2F45%22/%3E%3Ccircle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23F6EEE6%22 stroke-width=%221.6%22/%3E%3Ccircle cx=%2219%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23E39A7E%22 stroke-width=%221.6%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/noi/assets/noi.css?v=20261026">
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="/noi/scopri/"><span class="logo" aria-hidden="true"></span>NOI</a>
+  <span class="badge" id="badge">Questionario</span>
+</header>
+<main class="wrap quiz" id="main">
+  <h1 class="mono" style="max-width:780px;margin:0 auto" id="h1">Il tuo questionario</h1>
+  <div class="qbar" id="qbar" hidden><div class="progress" aria-hidden="true"><i id="bar"></i></div><span class="mono" id="count" aria-live="polite"></span></div>
+  <div class="qcard" id="card"></div>
+  <div class="qnav" id="qnav" hidden>
+    <button class="linkbtn" type="button" id="back">← Indietro</button>
+    <span class="mono" id="hint">Puoi usare i tasti numerici</span>
+  </div>
+  <noscript><p>Per compilare il questionario serve JavaScript.</p></noscript>
+</main>
+<script src="/noi/assets/noi.js?v=20261026"></script>
+<script src="/noi/assets/engine.js?v=20261026"></script>
+<script src="/noi/assets/chiave.js?v=20261026"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = window.NOIesc, S = window.NOIStore, C = window.NOIContact;
+  var card = $('card');
+
+  // 1. Invito: dall'indirizzo (#i=…) oppure l'ultimo aperto in questo browser
+  var inv = null, key = null;
+  var m = location.hash.match(/[#&]i=([A-Za-z0-9_-]+)/);
+  if (m) {
+    inv = window.NOIInvite.decode(m[1]);
+    if (inv) {
+      key = 'noi-q-' + inv.c + '-' + inv.r;
+      var cur = S.get(key);
+      if (!cur.inv) S.set(key, { inv: inv, aperto: new Date().toISOString() });
+      try { localStorage.setItem('noi-q-attivo', key); } catch (e) {}
+    }
+    history.replaceState(null, '', location.pathname); // il link personale non resta nella barra degli indirizzi
+  }
+  if (!inv) {
+    try { key = localStorage.getItem('noi-q-attivo'); } catch (e) {}
+    inv = key ? S.get(key).inv : null;
+  }
+  if (!inv) {
+    card.innerHTML = '<h2>Ti serve il tuo invito personale.</h2><p class="qintro">Il questionario si apre dal link che hai ricevuto su WhatsApp o per email. Se non lo trovi, chiedi a chi vi ha iscritto di rimandartelo, oppure iscrivetevi da qui.</p><div><a class="btn" href="/noi/iscrizione/">Vai all’iscrizione</a></div>';
+    return;
+  }
+  var me = { altro: inv.an, g: inv.g };
+  var T = function (s) { return window.NOI.text(s, me); };
+  var st = S.get(key);
+  var answers = st.risposte || {};
+  var Q = window.NOI.QUESTIONS, P = window.NOI.PARTS;
+  $('badge').textContent = inv.n + ' · coppia ' + inv.c;
+  var save = function (patch) { st = S.set(key, patch); };
+
+  // Schermate: benvenuto, per ogni parte presentazione + domande, poi condivisione, messaggi, invio
+  var screens = [{ welcome: true }];
+  P.forEach(function (p, pi) {
+    screens.push({ intro: true, part: pi });
+    Q.forEach(function (q) { if (q.part === pi) screens.push({ q: q, part: pi }); });
+  });
+  screens.push({ share: true }, { words: true }, { send: true });
+  var pos = Math.min(st.pos || 0, screens.length - 1);
+  if (st.busta) pos = screens.length - 1;
+  var lock = false;
+
+  function done() { return Q.filter(function (q) { return answers[q.id] !== undefined; }).length; }
+  function go(i) { pos = Math.max(0, Math.min(screens.length - 1, i)); save({ risposte: answers, pos: pos }); render(); }
+  function focusH() { var h = card.querySelector('h2'); if (h) h.focus({ preventScroll: true }); window.scrollTo(0, 0); }
+
+  function render() {
+    var sc = screens[pos];
+    var inQuiz = !sc.welcome && !sc.send;
+    $('qbar').hidden = !inQuiz; $('qnav').hidden = !inQuiz;
+    var n = done();
+    $('bar').style.width = (n / Q.length * 100) + '%';
+    $('count').textContent = n + ' / ' + Q.length;
+    $('hint').style.visibility = sc.q ? 'visible' : 'hidden';
+    if (sc.welcome) return welcome();
+    if (sc.share) return share();
+    if (sc.words) return words();
+    if (sc.send) return send();
+    var p = P[sc.part];
+    var kind = 'Parte ' + (sc.part + 1) + ' di ' + P.length + ' · ' + T(p.titolo);
+    if (sc.intro) {
+      card.innerHTML = '<p class="qkind">' + esc(kind) + '</p><h2 tabindex="-1">' + esc(T(p.titolo)) + '</h2><p class="qintro">' + esc(T(p.intro)) + '</p>' +
+        '<div><button class="btn" type="button" id="next">Continua</button></div>';
+      $('next').addEventListener('click', function () { go(pos + 1); });
+    } else {
+      var q = sc.q, cur = answers[q.id];
+      var opts = q.opts.map(function (o, i) {
+        return '<button class="opt" type="button" data-v="' + esc(o.v) + '" aria-pressed="' + (String(cur) === String(o.v)) + '"><span class="k">' + (i + 1) + '</span><span>' + esc(T(o.t)) + '</span></button>';
+      }).join('');
+      card.innerHTML = '<p class="qkind">' + esc(kind) + '</p><h2 tabindex="-1">' + esc(T(q.t)) + '</h2>' +
+        '<div class="opts' + (q.type === 'likert' ? ' likert' : '') + '" role="group" aria-label="Risposte">' + opts + '</div>';
+      card.querySelectorAll('.opt').forEach(function (b) { b.addEventListener('click', function () { pick(b.dataset.v); }); });
+    }
+    focusH();
+  }
+
+  function pick(v) {
+    if (lock) return;
+    var q = screens[pos].q;
+    answers[q.id] = q.type === 'likert' ? Number(v) : v;
+    card.querySelectorAll('.opt').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === String(v))); });
+    lock = true;
+    save({ risposte: answers });
+    setTimeout(function () { lock = false; go(pos + 1); }, 170);
+  }
+
+  function welcome() {
+    var c = st.consenso;
+    card.innerHTML = '<p class="qkind">Coppia ' + esc(inv.c) + '</p><h2 tabindex="-1">Ciao ' + esc(inv.n) + '.</h2>' +
+      '<p class="qintro">' + esc(T('Questo questionario è solo tuo. Rispondi pensando alla tua relazione con {{altro}}, negli ultimi mesi: non come vorresti che fosse, ma come è. Ci vogliono una decina di minuti, e puoi interrompere quando vuoi: le risposte restano salvate in questo browser.')) + '</p>' +
+      '<div class="checks">' +
+      '<label class="check"><input type="checkbox" id="k1"' + (c ? ' checked' : '') + '><span>' + esc(T('Rispondo da sol[[o|a|o/a]], senza che {{altro}} veda le mie risposte.')) + '</span></label>' +
+      '<label class="check"><input type="checkbox" id="k2"' + (c ? ' checked' : '') + '><span>' + esc(T('So che le risposte arrivano cifrate a Francesco, che {{altro}} non le vedrà e che alla fine sceglierò che cosa condividere.')) + '</span></label>' +
+      '<label class="check"><input type="checkbox" id="k3"' + (c ? ' checked' : '') + '><span>So che non è una valutazione psicologica né un percorso clinico, e che posso fermarmi in qualunque momento.</span></label>' +
+      '</div><p class="err" id="err" role="alert"></p><div><button class="btn" type="button" id="go">' + (done() ? 'Riprendi da dove eri' : 'Cominciamo') + '</button></div>' +
+      '<p class="muted" style="font-size:14px">Prima di iniziare puoi leggere <a href="/noi/metodo/">metodo e riservatezza</a>.</p>';
+    $('go').addEventListener('click', function () {
+      if (!($('k1').checked && $('k2').checked && $('k3').checked)) { $('err').textContent = 'Per cominciare servono le tre conferme.'; return; }
+      save({ consenso: new Date().toISOString() });
+      go(Math.max(1, pos));
+    });
+    focusH();
+  }
+
+  function share() {
+    var sh = st.share || {};
+    var LAB = { I: T('Solo nelle istruzioni per {{altro}}'), S: 'Anche nella scheda di coppia', N: 'Non usarla' };
+    card.innerHTML = '<p class="qkind">Quasi finito · Che cosa condividere</p><h2 tabindex="-1">Che cosa può arrivare a ' + esc(inv.an) + '?</h2>' +
+      '<p class="qintro">' + esc(T('Per ogni area scegli come usare le tue risposte. {{altro}} non vedrà mai le risposte in sé: leggerà indicazioni che ne derivano. La scheda di coppia, invece, la leggerete insieme.')) + '</p>' +
+      '<div class="share-grid">' + window.NOI.AREE.map(function (a) {
+        var v = sh[a.id] || 'I';
+        return '<fieldset class="share"><legend class="visually-hidden">' + esc(a.t) + '</legend><h3>' + esc(a.t) + '</h3><p>' + esc(a.d) + '</p><div class="seg">' +
+          ['I', 'S', 'N'].map(function (k) { return '<label><input type="radio" name="' + a.id + '" value="' + k + '"' + (v === k ? ' checked' : '') + '>' + esc(LAB[k]) + '</label>'; }).join('') +
+          '</div></fieldset>';
+      }).join('') + '</div><p class="muted" style="font-size:14px">' + esc(T('L’ultima domanda, quella riservata, non è in elenco perché non viene mai condivisa con {{altro}}.')) + '</p>' +
+      '<div><button class="btn" type="button" id="next">Continua</button></div>';
+    $('next').addEventListener('click', function () {
+      var out = {};
+      window.NOI.AREE.forEach(function (a) { var r = card.querySelector('input[name="' + a.id + '"]:checked'); out[a.id] = r ? r.value : 'I'; });
+      save({ share: out });
+      go(pos + 1);
+    });
+    focusH();
+  }
+
+  function words() {
+    card.innerHTML = '<p class="qkind">Facoltativo · Con parole tue</p><h2 tabindex="-1">Se vuoi, due frasi.</h2>' +
+      '<div class="field" style="max-width:none"><label for="msg">' + esc(T('Una cosa che vorresti arrivasse a {{altro}}')) + '</label><textarea id="msg" maxlength="280">' + esc(st.msg || '') + '</textarea>' +
+      '<span class="hint">' + esc(T('Comparirà così com’è nelle istruzioni per {{altro}}. Francesco la legge prima di inviare.')) + '</span></div>' +
+      '<div class="field" style="max-width:none"><label for="gr">' + esc(T('Una cosa che apprezzi di {{altro}}')) + '</label><textarea id="gr" maxlength="200">' + esc(st.grazie || '') + '</textarea>' +
+      '<span class="hint">Comparirà nella scheda di coppia, che leggerete insieme.</span></div>' +
+      '<div><button class="btn" type="button" id="next">Continua</button></div>';
+    $('next').addEventListener('click', function () {
+      save({ msg: $('msg').value.trim().slice(0, 280), grazie: $('gr').value.trim().slice(0, 200) });
+      go(pos + 1);
+    });
+    focusH();
+  }
+
+  async function send() {
+    var miss = screens.findIndex(function (sc) { return sc.q && answers[sc.q.id] === undefined; });
+    if (miss >= 0 && !st.busta) return go(miss);
+    var p = window.NOI.score(answers);
+    var note = '';
+    if (p.carico >= 4) note += '<div class="notice"><p><b>Ci tengo a dirti una cosa.</b> Hai indicato che in questo periodo il carico che porti è molto pesante. Se senti di essere al limite, parlane anche con il tuo medico o con uno psicologo: non serve aspettare il percorso di coppia. In emergenza, il 112.</p></div>';
+    if (answers.sicurezza && answers.sicurezza !== 'N') note += '<div class="notice"><p><b>Grazie per avermelo detto.</b> Ti scriverò solo per fissare una breve chiamata con te, da sol' + ({ F: 'a', M: 'o', N: 'o/a' }[inv.g] || 'o/a') + ', con un messaggio che non parla di questo. Dopo aver inviato le risposte, cancellale da questo browser con il pulsante in fondo; se altre persone usano il tuo telefono, cancella anche il messaggio dalla chat.</p></div>';
+    var sh = st.share || {}, LAB = { I: T('solo istruzioni per {{altro}}'), S: 'anche scheda di coppia', N: 'non usata' };
+    card.innerHTML = '<p class="qkind">Fatto</p><h2 tabindex="-1">Grazie, ' + esc(inv.n) + '.</h2>' + note +
+      '<div class="done-box"><p class="mono" style="color:inherit;opacity:.75">Ultimo passo</p><h2>Invia le tue risposte a Francesco.</h2>' +
+      '<p>' + esc(T('Sono già cifrate: dentro il messaggio vedrai solo una lunga sequenza di lettere. Solo Francesco può aprirle, né {{altro}} né chi vede il messaggio possono leggerle.')) + '</p>' +
+      '<div class="cta-row" style="margin-top:0" id="sendrow"><span class="note" style="color:inherit">Preparo la busta…</span></div>' +
+      '<details><summary style="cursor:pointer;font-size:14px;opacity:.85">Mostra la busta cifrata</summary><div class="codebox" style="margin-top:8px"><code id="env"></code></div></details></div>' +
+      '<div class="sh-head" style="margin-top:28px"><h2 style="font-size:24px">Le tue scelte</h2><p>' + window.NOI.AREE.map(function (a) { return esc(a.t) + ': <b>' + esc(LAB[sh[a.id] || 'I']) + '</b>'; }).join('<br>') + '</p>' +
+      '<p><button class="linkbtn" type="button" id="edit">Cambia le scelte o le risposte</button></p></div>' +
+      '<div class="notice" style="margin-top:12px"><p>Se nella relazione c’è paura, controllo o violenza, il <b>1522</b> è gratuito e attivo 24 ore su 24, anche in chat su 1522.eu. In caso di pericolo immediato, il <b>112</b>.</p></div>' +
+      '<p style="margin-top:20px"><button class="linkbtn" type="button" id="wipe">Ho inviato: cancella le mie risposte da questo browser</button></p>';
+    $('edit').addEventListener('click', function () { save({ busta: null }); go(screens.length - 3); });
+    $('wipe').addEventListener('click', function () {
+      if (confirm('Cancellare da questo browser le tue risposte? Se non hai ancora inviato il messaggio a Francesco, andranno perse.')) {
+        S.del(key); try { localStorage.removeItem('noi-q-attivo'); } catch (e) {}
+        card.innerHTML = '<h2 tabindex="-1">Fatto.</h2><p class="qintro">Le tue risposte non sono più in questo browser. Francesco ti scriverà quando i materiali saranno pronti.</p>';
+      }
+    });
+    focusH();
+    var busta = st.busta;
+    try {
+      if (!busta) {
+        busta = await window.NOISeal.seal({ v: window.NOI.VERSION, c: inv.c, r: inv.r, nome: inv.n, g: inv.g, altro: inv.an, galtro: inv.ag,
+          a: window.NOI.pack(answers), s: st.share || {}, m: st.msg || '', t: st.grazie || '', d: new Date().toISOString() });
+        save({ busta: busta, pos: pos });
+      }
+    } catch (e) {
+      $('sendrow').innerHTML = '<span class="note" style="color:inherit">Questo browser non riesce a cifrare le risposte. Prova con una versione aggiornata di Chrome, Safari, Firefox o Edge.</span>';
+      return;
+    }
+    var text = 'NOI · risposte di ' + inv.n + ' · coppia ' + inv.c + '\n(cifrate: solo Francesco può leggerle)\n\n' + busta;
+    $('env').textContent = busta;
+    $('sendrow').innerHTML = '<a class="btn" href="' + esc(C.wa(C.FRANCESCO_WA, text)) + '" rel="noopener">Invia a Francesco su WhatsApp</a>' +
+      '<a class="btn ghost" href="' + esc(C.mail(C.FRANCESCO_MAIL, 'NOI · risposte di ' + inv.n + ' (' + inv.c + ')', text)) + '">Invia per email</a>' +
+      '<button class="btn ghost" type="button" id="cp">Copia</button>';
+    $('cp').addEventListener('click', function () {
+      (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { $('cp').textContent = 'Copiato'; }, function () { window.prompt('Copia il messaggio:', text); });
+    });
+  }
+
+  $('back').addEventListener('click', function () { go(pos - 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var sc = screens[pos];
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName)) return;
+    if (sc.intro && e.key === 'Enter') { e.preventDefault(); go(pos + 1); return; }
+    if ((e.key === 'Backspace' || e.key === 'ArrowLeft') && sc.q) { if (pos > 0) { e.preventDefault(); go(pos - 1); } return; }
+    if (!sc.q) return;
+    var k = parseInt(e.key, 10);
+    if (k >= 1 && k <= sc.q.opts.length) { e.preventDefault(); pick(String(sc.q.opts[k - 1].v)); }
+  });
+  if (!st.consenso) pos = 0;
+  render();
+})();
+</script>
+</body>
+</html>

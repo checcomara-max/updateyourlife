@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="/noi/assets/gate.js?v=20261026"></script>
+<title>NOI · Iscrizione della coppia</title>
+<meta name="description" content="Iscrizione al percorso NOI: i dati di entrambi e due inviti personali per i questionari.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%234A2F45%22/%3E%3Ccircle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23F6EEE6%22 stroke-width=%221.6%22/%3E%3Ccircle cx=%2219%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23E39A7E%22 stroke-width=%221.6%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/noi/assets/noi.css?v=20261026">
+</head>
+<body>
+<a class="skip" href="#main">Vai al contenuto</a>
+<header class="wrap top">
+  <a class="brand" href="/noi/scopri/"><span class="logo" aria-hidden="true"></span>NOI</a>
+  <nav aria-label="NOI"><a href="/noi/scopri/">Il percorso</a><a href="/noi/metodo/">Metodo e riservatezza</a><a href="/noi/iscrizione/" aria-current="page">Iscrizione</a></nav>
+</header>
+
+<main id="main" class="wrap mid">
+  <div class="r-head">
+    <p class="mono">Iscrizione</p>
+    <h1>Iniziamo da voi due.</h1>
+    <p>Bastano i nomi e un contatto per ciascuno. Alla fine il sito prepara due inviti personali: ognuno riceve il suo e compila il questionario da solo.</p>
+  </div>
+
+  <form id="f" novalidate>
+    <div class="pair">
+      <fieldset class="who" data-p="A">
+        <legend>Lei</legend>
+        <div class="field"><label for="nA">Nome</label><input id="nA" maxlength="30" autocomplete="off" required></div>
+        <div class="field"><label for="gA">Nei testi, rivolgersi a lei/lui</label>
+          <select id="gA"><option value="F" selected>Al femminile</option><option value="M">Al maschile</option><option value="N">In forma neutra</option></select></div>
+        <div class="field"><label for="wA">WhatsApp</label><input id="wA" type="tel" inputmode="tel" autocomplete="off" placeholder="+39 333 123 4567"></div>
+        <div class="field"><label for="eA">Email</label><input id="eA" type="email" autocomplete="off"></div>
+      </fieldset>
+      <fieldset class="who" data-p="B">
+        <legend>Lui</legend>
+        <div class="field"><label for="nB">Nome</label><input id="nB" maxlength="30" autocomplete="off" required></div>
+        <div class="field"><label for="gB">Nei testi, rivolgersi a lei/lui</label>
+          <select id="gB"><option value="F">Al femminile</option><option value="M" selected>Al maschile</option><option value="N">In forma neutra</option></select></div>
+        <div class="field"><label for="wB">WhatsApp</label><input id="wB" type="tel" inputmode="tel" autocomplete="off" placeholder="+39 333 123 4567"></div>
+        <div class="field"><label for="eB">Email</label><input id="eB" type="email" autocomplete="off"></div>
+      </fieldset>
+    </div>
+    <p class="hint muted" style="font-size:14px;margin-top:10px">Per ciascuno serve almeno un contatto, WhatsApp o email: è dove arriverà l’invito e poi il materiale.</p>
+
+    <div class="checks" style="margin-top:28px">
+      <label class="check"><input type="checkbox" id="c1"><span>Siamo entrambi maggiorenni e abbiamo scelto liberamente di fare questo percorso, nessuno dei due per far piacere all’altro.</span></label>
+      <label class="check"><input type="checkbox" id="c2"><span>Abbiamo letto <a href="/noi/metodo/" target="_blank" rel="noopener">metodo e riservatezza</a>: ognuno risponde da solo e sceglie che cosa condividere; le risposte arrivano cifrate solo a Francesco.</span></label>
+      <label class="check"><input type="checkbox" id="c3"><span>Sappiamo che non è adatto se nella relazione c’è paura, controllo o violenza. In quel caso il numero è il 1522, gratuito, 24 ore su 24.</span></label>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+    <div class="cta-row" style="margin-top:8px"><button class="btn" type="submit">Prepara i due inviti</button></div>
+  </form>
+
+  <section id="out" hidden aria-live="polite" style="margin-top:8px">
+    <div class="sh-head" style="margin-top:8px">
+      <p class="mono">Codice coppia <b id="code"></b></p>
+      <h2>Ecco i due inviti.</h2>
+      <p>Mandate a ciascuno il suo. Il link è personale: apre il questionario giusto, con il nome giusto. Per entrare serve anche la password che vi ha dato Francesco.</p>
+    </div>
+    <div class="invites" id="invites"></div>
+    <div class="notice" style="margin-top:20px">
+      <p><b>Ultimo passo: avvisate Francesco.</b> Così sa che state iniziando e dove mandarvi i materiali. Il messaggio contiene solo nomi, contatti e codice coppia, nessuna risposta.</p>
+      <div class="row" style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn small" id="toF" href="#" rel="noopener">Avvisa Francesco su WhatsApp</a><a class="btn small ghost" id="toFm" href="#">Oppure per email</a></div>
+    </div>
+    <p style="margin-top:24px"><button class="linkbtn" type="button" id="reset">Cancella questa iscrizione da questo browser</button></p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>I dati dell’iscrizione restano in questo browser: il sito non li invia a nessun server. Partono solo con i messaggi che mandate voi.</p>
+  <p><a href="/noi/metodo/#riservatezza">Riservatezza</a> · <a href="/noi/scopri/">Il percorso</a> · <a href="#" data-esci>Esci dall’area riservata</a></p>
+</footer>
+<script src="/noi/assets/noi.js?v=20261026"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = window.NOIesc, C = window.NOIContact;
+  var LEG = { F: 'Lei', M: 'Lui' };
+  ['A', 'B'].forEach(function (p, i) {
+    var sel = $('g' + p), leg = document.querySelector('fieldset[data-p="' + p + '"] legend');
+    function upd() { leg.textContent = LEG[sel.value] || ('Persona ' + (i + 1)); }
+    sel.addEventListener('change', upd); upd();
+  });
+  var ALL = { F: 'a', M: 'o', N: 'o/a' };
+  function link(inv) { return location.origin + '/noi/questionario/#i=' + window.NOIInvite.encode(inv); }
+  function inviteText(p, o, url) {
+    return 'Ciao ' + p.n + ', ecco il tuo invito personale al percorso NOI di Francesco Maragliulo.\n\n' +
+      'Il questionario è solo tuo: circa 10 minuti, da compilare da sol' + ALL[p.g] + ' quando hai un momento tranquillo. ' +
+      'Le tue risposte arrivano a Francesco cifrate: ' + o.n + ' non le vedrà, e alla fine sarai tu a scegliere che cosa condividere.\n\n' +
+      'Per entrare ti servirà la password che vi ha dato Francesco.\n\n' + url;
+  }
+  function render(r) {
+    $('f').hidden = true; $('out').hidden = false;
+    $('code').textContent = r.c;
+    var ps = [r.A, r.B];
+    $('invites').innerHTML = ps.map(function (p, i) {
+      var o = ps[1 - i];
+      var url = link({ c: r.c, r: i ? 'B' : 'A', n: p.n, g: p.g, an: o.n, ag: o.g });
+      var txt = inviteText(p, o, url);
+      var w = C.phone(p.w);
+      return '<div class="inv"><p class="mono">Invito ' + (i + 1) + ' di 2</p><h3>Per ' + esc(p.n) + '</h3>' +
+        '<div class="row">' + (w ? '<a class="btn small" href="' + esc(C.wa(w, txt)) + '" rel="noopener">Invia a ' + esc(p.n) + ' su WhatsApp</a>' : '') +
+        (p.e ? '<a class="btn small ghost" href="' + esc(C.mail(p.e, 'Il tuo invito al percorso NOI', txt)) + '">Invia per email</a>' : '') +
+        '<button class="btn small ghost" type="button" data-copy="' + esc(txt) + '">Copia il messaggio</button></div>' +
+        '<details><summary class="muted" style="cursor:pointer;font-size:14px">Mostra il link</summary><div class="codebox" style="margin-top:8px"><code>' + esc(url) + '</code></div></details></div>';
+    }).join('');
+    var contatti = function (p) { return p.n + ' (' + [p.w, p.e].filter(Boolean).join(', ') + ')'; };
+    var msgF = 'Ciao Francesco, ci siamo iscritti al percorso NOI.\nCodice coppia: ' + r.c + '\n' + contatti(r.A) + '\n' + contatti(r.B);
+    $('toF').href = C.wa(C.FRANCESCO_WA, msgF);
+    $('toFm').href = C.mail(C.FRANCESCO_MAIL, 'NOI · iscrizione ' + r.c, msgF);
+    document.querySelectorAll('[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var t = b.getAttribute('data-copy');
+        (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { b.textContent = 'Copiato'; }, function () { window.prompt('Copia il messaggio:', t); });
+      });
+    });
+    window.scrollTo(0, 0);
+  }
+  var saved = window.NOIStore.get('noi-iscrizione');
+  if (saved && saved.c && saved.A && saved.B) render(saved);
+
+  $('f').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var err = $('err'); err.textContent = '';
+    var r = { c: window.NOIInvite.id(), creata: new Date().toISOString() };
+    var bad = null;
+    ['A', 'B'].forEach(function (p) {
+      var n = $('n' + p).value.replace(/[<>{}\[\]*_]/g, '').trim(), w = $('w' + p).value.trim(), em = $('e' + p).value.trim();
+      if (!bad && !n) bad = [$('n' + p), 'Inserisci il nome di entrambi.'];
+      if (!bad && w && !C.phone(w)) bad = [$('w' + p), 'Controlla il numero WhatsApp di ' + n + ': scrivilo con il prefisso, per esempio +39 333 1234567.'];
+      if (!bad && em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) bad = [$('e' + p), 'Controlla l’email di ' + n + '.'];
+      if (!bad && !w && !em) bad = [$('w' + p), 'Serve almeno un contatto per ' + (n || 'ciascuno') + ': WhatsApp o email.'];
+      r[p] = { n: n, g: $('g' + p).value, w: w, e: em };
+    });
+    if (!bad && r.A.n.toLowerCase() === r.B.n.toLowerCase()) bad = [$('nB'), 'I due nomi sono uguali: aggiungi un’iniziale per distinguerli.'];
+    if (!bad && !($('c1').checked && $('c2').checked && $('c3').checked)) bad = [$('c1'), 'Per continuare servono le tre conferme.'];
+    if (bad) { err.textContent = bad[1]; bad[0].focus(); return; }
+    window.NOIStore.set('noi-iscrizione', r);
+    render(r);
+  });
+  $('reset').addEventListener('click', function () {
+    if (confirm('Cancellare questa iscrizione da questo browser? Gli inviti già inviati restano validi.')) { window.NOIStore.del('noi-iscrizione'); location.reload(); }
+  });
+})();
+</script>
+</body>
+</html>

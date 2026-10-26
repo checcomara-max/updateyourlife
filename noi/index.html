@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NOI · Area riservata</title>
+<meta name="description" content="NOI, percorso per coppie di Francesco Maragliulo: area riservata.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%234A2F45%22/%3E%3Ccircle cx=%2213%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23F6EEE6%22 stroke-width=%221.6%22/%3E%3Ccircle cx=%2219%22 cy=%2216%22 r=%227%22 fill=%22none%22 stroke=%22%23E39A7E%22 stroke-width=%221.6%22/%3E%3C/svg%3E">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preload" href="/uno-di-uno/assets/fonts/fraunces-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/noi/assets/noi.css?v=20261026">
+</head>
+<body>
+<main class="wrap gate">
+  <p class="mono"><span class="logo" aria-hidden="true"></span> Update Your Life · Francesco Maragliulo</p>
+  <div>
+    <h1>NOI</h1>
+    <p class="soon">Un percorso per coppie · area riservata</p>
+  </div>
+  <form id="gate" autocomplete="off" novalidate>
+    <div class="field">
+      <label for="pw">Password</label>
+      <input id="pw" name="pw" type="password" autocomplete="current-password" required aria-describedby="msg">
+    </div>
+    <button class="btn" type="submit">Entra</button>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </form>
+  <p class="muted" style="font-size:14px;max-width:34em">La password te l’ha data Francesco. Se hai ricevuto un invito personale, dopo la password si apre direttamente il tuo questionario.</p>
+</main>
+<script src="/noi/assets/gate.js?v=20261026"></script>
+<script>
+(function () {
+  var CFG = window.NOI_KEYCFG;
+  var form = document.getElementById('gate'), pw = document.getElementById('pw'), msg = document.getElementById('msg'), btn = form.querySelector('button');
+  function dest() {
+    var d = new URLSearchParams(location.search).get('da') || '';
+    d = /^\/noi\/[a-z-]+\/$/.test(d) ? d : '/noi/scopri/';
+    var h = '';
+    try { h = sessionStorage.getItem('noi-hash') || ''; sessionStorage.removeItem('noi-hash'); } catch (e) {}
+    return d + (/^#[A-Za-z0-9_=&.-]+$/.test(h) ? h : '');
+  }
+  var b64 = function (u8) { var s = ''; u8.forEach(function (b) { s += String.fromCharCode(b); }); return btoa(s); };
+  var unb64 = function (s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); };
+  var hex = function (u8) { return Array.from(u8).map(function (b) { return b.toString(16).padStart(2, '0'); }).join(''); };
+  async function derive(password) {
+    var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+    var bits = new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: unb64(CFG.salt), iterations: CFG.iter }, base, 512));
+    return { key: bits.slice(0, 32), token: hex(bits.slice(32)) };
+  }
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    msg.textContent = '';
+    var v = pw.value.trim();
+    if (!v) { msg.textContent = 'Inserisci la password.'; pw.focus(); return; }
+    btn.disabled = true; btn.textContent = 'Verifico…';
+    try {
+      var d = await derive(v);
+      if (d.token === CFG.token) {
+        try { localStorage.setItem('noi-accesso', d.token); localStorage.setItem('noi-chiave', b64(d.key)); } catch (err) {}
+        location.href = dest();
+        return;
+      }
+      msg.textContent = 'Password non corretta.';
+      pw.select();
+    } catch (err) {
+      msg.textContent = 'Questo browser non riesce a verificare la password: prova con una versione aggiornata.';
+    }
+    btn.disabled = false; btn.textContent = 'Entra';
+  });
+})();
+</script>
+</body>
+</html>
