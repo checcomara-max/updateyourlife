@@ -16,7 +16,7 @@ const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)/g)].map((m) => m[1]);
 // Pagine servizio: devono comparire in nav.topics e nei footer di home + pagine servizio
 const SERVICE_DIRS = [
   'psicologo-online', 'ansia-online', 'relazioni-coppia-online', 'autostima-online', 'momenti-di-cambiamento-online',
-  'stress-lavoro-burnout-online', 'psicologo-per-manager', 'azienda-di-famiglia-online', 'coaching', 'psicologo-online-italiani-estero', 'psicologo-online-milano',
+  'stress-lavoro-burnout-online', 'psicologo-per-manager', 'azienda-di-famiglia-online', 'coaching', 'coaching-online-crescita-personale', 'psicologo-online-italiani-estero', 'psicologo-online-milano',
 ];
 const serviceFiles = new Set(SERVICE_DIRS.map((d) => `${d}/index.html`));
 
