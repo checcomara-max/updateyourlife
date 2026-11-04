@@ -18,11 +18,12 @@
   if (ok) ok.onclick = function () { set('all'); banner.classList.remove('show'); loadGA(); };
   if (no) no.onclick = function () { set('necessary'); banner.classList.remove('show'); };
 
-  // Contatti: evento generate_lead (solo con consenso analitico)
+  // Contatti: traccia solo il clic, non una richiesta realmente ricevuta.
+  // L'evento viene inviato solo dopo il consenso ai cookie analitici.
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !window.gtag) return;
     var m = a.getAttribute('data-contatto');
-    gtag('event', 'generate_lead', { metodo: m.split('-')[0], posizione: m });
+    gtag('event', 'contact_click', { metodo: m.split('-')[0], posizione: m });
   });
 
   // Menu mobile
