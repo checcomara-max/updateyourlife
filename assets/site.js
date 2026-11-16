@@ -18,6 +18,20 @@
   if (ok) ok.onclick = function () { set('all'); banner.classList.remove('show'); loadGA(); };
   if (no) no.onclick = function () { set('necessary'); banner.classList.remove('show'); };
 
+  // Rendi riconoscibile la provenienza nel messaggio WhatsApp per i link della campagna.
+  if (document.body.hasAttribute('data-campaign-contact')) {
+    var campaign = new URLSearchParams(window.location.search);
+    if (campaign.get('utm_source') === 'google' && campaign.get('utm_medium') === 'cpc') {
+      document.querySelectorAll('a[data-contatto^="whatsapp-"][href^="https://wa.me/"]').forEach(function (link) {
+        var url = new URL(link.href);
+        var message = url.searchParams.get('text');
+        if (!message) return;
+        url.searchParams.set('text', message + ' Ho visto il tuo annuncio su Google.');
+        link.href = url.href;
+      });
+    }
+  }
+
   // Contatti: traccia solo il clic, non una richiesta realmente ricevuta.
   // L'evento viene inviato solo dopo il consenso ai cookie analitici.
   document.addEventListener('click', function (e) {
