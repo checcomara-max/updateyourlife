@@ -21,22 +21,12 @@
   // Rendi riconoscibile la provenienza nel messaggio WhatsApp per i link della campagna.
   if (document.body.hasAttribute('data-campaign-contact')) {
     var campaign = new URLSearchParams(window.location.search);
-    var source = campaign.get('utm_source');
-    var medium = campaign.get('utm_medium');
-    var suffix = '';
-
-    if (source === 'instagram' && medium === 'organic_social') {
-      suffix = ' Ti ho trovato tramite Instagram.';
-    } else if (source === 'google' && medium === 'cpc') {
-      suffix = ' Ho visto il tuo annuncio su Google.';
-    }
-
-    if (suffix) {
+    if (campaign.get('utm_source') === 'google' && campaign.get('utm_medium') === 'cpc') {
       document.querySelectorAll('a[data-contatto^="whatsapp-"][href^="https://wa.me/"]').forEach(function (link) {
         var url = new URL(link.href);
         var message = url.searchParams.get('text');
         if (!message) return;
-        url.searchParams.set('text', message + suffix);
+        url.searchParams.set('text', message + ' Ho visto il tuo annuncio su Google.');
         link.href = url.href;
       });
     }
