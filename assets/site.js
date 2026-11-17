@@ -1,22 +1,158 @@
-// Update Your Life — script condiviso: consenso cookie + Google Analytics, misura contatti, menu mobile, barra WhatsApp mobile.
+// Update Your Life — consenso, misurazione, menu e contatti.
 (function () {
-  var KEY = 'uyl_cookie_consent';
-  function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var ANALYTICS_KEY = 'uyl_cookie_consent';
+  var MARKETING_KEY = 'uyl_marketing_consent';
+  var GA_ID = 'G-ZEHNGYS0Z9';
+  function get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function set(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
   function loadGA() {
     if (window._gaLoaded) return; window._gaLoaded = true;
     window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date()); gtag('config', 'G-ZEHNGYS0Z9', { anonymize_ip: true });
-    var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZEHNGYS0Z9'; document.head.appendChild(s);
+    gtag('js', new Date()); gtag('config', GA_ID, { anonymize_ip: true });
+    var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID; document.head.appendChild(s);
   }
 
-  // Cookie
-  var banner = document.getElementById('cookie'), c = get();
-  if (c === 'all') loadGA();
-  else if (!c && banner) banner.classList.add('show');
+  var pixelId = document.body.getAttribute('data-meta-pixel');
+  var pixelLoading = false, pixelReady = false, pixelInitialized = false;
+  var marketingAllowed = false, analyticsAllowed = false;
+
+  function canLoadPixel() {
+    var url = new URL(window.location.href);
+    if (!pixelId || url.origin !== 'https://www.updateyourlife.it' || url.pathname !== '/' || url.hash) return false;
+
+    // Il Pixel può includere URL e referrer nelle richieste. Limita i dati ai riferimenti pubblicitari neutri.
+    if (document.referrer &&
+        !/^https:\/\/(?:[a-z0-9-]+\.)?(?:facebook\.com|instagram\.com)\/?$/.test(document.referrer)) return false;
+
+    var allowed = new Map([
+      ['fbclid', /^[A-Za-z0-9_-]+$/],
+      ['utm_source', /^(meta|facebook|instagram|fb|ig)$/i],
+      ['utm_medium', /^(cpc|paid|paid_social|social)$/i],
+      ['utm_id', /^\d+$/],
+      ['utm_campaign', /^\d+$/],
+      ['utm_content', /^\d+$/],
+      ['utm_term', /^\d+$/]
+    ]);
+    return Array.from(url.searchParams).every(function (entry) {
+      var pattern = allowed.get(entry[0]);
+      return !!pattern && pattern.test(entry[1]);
+    });
+  }
+
+  function applyPixelConsent() {
+    if (!pixelReady) return;
+    window.fbq('consent', marketingAllowed ? 'grant' : 'revoke');
+    if (!marketingAllowed || pixelInitialized || !canLoadPixel()) return;
+
+    pixelInitialized = true;
+    window.fbq('set', 'autoConfig', false, pixelId);
+    window.fbq.disablePushState = true;
+    window.fbq('init', pixelId);
+    window.fbq('trackSingle', pixelId, 'PageView');
+  }
+
+  function loadPixel() {
+    if (pixelLoading || pixelReady || !canLoadPixel()) return;
+    pixelLoading = true;
+    var fbq = function () {
+      if (fbq.callMethod) fbq.callMethod.apply(fbq, arguments);
+      else fbq.queue.push(arguments);
+    };
+    fbq.push = fbq;
+    fbq.loaded = true;
+    fbq.version = '2.0';
+    fbq.queue = [];
+    window.fbq = window._fbq = fbq;
+
+    var script = document.createElement('script');
+    script.async = true;
+    script.referrerPolicy = 'no-referrer';
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    script.onload = function () {
+      pixelLoading = false;
+      pixelReady = true;
+      applyPixelConsent();
+    };
+    script.onerror = function () {
+      pixelLoading = false;
+      script.remove();
+    };
+    document.head.appendChild(script);
+  }
+
+  function clearPixelCookies() {
+    ['_fbp', '_fbc'].forEach(function (name) {
+      var expired = name + '=; Max-Age=0; Path=/; Secure';
+      document.cookie = expired;
+      document.cookie = expired + '; Domain=updateyourlife.it';
+    });
+  }
+
+  var banner = document.getElementById('cookie');
+  var form = document.getElementById('cookie-options');
+  var analyticsOption = document.getElementById('cookie-analytics');
+  var marketingOption = document.getElementById('cookie-marketing');
   var ok = document.getElementById('cookie-ok'), no = document.getElementById('cookie-no');
-  if (ok) ok.onclick = function () { set('all'); banner.classList.remove('show'); loadGA(); };
-  if (no) no.onclick = function () { set('necessary'); banner.classList.remove('show'); };
+  var preferencesTrigger;
+
+  function applyPreferences(analytics, marketing) {
+    analyticsAllowed = analytics === 'all';
+    marketingAllowed = marketing === 'granted';
+    window['ga-disable-' + GA_ID] = !analyticsAllowed;
+    if (analyticsAllowed) loadGA();
+    if (marketingAllowed) loadPixel();
+    applyPixelConsent();
+  }
+
+  function openPreferences(trigger) {
+    if (form) {
+      analyticsOption.checked = analyticsAllowed;
+      marketingOption.checked = marketingAllowed;
+    }
+    banner.classList.add('show');
+    if (trigger) {
+      preferencesTrigger = trigger;
+      analyticsOption.focus();
+    }
+  }
+
+  function savePreferences(analytics, marketing) {
+    if (analytics) set(ANALYTICS_KEY, analytics);
+    if (marketing) set(MARKETING_KEY, marketing);
+    applyPreferences(analytics, marketing || get(MARKETING_KEY));
+    if (marketing === 'denied') clearPixelCookies();
+    banner.classList.remove('show');
+    if (preferencesTrigger) {
+      preferencesTrigger.focus();
+      preferencesTrigger = null;
+    }
+  }
+
+  var analytics = get(ANALYTICS_KEY), marketing = get(MARKETING_KEY);
+  applyPreferences(analytics, marketing);
+  if (banner && (!analytics || (pixelId && analytics === 'all' && !marketing))) openPreferences();
+  if (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      savePreferences(analyticsOption.checked ? 'all' : 'necessary', marketingOption.checked ? 'granted' : 'denied');
+    });
+    document.querySelectorAll('[data-cookie-preferences]').forEach(function (button) {
+      button.hidden = false;
+      button.addEventListener('click', function () { openPreferences(button); });
+    });
+  } else if (ok) {
+    ok.onclick = function () { savePreferences('all'); };
+  }
+  if (no) no.onclick = function () { savePreferences('necessary', form ? 'denied' : null); };
+
+  window.addEventListener('storage', function (event) {
+    if (event.key === ANALYTICS_KEY || event.key === MARKETING_KEY || event.key === null) {
+      applyPreferences(get(ANALYTICS_KEY), get(MARKETING_KEY));
+    }
+  });
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) applyPreferences(get(ANALYTICS_KEY), get(MARKETING_KEY));
+  });
 
   // Rendi riconoscibile la provenienza nel messaggio WhatsApp per i link della campagna.
   if (document.body.hasAttribute('data-campaign-contact')) {
@@ -35,7 +171,7 @@
   // Contatti: traccia solo il clic, non una richiesta realmente ricevuta.
   // L'evento viene inviato solo dopo il consenso ai cookie analitici.
   document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !window.gtag) return;
+    var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !analyticsAllowed || !window.gtag) return;
     var m = a.getAttribute('data-contatto');
     gtag('event', 'contact_click', { metodo: m.split('-')[0], posizione: m });
   });
