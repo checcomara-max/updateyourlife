@@ -93,6 +93,7 @@
   var analyticsOption = document.getElementById('cookie-analytics');
   var marketingOption = document.getElementById('cookie-marketing');
   var ok = document.getElementById('cookie-ok'), no = document.getElementById('cookie-no');
+  var customize = document.getElementById('cookie-customize');
   var preferencesTrigger;
 
   function applyPreferences(analytics, marketing) {
@@ -104,6 +105,12 @@
     applyPixelConsent();
   }
 
+  function showOptions(open) {
+    if (!customize) return;
+    form.hidden = !open;
+    customize.setAttribute('aria-expanded', String(open));
+  }
+
   function openPreferences(trigger) {
     if (form) {
       analyticsOption.checked = analyticsAllowed;
@@ -112,6 +119,7 @@
     banner.classList.add('show');
     if (trigger) {
       preferencesTrigger = trigger;
+      showOptions(true);
       analyticsOption.focus();
     }
   }
@@ -122,6 +130,7 @@
     applyPreferences(analytics, marketing || get(MARKETING_KEY));
     if (marketing === 'denied') clearPixelCookies();
     banner.classList.remove('show');
+    showOptions(false);
     if (preferencesTrigger) {
       preferencesTrigger.focus();
       preferencesTrigger = null;
@@ -131,6 +140,7 @@
   var analytics = get(ANALYTICS_KEY), marketing = get(MARKETING_KEY);
   applyPreferences(analytics, marketing);
   if (banner && (!analytics || (pixelId && analytics === 'all' && !marketing))) openPreferences();
+  if (customize) customize.onclick = function () { showOptions(form.hidden); };
   if (form) {
     form.addEventListener('submit', function (event) {
       event.preventDefault();
@@ -140,9 +150,8 @@
       button.hidden = false;
       button.addEventListener('click', function () { openPreferences(button); });
     });
-  } else if (ok) {
-    ok.onclick = function () { savePreferences('all'); };
   }
+  if (ok) ok.onclick = function () { savePreferences('all', form ? 'granted' : null); };
   if (no) no.onclick = function () { savePreferences('necessary', form ? 'denied' : null); };
 
   window.addEventListener('storage', function (event) {

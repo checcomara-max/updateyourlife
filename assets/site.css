@@ -104,6 +104,18 @@ b,strong{font-weight:600}
 .cookie legend{font-weight:600;margin-bottom:4px}
 .cookie label{display:inline-flex;align-items:center;gap:8px;min-height:28px;cursor:pointer}
 .cookie input{width:18px;height:18px;flex:none;accent-color:var(--ink)}
+.cookie-compact{left:50%;right:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(920px,calc(100% - 24px));max-height:calc(100dvh - 24px - env(safe-area-inset-bottom,0px));overflow:auto;transform:translateX(-50%);padding:10px 14px;border:1px solid var(--rule);border-radius:16px;box-shadow:0 6px 24px rgba(27,36,54,.16)}
+.cookie-compact.show{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px}
+.cookie-compact p{flex:1 1 220px;min-width:0;line-height:1.4}
+.cookie-compact a,.cookie-compact .cookie-customize{text-decoration:underline;text-underline-offset:3px}
+.cookie-actions{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px}
+.cookie-compact button{min-height:44px;padding:6px 12px;font-size:13px;color:var(--ink);white-space:nowrap}
+.cookie-compact .cookie-choice{border:1px solid var(--graphite);background:var(--white)}
+.cookie-compact .cookie-customize{border:0;background:transparent;padding-inline:4px}
+.cookie-compact button:hover{background:var(--paper)}
+.cookie-compact form{flex:1 1 100%;padding-top:10px;border-top:1px solid var(--rule)}
+.cookie-compact form:not([hidden]){display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.cookie-compact form fieldset{flex:1 1 330px}
 
 /* Barra WhatsApp fissa su mobile */
 .sticky-cta{display:none}
@@ -348,6 +360,7 @@ b,strong{font-weight:600}
   .sticky-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:90;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(243,245,248,.96);border-top:1px solid var(--rule);transform:translateY(110%);transition:transform .25s}
   .sticky-cta.on{transform:none}
   .sticky-cta .btn{width:100%}
+  .home:has(.sticky-cta.on) .cookie-compact{bottom:calc(88px + env(safe-area-inset-bottom,0px));max-height:calc(100dvh - 100px - env(safe-area-inset-bottom,0px))}
 }
 @media (max-width:560px){
   body{font-size:16.5px}
@@ -360,6 +373,8 @@ b,strong{font-weight:600}
   .home .hero .actions .tlink{order:3;align-self:flex-start}
   .cookie p{flex-basis:100%;min-width:0}
   .cookie button{flex:1}
+  .cookie-compact{padding:8px 10px}
+  .cookie-compact button{flex:0 1 auto}
   .home .hero .actions .btn,.svc .page-hero .actions .btn,.about-page .actions .btn{width:100%}
   .proof ul{grid-template-columns:1fr 1fr;gap:16px 20px}
   .facts div{grid-template-columns:1fr;gap:4px}
