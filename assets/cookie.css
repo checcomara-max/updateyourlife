@@ -1,0 +1,53 @@
+/* Scelte sui cookie condivise dalle pagine con misurazione facoltativa. */
+.cookie {
+  position: fixed;
+  z-index: 300;
+  left: 50%;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(920px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px - env(safe-area-inset-bottom, 0px));
+  overflow: auto;
+  box-sizing: border-box;
+  border: 1px solid #c8d0dc;
+  border-radius: 16px;
+  padding: 10px 14px;
+  background: #fff;
+  color: #1b2436;
+  box-shadow: 0 6px 24px rgba(27,36,54,.16);
+  font: 400 14px/1.45 var(--sans, system-ui, sans-serif);
+}
+.cookie:not([hidden]) { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.cookie[hidden], #cookie-options[hidden] { display: none; }
+.cookie p { flex: 1 1 240px; margin: 0; color: #4a5366; font: inherit; }
+.cookie a { color: #1b2436; text-decoration: underline; text-underline-offset: 2px; }
+.cookie-actions { display: flex; margin-left: auto; gap: 8px; }
+.cookie-actions button, #cookie-options button {
+  min-height: 44px;
+  border: 1px solid #4a5366;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: 600 14px/1.2 var(--sans, system-ui, sans-serif);
+  color: #1b2436;
+  background: #eff0f2;
+  cursor: pointer;
+}
+.cookie-actions button { flex: 1; min-width: 112px; white-space: nowrap; }
+.cookie #cookie-ok { background: #f9ebcf; }
+.cookie-actions button:hover, #cookie-options button:hover { box-shadow: inset 0 0 0 1px #4a5366; }
+.cookie :focus-visible, #cookie-options :focus-visible { outline: 2px solid #26324b; outline-offset: 2px; }
+#preferenze-cookie { scroll-margin-top: 100px; }
+#cookie-options { margin: 12px 0 24px; }
+#cookie-options fieldset { padding: 0; margin: 0 0 12px; border: 0; }
+#cookie-options legend { font-weight: 600; }
+#cookie-options label { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; }
+#cookie-options input { width: 18px; height: 18px; accent-color: #26324b; }
+#cookie-status { margin-left: 8px; }
+@media (max-width: 980px) {
+  body:has(.sticky-cta.on) .cookie { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); max-height: calc(100dvh - 100px - env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 560px) {
+  .cookie { padding: 10px 12px; }
+  .cookie p, .cookie-actions { flex-basis: 100%; }
+  .cookie-actions button { min-width: 0; }
+}

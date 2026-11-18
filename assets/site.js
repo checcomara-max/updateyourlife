@@ -99,8 +99,7 @@
   var analyticsOption = document.getElementById('cookie-analytics');
   var marketingOption = document.getElementById('cookie-marketing');
   var ok = document.getElementById('cookie-ok'), no = document.getElementById('cookie-no');
-  var customize = document.getElementById('cookie-customize');
-  var preferencesTrigger;
+  var status = document.getElementById('cookie-status');
 
   function applyPreferences(analytics, marketing) {
     analyticsAllowed = analytics === 'all';
@@ -111,64 +110,52 @@
     applyPixelConsent();
   }
 
-  function showOptions(open) {
-    if (!customize) return;
-    form.hidden = !open;
-    customize.setAttribute('aria-expanded', String(open));
-  }
-
-  function openPreferences(trigger) {
+  function syncPreferences() {
+    var analytics = get(ANALYTICS_KEY);
+    var marketing = get(MARKETING_KEY);
+    applyPreferences(analytics, marketing);
+    if (banner) {
+      // Un vecchio consenso alle sole statistiche non autorizza Meta.
+      var needsChoice = !analytics || (pixelId && analytics === 'all' && !marketing);
+      banner.hidden = !needsChoice || (form && window.location.hash === '#preferenze-cookie');
+    }
     if (form) {
       analyticsOption.checked = analyticsAllowed;
       marketingOption.checked = marketingAllowed;
-    }
-    banner.classList.add('show');
-    if (trigger) {
-      preferencesTrigger = trigger;
-      showOptions(true);
-      if (analyticsOption) analyticsOption.focus();
-      else no.focus();
+      form.hidden = false;
     }
   }
 
   function savePreferences(analytics, marketing) {
-    if (analytics) set(ANALYTICS_KEY, analytics);
-    if (marketing) set(MARKETING_KEY, marketing);
-    applyPreferences(analytics, marketing || get(MARKETING_KEY));
+    set(ANALYTICS_KEY, analytics);
+    set(MARKETING_KEY, marketing);
+    applyPreferences(analytics, marketing);
     if (analytics === 'necessary') clearFirstPartyCookies(['_ga', '_ga_' + GA_ID.slice(2)]);
     if (marketing === 'denied') clearFirstPartyCookies(['_fbp', '_fbc']);
-    banner.classList.remove('show');
-    showOptions(false);
-    if (preferencesTrigger) {
-      preferencesTrigger.focus();
-      preferencesTrigger = null;
+    if (banner) banner.hidden = true;
+    if (form) {
+      analyticsOption.checked = analyticsAllowed;
+      marketingOption.checked = marketingAllowed;
+      status.textContent = 'Preferenze salvate.';
     }
   }
 
-  var analytics = get(ANALYTICS_KEY), marketing = get(MARKETING_KEY);
-  applyPreferences(analytics, marketing);
-  if (banner && (!analytics || (pixelId && analytics === 'all' && !marketing))) openPreferences();
-  if (customize) customize.onclick = function () { showOptions(form.hidden); };
+  syncPreferences();
+  if (ok) ok.onclick = function () { savePreferences('all', 'granted'); };
+  if (no) no.onclick = function () { savePreferences('necessary', 'denied'); };
   if (form) {
+    window.addEventListener('hashchange', syncPreferences);
+    form.addEventListener('change', function () { status.textContent = ''; });
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       savePreferences(analyticsOption.checked ? 'all' : 'necessary', marketingOption.checked ? 'granted' : 'denied');
     });
   }
-  document.querySelectorAll('[data-cookie-preferences]').forEach(function (button) {
-    button.hidden = false;
-    button.addEventListener('click', function () { openPreferences(button); });
-  });
-  if (ok) ok.onclick = function () { savePreferences('all', form ? 'granted' : null); };
-  if (no) no.onclick = function () { savePreferences('necessary', form ? 'denied' : null); };
-
   window.addEventListener('storage', function (event) {
-    if (event.key === ANALYTICS_KEY || event.key === MARKETING_KEY || event.key === null) {
-      applyPreferences(get(ANALYTICS_KEY), get(MARKETING_KEY));
-    }
+    if (event.key === ANALYTICS_KEY || event.key === MARKETING_KEY || event.key === null) syncPreferences();
   });
   window.addEventListener('pageshow', function (event) {
-    if (event.persisted) applyPreferences(get(ANALYTICS_KEY), get(MARKETING_KEY));
+    if (event.persisted) syncPreferences();
   });
 
   // Indica la provenienza nel contatto che il visitatore può modificare prima dell’invio.
