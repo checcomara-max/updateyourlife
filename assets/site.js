@@ -8,7 +8,12 @@
   function loadGA() {
     if (window._gaLoaded) return; window._gaLoaded = true;
     window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date()); gtag('config', GA_ID, { anonymize_ip: true });
+    gtag('js', new Date());
+    gtag('config', GA_ID, {
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
     var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID; document.head.appendChild(s);
   }
 
@@ -80,10 +85,11 @@
     document.head.appendChild(script);
   }
 
-  function clearPixelCookies() {
-    ['_fbp', '_fbc'].forEach(function (name) {
+  function clearFirstPartyCookies(names) {
+    names.forEach(function (name) {
       var expired = name + '=; Max-Age=0; Path=/; Secure';
       document.cookie = expired;
+      document.cookie = expired + '; Domain=' + window.location.hostname;
       document.cookie = expired + '; Domain=updateyourlife.it';
     });
   }
@@ -120,7 +126,8 @@
     if (trigger) {
       preferencesTrigger = trigger;
       showOptions(true);
-      analyticsOption.focus();
+      if (analyticsOption) analyticsOption.focus();
+      else no.focus();
     }
   }
 
@@ -128,7 +135,8 @@
     if (analytics) set(ANALYTICS_KEY, analytics);
     if (marketing) set(MARKETING_KEY, marketing);
     applyPreferences(analytics, marketing || get(MARKETING_KEY));
-    if (marketing === 'denied') clearPixelCookies();
+    if (analytics === 'necessary') clearFirstPartyCookies(['_ga', '_ga_' + GA_ID.slice(2)]);
+    if (marketing === 'denied') clearFirstPartyCookies(['_fbp', '_fbc']);
     banner.classList.remove('show');
     showOptions(false);
     if (preferencesTrigger) {
@@ -146,11 +154,11 @@
       event.preventDefault();
       savePreferences(analyticsOption.checked ? 'all' : 'necessary', marketingOption.checked ? 'granted' : 'denied');
     });
-    document.querySelectorAll('[data-cookie-preferences]').forEach(function (button) {
-      button.hidden = false;
-      button.addEventListener('click', function () { openPreferences(button); });
-    });
   }
+  document.querySelectorAll('[data-cookie-preferences]').forEach(function (button) {
+    button.hidden = false;
+    button.addEventListener('click', function () { openPreferences(button); });
+  });
   if (ok) ok.onclick = function () { savePreferences('all', form ? 'granted' : null); };
   if (no) no.onclick = function () { savePreferences('necessary', form ? 'denied' : null); };
 
@@ -163,7 +171,7 @@
     if (event.persisted) applyPreferences(get(ANALYTICS_KEY), get(MARKETING_KEY));
   });
 
-  // Rendi riconoscibile la provenienza nel messaggio WhatsApp per i link della campagna.
+  // Indica la provenienza nel contatto che il visitatore può modificare prima dell’invio.
   if (document.body.hasAttribute('data-campaign-contact')) {
     var campaign = new URLSearchParams(window.location.search);
     var source = campaign.get('utm_source');
@@ -179,6 +187,17 @@
         url.searchParams.set('text', message + ' Ho visto il tuo annuncio su ' + platform + '.');
         link.href = url.href;
       });
+      if (platform === 'ChatGPT') {
+        var email = document.querySelector('a[data-contatto^="email-"][href^="mailto:"]');
+        if (email) {
+          var mailUrl = new URL(email.href);
+          var subject = mailUrl.searchParams.get('subject');
+          if (subject) {
+            // I client di posta si aspettano spazi percent-encoded nel mailto.
+            email.href = 'mailto:' + mailUrl.pathname + '?subject=' + encodeURIComponent(subject + ' (ChatGPT Ads)');
+          }
+        }
+      }
     }
   }
 
