@@ -163,7 +163,7 @@
     var campaign = new URLSearchParams(window.location.search);
     var source = campaign.get('utm_source');
     var platform = source === 'google' ? 'Google' : '';
-    if (source === 'chatgpt' && document.body.getAttribute('data-campaign-contact') === 'chatgpt') {
+    if ((source === 'chatgpt' || source === 'chatgpt_ads') && document.body.getAttribute('data-campaign-contact') === 'chatgpt') {
       platform = 'ChatGPT';
     }
     if (platform && campaign.get('utm_medium') === 'cpc') {

@@ -25,6 +25,7 @@ PAGES = [
     ('psicologo-per-manager', 'Psicologo online per manager e professionisti'),
     ('azienda-di-famiglia-online', 'Coach e psicologo online per chi lavora in azienda di famiglia'),
     ('coaching', 'Coaching online per manager e professionisti'),
+    ('coaching-scelte-manager', 'Coaching per manager tra sovraccarico, feedback e carriera'),
     ('coaching-online-crescita-personale', 'Coaching online per la crescita personale'),
     ('psicologo-online-italiani-estero', "Psicologo italiano online per chi vive all'estero"),
     ('psicologo-online-milano', 'Psicologo online a Milano'),
