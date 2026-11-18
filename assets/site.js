@@ -166,12 +166,17 @@
   // Rendi riconoscibile la provenienza nel messaggio WhatsApp per i link della campagna.
   if (document.body.hasAttribute('data-campaign-contact')) {
     var campaign = new URLSearchParams(window.location.search);
-    if (campaign.get('utm_source') === 'google' && campaign.get('utm_medium') === 'cpc') {
+    var source = campaign.get('utm_source');
+    var platform = source === 'google' ? 'Google' : '';
+    if (source === 'chatgpt' && document.body.getAttribute('data-campaign-contact') === 'chatgpt') {
+      platform = 'ChatGPT';
+    }
+    if (platform && campaign.get('utm_medium') === 'cpc') {
       document.querySelectorAll('a[data-contatto^="whatsapp-"][href^="https://wa.me/"]').forEach(function (link) {
         var url = new URL(link.href);
         var message = url.searchParams.get('text');
         if (!message) return;
-        url.searchParams.set('text', message + ' Ho visto il tuo annuncio su Google.');
+        url.searchParams.set('text', message + ' Ho visto il tuo annuncio su ' + platform + '.');
         link.href = url.href;
       });
     }
