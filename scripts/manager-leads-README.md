@@ -8,7 +8,7 @@
 4. Vai su Esegui deployment > Nuovo deployment > Applicazione web.
 5. Scegli Esegui come: Me; Accesso: Chiunque. Autorizza lo script ad inviare email.
 6. L'URL /exec del deployment è stato fornito dal titolare e collegato nella costante ENDPOINT in assets/manager-form.js.
-7. Non condividere il link /dev: per il sito serve soltanto /exec. Dopo ogni modifica significativa del backend, aggiorna il deployment di Apps Script se necessario.
+7. Non condividere il link /dev: per il sito serve soltanto /exec. Dopo ogni modifica significativa del backend, aggiorna il deployment di Apps Script se necessario. Il codice client usa /api/manager-leads su Vercel, che inoltra la richiesta all'URL /exec e ne verifica la risposta.
 8. Invia un test dal modulo con dati di test di tua proprietà. Verifica che compaia il successo SOLO dopo la risposta, che l'email arrivi a Gmail, e che in caso di fallimento sia visibile solo l'alternativa WhatsApp.
 9. Completa la verifica privacy professionale, quindi pubblica/mergia questa branch.
 
@@ -24,3 +24,10 @@
 - Il frontend mantiene i due flag booleani (`contactRequested` e `sensitiveConsent`) previsti dal backend distribuito inizialmente, ricavati da questa unica richiesta esplicita non preselezionata. Non serve ridistribuire lo script per questo cambiamento.
 - Eliminati i due testi ridondanti richiesti dall'utente.
 - Meta Pixel NON attivato sulla pagina manager; niente eventi Lead o PageView inviati a Meta dalla landing.
+
+## Connessione Vercel (a partire da questa PR)
+- `api/manager-leads.js` riceve le richieste pubbliche, le valida e inoltra il payload a Google Apps Script dal server Vercel.
+- La funzione restituisce `{ success: true }` soltanto dopo una risposta positiva dal backend Google. In caso di errore il frontend mostra il fallback WhatsApp, senza proclamare una richiesta ricevuta.
+- Sulle anteprime Vercel la chiamata è same-origin a `/api/manager-leads`. Sul sito con dominio personalizzato GitHub Pages il client chiama `https://project-30hc5.vercel.app/api/manager-leads` con CORS limitato alle origini autorizzate.
+- Le richieste transitano quindi anche attraverso l'hosting Vercel; la sezione dedicata della privacy policy ne dà conto. Verificare gli accordi di trattamento e l'idoneità per dati potenzialmente sensibili.
+- **NON PUBBLICARE la PR senza un invio end-to-end di prova dal browser, conferma su pagina e email ricevuta.**
