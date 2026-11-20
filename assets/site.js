@@ -6,7 +6,7 @@
   function get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
   function set(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
   var isManagerLanding = document.body.classList.contains('manager-landing');
-  var isProductionDomain = /^(?:www\\.)?updateyourlife\\.it$/.test(location.hostname);
+  var isProductionDomain = /^(?:www\.)?updateyourlife\.it$/.test(location.hostname);
 
   // Sulla landing manager usiamo solo statistiche del traffico, non dettagli dei moduli.
   // Le anteprime Vercel non devono inquinare la proprietà GA4 di produzione.
