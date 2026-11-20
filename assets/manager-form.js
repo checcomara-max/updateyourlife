@@ -3,8 +3,8 @@
   'use strict';
   var f = document.getElementById('manager-lead-form');
   if (!f) return;
-  // Inserire qui l'URL /exec della Web App dedicata solo dopo il test del backend.
-  var ENDPOINT = '';
+  // Google Apps Script dedicato, pubblicato dall'account del titolare.
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbwrSn79Vrv8rxL6Mw1aymgo4FUdsRxyuYzhfdZCTSzqIRY1RSW7yM-wjaGW0KveCFRI/exec';
   var err = document.getElementById('manager-form-error');
   var done = document.getElementById('manager-form-success');
   var btn = document.getElementById('manager-form-submit');
@@ -37,8 +37,7 @@
     if (!cognome || cognome.length > 90) return fail('Inserisci un cognome valido.', fields.namedItem('cognome'));
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 180) return fail("Controlla l'indirizzo email.", fields.namedItem('email'));
     if (!/^\+[1-9]\d{8,14}$/.test(tel)) return fail('Inserisci un numero WhatsApp valido con prefisso internazionale (es. +39).', fields.namedItem('cellulare'));
-    if (!fields.namedItem('privacy').checked) return fail("Conferma di aver letto l'informativa e di richiedere il ricontatto.", fields.namedItem('privacy'));
-    if (!fields.namedItem('sensitive').checked) return fail('Per inviare il modulo è necessario il consenso esplicito indicato.', fields.namedItem('sensitive'));
+    if (!fields.namedItem('privacy').checked) return fail("Per inviare la richiesta, leggi l'informativa ed esprimi il consenso al trattamento dei dati per il ricontatto.", fields.namedItem('privacy'));
     if (!ENDPOINT) return fail('Il modulo non è ancora attivo. Usa il pulsante WhatsApp subito sotto per organizzare la call.');
 
     var payload = {
