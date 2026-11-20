@@ -5,16 +5,59 @@
   var GA_ID = 'G-ZEHNGYS0Z9';
   function get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
   function set(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+  var isManagerLanding = document.body.classList.contains('manager-landing');
+  var isProductionDomain = /^(?:www\.)?updateyourlife\.it$/.test(location.hostname);
+
+  // Sulla landing manager usiamo solo statistiche del traffico, non dettagli dei moduli.
+  // Le anteprime Vercel non devono inquinare la proprietà GA4 di produzione.
+  function managerGAConfig() {
+    var config = {
+      page_location: 'https://www.updateyourlife.it/psicologo-per-manager/',
+      page_title: 'Psicologo per manager | Update Your Life',
+      // Mai inoltrare a GA4 un referrer completo, che potrebbe contenere query o identificativi.
+      page_referrer: ''
+    };
+    try {
+      if (document.referrer) {
+        var ref = new URL(document.referrer);
+        if (ref.protocol === 'https:' || ref.protocol === 'http:') {
+          config.page_referrer = ref.origin + '/';
+        }
+      }
+    } catch (_) {}
+    var query = new URLSearchParams(location.search);
+    // Solo etichette neutre, non identificativi personali o query arbitrarie.
+    var source = query.get('utm_source') || '';
+    var medium = query.get('utm_medium') || '';
+    var campaign = query.get('utm_campaign') || '';
+    var content = query.get('utm_content') || '';
+    var campaignId = query.get('utm_id') || '';
+    var sources = ['meta', 'facebook', 'instagram', 'google', 'newsletter'];
+    var media = ['paid_social', 'cpc', 'social', 'organic', 'email'];
+    if (sources.indexOf(source) !== -1 && media.indexOf(medium) !== -1) {
+      config.campaign_source = source;
+      config.campaign_medium = medium;
+      if (/^[a-z0-9_-]{1,48}$/.test(campaign)) config.campaign_name = campaign;
+      if (/^[a-z0-9_-]{1,48}$/.test(content)) config.campaign_content = content;
+      if (/^\d{1,30}$/.test(campaignId)) config.campaign_id = campaignId;
+    }
+    return config;
+  }
   function loadGA() {
-    if (window._gaLoaded) return; window._gaLoaded = true;
+    if (window._gaLoaded || (isManagerLanding && !isProductionDomain)) return;
+    window._gaLoaded = true;
     window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
     gtag('js', new Date());
-    gtag('config', GA_ID, {
+    var config = {
       anonymize_ip: true,
       allow_google_signals: false,
       allow_ad_personalization_signals: false
-    });
-    var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID; document.head.appendChild(s);
+    };
+    if (isManagerLanding) Object.assign(config, managerGAConfig());
+    gtag('config', GA_ID, config);
+    var s = document.createElement('script');
+    s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
   }
 
   var pixelId = document.body.getAttribute('data-meta-pixel');
@@ -191,7 +234,7 @@
   // Contatti: traccia solo il clic, non una richiesta realmente ricevuta.
   // L'evento viene inviato solo dopo il consenso ai cookie analitici.
   document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !analyticsAllowed || !window.gtag) return;
+    var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !analyticsAllowed || !window.gtag || isManagerLanding) return;
     var m = a.getAttribute('data-contatto');
     gtag('event', 'contact_click', { metodo: m.split('-')[0], posizione: m });
   });
