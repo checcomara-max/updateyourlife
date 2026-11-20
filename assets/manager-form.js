@@ -5,7 +5,9 @@
   if (!f) return;
   // Invio attraverso la funzione Vercel: questa conferma che Google Apps Script abbia risposto.
   // Le pagine GitHub Pages usano il dominio di produzione Vercel per la sola API.
-  var ENDPOINT = /\.vercel\.app$/.test(location.hostname) ? '/api/manager-leads' : 'https://project-30hc5.vercel.app/api/manager-leads';
+  // Vercel usa trailingSlash:true: usare direttamente la rotta canonica con / finale.
+  // Sull'anteprima Vercel chiamiamo la stessa origin; sul dominio pubblico l'API Vercel.
+  var ENDPOINT = /\.vercel\.app$/.test(location.hostname) ? '/api/manager-leads/' : 'https://project-30hc5.vercel.app/api/manager-leads/';
   var err = document.getElementById('manager-form-error');
   var done = document.getElementById('manager-form-success');
   var btn = document.getElementById('manager-form-submit');
@@ -58,15 +60,19 @@
       body: JSON.stringify(payload),
       redirect: 'follow'
     })
-    .then(function(r) { if (!r.ok) throw Error('network'); return r.json(); })
+    .then(function(r) {
+      if (!r.ok) throw Error('HTTP ' + r.status);
+      return r.json();
+    })
     .then(function(reply) {
       if (!reply || reply.success !== true) throw Error('server');
       f.hidden = true;
       document.getElementById('manager-success-name').textContent = nome;
       done.hidden = false; done.focus();
     })
-    .catch(function() {
-      fail("Non posso confermare che la richiesta sia stata ricevuta. Puoi scrivermi direttamente su WhatsApp usando il pulsante qui sotto.");
+    .catch(function(error) {
+      var reason = error && /^HTTP [0-9]{3}$/.test(error.message || '') ? ' (' + error.message + ')' : '';
+      fail("Non posso confermare che la richiesta sia stata ricevuta" + reason + ". Puoi scrivermi direttamente su WhatsApp usando il pulsante qui sotto.");
     })
     .finally(function() { btn.disabled = false; label.textContent = 'Chiedi di essere ricontattato'; });
   });
