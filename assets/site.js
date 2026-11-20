@@ -31,6 +31,7 @@
     var medium = query.get('utm_medium') || '';
     var campaign = query.get('utm_campaign') || '';
     var content = query.get('utm_content') || '';
+    var campaignId = query.get('utm_id') || '';
     var sources = ['meta', 'facebook', 'instagram', 'google', 'newsletter'];
     var media = ['paid_social', 'cpc', 'social', 'organic', 'email'];
     if (sources.indexOf(source) !== -1 && media.indexOf(medium) !== -1) {
@@ -38,6 +39,7 @@
       config.campaign_medium = medium;
       if (/^[a-z0-9_-]{1,48}$/.test(campaign)) config.campaign_name = campaign;
       if (/^[a-z0-9_-]{1,48}$/.test(content)) config.campaign_content = content;
+      if (/^\d{1,30}$/.test(campaignId)) config.campaign_id = campaignId;
     }
     return config;
   }
