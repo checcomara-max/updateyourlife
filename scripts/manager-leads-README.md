@@ -7,8 +7,8 @@
 3. Copia il contenuto di scripts/manager-leads.gs nel file Code.gs e salva.
 4. Vai su Esegui deployment > Nuovo deployment > Applicazione web.
 5. Scegli Esegui come: Me; Accesso: Chiunque. Autorizza lo script ad inviare email.
-6. Copia l'URL pubblico /exec (non /dev).
-7. Inseriscilo nella costante ENDPOINT in assets/manager-form.js.
+6. L'URL /exec del deployment è stato fornito dal titolare e collegato nella costante ENDPOINT in assets/manager-form.js.
+7. Non condividere il link /dev: per il sito serve soltanto /exec. Dopo ogni modifica significativa del backend, aggiorna il deployment di Apps Script se necessario.
 8. Invia un test dal modulo con dati di test di tua proprietà. Verifica che compaia il successo SOLO dopo la risposta, che l'email arrivi a Gmail, e che in caso di fallimento sia visibile solo l'alternativa WhatsApp.
 9. Completa la verifica privacy professionale, quindi pubblica/mergia questa branch.
 
@@ -19,3 +19,8 @@
 - Controlla le quote giornaliere di MailApp. Non conservare le richieste più del periodo indicato nell'informativa.
 - La pagina usa temporaneamente una foto professionale già presente nel repository. Le cinque foto allegate in chat non sono state caricate su GitHub tramite questa integrazione; prima di usare scene di colloquio simulate, chiarirne il carattere illustrativo.
 - La privacy policy nella PR contiene la nuova sezione dedicata: verificare ruoli e garanzie dei fornitori, base giuridica e durata della conservazione con un consulente privacy.
+## Aggiornamento 20/11/2026
+- Unica checkbox obbligatoria, che incorpora lettura dell'informativa e consenso esplicito al trattamento dei dati indirettamente riconducibili alla richiesta di contatto a uno psicologo.
+- Il frontend mantiene i due flag booleani (`contactRequested` e `sensitiveConsent`) previsti dal backend distribuito inizialmente, ricavati da questa unica richiesta esplicita non preselezionata. Non serve ridistribuire lo script per questo cambiamento.
+- Eliminati i due testi ridondanti richiesti dall'utente.
+- Meta Pixel NON attivato sulla pagina manager; niente eventi Lead o PageView inviati a Meta dalla landing.
