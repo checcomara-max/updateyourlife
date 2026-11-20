@@ -17,6 +17,9 @@ function send(res, code, value) {
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  // Diagnostica pubblica senza dati personali: permette di verificare che la funzione sia raggiungibile.
+  if (req.method === 'GET') return send(res, 200, { status: 'ok', service: 'manager-contact', version: '2026-11-20-2' });
   const origin = req.headers.origin || '';
   if (!originConsentita(origin)) return send(res, 403, { success: false });
   res.setHeader('Access-Control-Allow-Origin', origin);
