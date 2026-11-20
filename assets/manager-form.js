@@ -3,8 +3,9 @@
   'use strict';
   var f = document.getElementById('manager-lead-form');
   if (!f) return;
-  // Google Apps Script dedicato, pubblicato dall'account del titolare.
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbwrSn79Vrv8rxL6Mw1aymgo4FUdsRxyuYzhfdZCTSzqIRY1RSW7yM-wjaGW0KveCFRI/exec';
+  // Invio attraverso la funzione Vercel: questa conferma che Google Apps Script abbia risposto.
+  // Le pagine GitHub Pages usano il dominio di produzione Vercel per la sola API.
+  var ENDPOINT = /\.vercel\.app$/.test(location.hostname) ? '/api/manager-leads' : 'https://project-30hc5.vercel.app/api/manager-leads';
   var err = document.getElementById('manager-form-error');
   var done = document.getElementById('manager-form-success');
   var btn = document.getElementById('manager-form-submit');
