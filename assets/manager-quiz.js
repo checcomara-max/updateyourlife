@@ -4,7 +4,6 @@
   var panels = Array.prototype.slice.call(document.querySelectorAll('.quiz-panel'));
   var results = document.getElementById('quiz-results');
   var cards = document.getElementById('quiz-result-cards');
-  var bridge = document.getElementById('quiz-bridge');
   var contact = document.getElementById('inizia');
   var progressLabel = document.getElementById('quiz-progress-label');
   var progressPct = document.getElementById('quiz-progress-pct');
@@ -106,10 +105,9 @@
       var on = button.getAttribute('data-answer') === selected;
       button.classList.toggle('is-selected', on);
       button.setAttribute('aria-pressed', on ? 'true' : 'false');
+      button.disabled = false;
     });
-    panel.querySelector('.quiz-next').disabled = !selected;
-    panel.querySelector('h2').focus && panel.querySelector('h2').setAttribute('tabindex', '-1');
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function renderResults() {
@@ -153,9 +151,10 @@
     });
 
     results.hidden = false;
-    bridge.hidden = false;
     contact.hidden = false;
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var sticky = document.getElementById('quiz-result-sticky');
+    if (sticky) sticky.hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     analyticsEvent('manager_quiz_complete');
   }
 
@@ -167,20 +166,22 @@
           started = true;
           analyticsEvent('manager_quiz_start');
         }
+
         answers[index] = button.getAttribute('data-answer');
         panel.querySelectorAll('.quiz-option').forEach(function (other) {
           var selected = other === button;
           other.classList.toggle('is-selected', selected);
           other.setAttribute('aria-pressed', selected ? 'true' : 'false');
+          other.disabled = true;
         });
-        panel.querySelector('.quiz-next').disabled = false;
-      });
-    });
 
-    panel.querySelector('.quiz-next').addEventListener('click', function () {
-      if (!answers[index]) return;
-      if (index < 2) showQuestion(index + 1);
-      else renderResults();
+        analyticsEvent('manager_quiz_step_' + (index + 1) + '_complete');
+
+        window.setTimeout(function () {
+          if (index < 2) showQuestion(index + 1);
+          else renderResults();
+        }, 180);
+      });
     });
 
     var back = panel.querySelector('.quiz-back');
@@ -190,13 +191,19 @@
   restart.addEventListener('click', function () {
     answers = [null, null, null];
     completed = false;
-    bridge.hidden = true;
     contact.hidden = true;
+    var sticky = document.getElementById('quiz-result-sticky');
+    if (sticky) sticky.hidden = true;
     showQuestion(0);
   });
 
-  var startLink = document.getElementById('quiz-start-link');
-  if (startLink) startLink.addEventListener('click', function () { analyticsEvent('manager_quiz_entry_cta'); });
+  var sticky = document.getElementById('quiz-result-sticky');
+  if (sticky && contact && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      if (!completed) return;
+      sticky.hidden = entries[0].isIntersecting;
+    }, { threshold: 0.08 }).observe(contact);
+  }
 
   var success = document.getElementById('manager-form-success');
   if (success && 'MutationObserver' in window) {
