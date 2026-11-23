@@ -17,7 +17,7 @@
 <link rel="preload" href="/assets/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css?v=20261118-cookie-uniformi">
-<link rel="stylesheet" href="/assets/manager-quiz.css?v=20261123">
+<link rel="stylesheet" href="/assets/manager-quiz.css?v=20261123-fast">
 </head>
 <body class="manager-quiz-landing">
 
@@ -31,31 +31,7 @@
 </header>
 
 <main id="main">
-  <section class="quiz-hero" data-hero>
-    <div class="wrap quiz-hero-grid">
-      <div>
-        <p class="quiz-kicker">Un percorso di riflessione per manager e professionisti</p>
-        <h1>Tre decisioni.<br>Tre costi invisibili.</h1>
-        <p class="quiz-lead">Ogni scelta manageriale protegge qualcosa. Ma può lasciare qualcos'altro in ombra. Affronta tre situazioni realistiche e, alla fine, ricevi tre spunti costruiti sulle tue risposte.</p>
-        <div class="quiz-facts" aria-label="Informazioni sul percorso">
-          <span>Circa 2 minuti</span>
-          <span>3 situazioni</span>
-          <span>Nessun punteggio</span>
-        </div>
-        <a class="btn quiz-primary" href="#percorso" id="quiz-start-link">Inizia il percorso</a>
-        <p class="quiz-privacy-note">Le risposte restano nel tuo browser: non vengono salvate né associate ai tuoi dati.</p>
-      </div>
-      <aside class="quiz-hero-note">
-        <p class="quote">“Non sempre è difficile sapere cosa fare. A volte è difficile sostenere quello che comporta farlo.”</p>
-        <div class="quiz-author">
-          <img src="/img/francesco-maragliulo-avatar.webp" width="240" height="240" alt="">
-          <p><b>Dott. Francesco Maragliulo</b><br>Psicologo · Coach ICF · 18 anni in contesti aziendali</p>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="quiz-section" id="percorso">
+  <section class="quiz-section" id="percorso" data-hero>
     <div class="wrap">
       <div class="quiz-shell" id="quiz-shell">
         <div class="quiz-progress" aria-live="polite">
@@ -65,7 +41,7 @@
 
         <article class="quiz-panel is-active" data-question="0">
           <p class="quiz-label">1 · Risultati vs relazione</p>
-          <h2>Una persona affidabile smette improvvisamente di esserlo.</h2>
+          <h1>Una persona affidabile smette improvvisamente di esserlo.</h1>
           <p class="quiz-scenario">Una persona del tuo team, finora molto affidabile, nelle ultime settimane ha mancato due scadenze importanti. Domani hai un incontro con lei. Nel frattempo il tuo responsabile ti ha già chiesto spiegazioni sui ritardi.</p>
           <p class="quiz-question">Come inizieresti il confronto?</p>
           <div class="quiz-options" role="group" aria-label="Scegli come inizieresti il confronto">
@@ -73,7 +49,7 @@
             <button type="button" class="quiz-option" data-answer="1B"><span>B</span><b>Prima provo a capire cosa è successo nelle ultime settimane.</b></button>
             <button type="button" class="quiz-option" data-answer="1C"><span>C</span><b>Prima mi allineo con il mio responsabile su ciò che si aspetta da me.</b></button>
           </div>
-          <div class="quiz-nav"><span></span><button class="btn quiz-next" type="button" disabled>Continua</button></div>
+
         </article>
 
         <article class="quiz-panel" data-question="1" hidden>
@@ -86,7 +62,7 @@
             <button type="button" class="quiz-option" data-answer="2B"><span>B</span><b>Spiego cosa dovrei spostare e chiedo al mio responsabile di scegliere la priorità.</b></button>
             <button type="button" class="quiz-option" data-answer="2C"><span>C</span><b>Cerco di riorganizzarmi senza coinvolgere il mio responsabile.</b></button>
           </div>
-          <div class="quiz-nav"><button class="quiz-back" type="button">← Indietro</button><button class="btn quiz-next" type="button" disabled>Continua</button></div>
+          <div class="quiz-backline"><button class="quiz-back" type="button">← Cambia la risposta precedente</button></div>
         </article>
 
         <article class="quiz-panel" data-question="2" hidden>
@@ -99,30 +75,24 @@
             <button type="button" class="quiz-option" data-answer="3B"><span>B</span><b>Dico al team che anch'io avevo delle perplessità, ma che la decisione è stata presa.</b></button>
             <button type="button" class="quiz-option" data-answer="3C"><span>C</span><b>Comunico la decisione senza entrare né nel mio punto di vista né nella discussione precedente.</b></button>
           </div>
-          <div class="quiz-nav"><button class="quiz-back" type="button">← Indietro</button><button class="btn quiz-next" type="button" disabled>Mostrami le riflessioni</button></div>
+          <div class="quiz-backline"><button class="quiz-back" type="button">← Cambia la risposta precedente</button></div>
         </article>
 
         <section class="quiz-results" id="quiz-results" hidden aria-live="polite">
-          <p class="quiz-label">Le tue tre scelte</p>
-          <h2>Tre fotografie, non un profilo.</h2>
-          <p class="quiz-results-intro">Questo non è un test psicologico e non assegna etichette. Le tre restituzioni guardano soltanto alle decisioni che hai appena preso e alle tensioni che ciascuna scelta può rendere visibili.</p>
+          <p class="quiz-label">Le tue tre riflessioni</p>
+          <h2>Ecco cosa rendono visibile le tue scelte.</h2>
+          <p class="quiz-results-intro">Non è un profilo psicologico: sono tre letture delle decisioni che hai appena preso.</p>
+          <div class="quiz-results-cta">
+            <div><b>Vuoi portare una situazione reale in uno spazio riservato?</b><span>Call conoscitiva online di 20 minuti · gratuita · senza impegno</span></div>
+            <a class="btn quiz-primary" href="#inizia">Richiedi la call</a>
+          </div>
           <div id="quiz-result-cards" class="quiz-result-cards"></div>
-          <button type="button" class="quiz-restart" id="quiz-restart">Rifai il percorso</button>
+          <div class="quiz-results-bottom">
+            <p><b>Se una di queste riflessioni ti ha fatto pensare a qualcosa di concreto del tuo lavoro, possiamo partire da lì.</b></p>
+            <a class="btn quiz-primary" href="#inizia">Richiedi una call conoscitiva gratuita</a>
+            <button type="button" class="quiz-restart" id="quiz-restart">Rifai il percorso</button>
+          </div>
         </section>
-      </div>
-    </div>
-  </section>
-
-  <section class="quiz-bridge" id="quiz-bridge" hidden>
-    <div class="wrap quiz-bridge-grid">
-      <div>
-        <p class="quiz-kicker">Dalla riflessione a una situazione reale</p>
-        <h2>Se una di queste tensioni ti ha fatto venire in mente qualcosa di concreto del tuo lavoro, possiamo partire da lì.</h2>
-      </div>
-      <div>
-        <p>Una call conoscitiva non serve a raccontarmi tutto né a decidere subito di iniziare un percorso. Serve a conoscerci, capire cosa stai cercando e valutare se il mio modo di lavorare può esserti utile.</p>
-        <p class="quiz-bridge-signature"><b>20 minuti · online · gratuita · senza impegno</b><br>Il confronto è personale e indipendente dalla tua azienda.</p>
-        <a class="btn quiz-primary" href="#inizia">Richiedi una call conoscitiva</a>
       </div>
     </div>
   </section>
@@ -130,16 +100,16 @@
   <section class="quiz-contact" id="inizia" data-contact hidden>
     <div class="wrap">
       <div class="quiz-contact-head">
-        <p class="quiz-kicker">Il passo successivo, solo se ti va</p>
+        <p class="quiz-kicker">Call conoscitiva gratuita · 20 minuti</p>
         <h2>Lasciami i tuoi recapiti. Ti scrivo io.</h2>
-        <p>Compila il modulo: non devi descrivere il motivo della richiesta. Ti contatterò personalmente su WhatsApp per trovare un momento adatto per la call conoscitiva gratuita di 20 minuti.</p>
+        <p>Niente agenda da incastrare adesso e niente descrizioni personali: ti contatto su WhatsApp per trovare insieme un momento adatto.</p>
       </div>
 
       <div class="manager-lead-layout">
         <div class="manager-lead-card">
           <form id="manager-lead-form" novalidate aria-labelledby="manager-form-title">
             <h3 id="manager-form-title">Richiedi la call conoscitiva</h3>
-            <p class="sub">Quattro campi e nessuna domanda sulla tua situazione personale.</p>
+            <p class="sub">Solo i recapiti necessari per organizzare la call.</p>
             <div class="manager-fields">
               <div class="manager-field"><label for="manager-nome">Nome *</label><input id="manager-nome" name="nome" type="text" autocomplete="given-name" maxlength="90" required placeholder="Nome"></div>
               <div class="manager-field"><label for="manager-cognome">Cognome *</label><input id="manager-cognome" name="cognome" type="text" autocomplete="family-name" maxlength="90" required placeholder="Cognome"></div>
@@ -190,6 +160,11 @@
   </section>
 </main>
 
+<div class="quiz-result-sticky" id="quiz-result-sticky" hidden>
+  <div><b>Call conoscitiva gratuita</b><span>20 min · online · senza impegno</span></div>
+  <a class="btn quiz-primary" href="#inizia">Richiedila</a>
+</div>
+
 <footer class="foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -227,7 +202,7 @@
 </div>
 
 <script src="/assets/site.js?v=20261118-cookie-uniformi" defer></script>
-<script src="/assets/manager-quiz.js?v=20261123" defer></script>
+<script src="/assets/manager-quiz.js?v=20261123-fast" defer></script>
 <script src="/assets/manager-form.js?v=20261120-cors-fix2" defer></script>
 </body>
 </html>
