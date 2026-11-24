@@ -126,7 +126,7 @@
       var pixelId = document.body.getAttribute('data-meta-pixel');
       if (localStorage.getItem('uyl_marketing_consent') === 'granted' &&
           pixelId && window.fbq) {
-        window.fbq('trackSingle', pixelId, 'Lead');
+        window.fbq('track', 'Lead');
         if (window.uylMetaDebug) window.uylMetaDebug.leadCalled = true;
         window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
       }
