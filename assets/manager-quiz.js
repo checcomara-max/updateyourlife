@@ -2,6 +2,33 @@
   'use strict';
 
   var panels = Array.prototype.slice.call(document.querySelectorAll('.quiz-panel'));
+
+  function setupPixelDebug() {
+    var params = new URLSearchParams(location.search);
+    if (params.get('debug_pixel') !== '1') return;
+    var box = document.createElement('div');
+    box.id = 'uyl-pixel-debug';
+    box.style.cssText = 'position:fixed;right:10px;bottom:10px;z-index:99999;background:#111;color:#fff;padding:10px 12px;border-radius:8px;font:12px/1.45 monospace;max-width:300px;box-shadow:0 4px 20px rgba(0,0,0,.35)';
+    document.body.appendChild(box);
+    function render() {
+      var d = window.uylMetaDebug || {};
+      var consent = '';
+      try { consent = localStorage.getItem('uyl_marketing_consent') || 'none'; } catch (_) { consent = 'unavailable'; }
+      box.textContent =
+        'Meta Pixel debug\n' +
+        'ID: ' + (d.pixelId || document.body.getAttribute('data-meta-pixel') || '-') + '\n' +
+        'consent: ' + consent + '\n' +
+        'fbq: ' + (typeof window.fbq === 'function' ? 'YES' : 'NO') + '\n' +
+        'script loaded: ' + (d.scriptLoaded ? 'YES' : 'NO') + '\n' +
+        'PageView called: ' + (d.pageViewCalled ? 'YES' : 'NO') + '\n' +
+        'Lead called: ' + (d.leadCalled ? 'YES' : 'NO');
+    }
+    render();
+    window.addEventListener('uyl-meta-debug-update', render);
+    window.addEventListener('storage', render);
+    setInterval(render, 1000);
+  }
+  setupPixelDebug();
   var results = document.getElementById('quiz-results');
   var cards = document.getElementById('quiz-result-cards');
   var contact = document.getElementById('inizia');
@@ -100,6 +127,8 @@
       if (localStorage.getItem('uyl_marketing_consent') === 'granted' &&
           pixelId && window.fbq) {
         window.fbq('trackSingle', pixelId, 'Lead');
+        if (window.uylMetaDebug) window.uylMetaDebug.leadCalled = true;
+        window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
       }
     } catch (_) {}
   };
