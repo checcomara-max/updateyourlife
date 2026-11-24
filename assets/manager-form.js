@@ -46,7 +46,7 @@
     var payload = {
       formType: 'manager-call-v1',
       nome: nome, cognome: cognome, email: email, cellulare: tel,
-      pagina: '/psicologo-per-manager/',
+      pagina: location.pathname === '/decisioni-manager/' ? '/decisioni-manager/' : '/psicologo-per-manager/',
       privacyVersion: '2026-11-20',
       contactRequested: true,
       sensitiveConsent: true,
@@ -69,6 +69,9 @@
       f.hidden = true;
       document.getElementById('manager-success-name').textContent = nome;
       done.hidden = false; done.focus();
+      if (typeof window.uylTrackManagerLead === 'function') {
+        window.uylTrackManagerLead();
+      }
     })
     .catch(function(error) {
       var reason = error && /^HTTP [0-9]{3}$/.test(error.message || '') ? ' (' + error.message + ')' : '';
