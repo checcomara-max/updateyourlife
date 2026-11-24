@@ -66,9 +66,10 @@
 
   function canLoadPixel() {
     var url = new URL(window.location.href);
-    if (!pixelId || url.origin !== 'https://www.updateyourlife.it' || url.pathname !== '/' || url.hash) return false;
+    var allowedPixelPath = url.pathname === '/' || url.pathname === '/decisioni-manager/';
+    if (!pixelId || url.origin !== 'https://www.updateyourlife.it' || !allowedPixelPath || url.hash) return false;
 
-    // Il Pixel può includere URL e referrer nelle richieste. Limita i dati ai riferimenti pubblicitari neutri.
+    // Il Pixel può includere URL e referrer nelle richieste. Limita il caricamento alle pagine abilitate e a parametri pubblicitari neutri.
     if (document.referrer &&
         !/^https:\/\/(?:[a-z0-9-]+\.)?(?:facebook\.com|instagram\.com)\/?$/.test(document.referrer)) return false;
 
@@ -77,8 +78,8 @@
       ['utm_source', /^(meta|facebook|instagram|fb|ig)$/i],
       ['utm_medium', /^(cpc|paid|paid_social|social)$/i],
       ['utm_id', /^\d+$/],
-      ['utm_campaign', /^\d+$/],
-      ['utm_content', /^\d+$/],
+      ['utm_campaign', /^[a-z0-9_-]{1,48}$/i],
+      ['utm_content', /^[a-z0-9_-]{1,48}$/i],
       ['utm_term', /^\d+$/]
     ]);
     return Array.from(url.searchParams).every(function (entry) {
