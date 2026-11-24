@@ -100,7 +100,7 @@
     window.fbq('set', 'autoConfig', false, pixelId);
     window.fbq.disablePushState = true;
     window.fbq('init', pixelId);
-    window.fbq('trackSingle', pixelId, 'PageView');
+    window.fbq('track', 'PageView');
     window.uylMetaDebug.pageViewCalled = true;
     window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
   }
