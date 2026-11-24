@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   // Diagnostica pubblica senza dati personali: permette di verificare che la funzione sia raggiungibile.
-  if (req.method === 'GET') return send(res, 200, { status: 'ok', service: 'manager-contact', version: '2026-11-20-2' });
+  if (req.method === 'GET') return send(res, 200, { status: 'ok', service: 'manager-contact', version: '2026-11-24-quiz' });
   const origin = req.headers.origin || '';
   if (!originConsentita(origin)) return send(res, 403, { success: false });
   res.setHeader('Access-Control-Allow-Origin', origin);
@@ -39,14 +39,14 @@ export default async function handler(req, res) {
     if (!nome || !cognome || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
         !/^\+[1-9]\d{8,14}$/.test(cellulare) ||
         d.formType !== 'manager-call-v1' ||
-        d.pagina !== '/psicologo-per-manager/' ||
+        !['/psicologo-per-manager/','/decisioni-manager/'].includes(d.pagina) ||
         d.privacyVersion !== '2026-11-20' ||
         d.contactRequested !== true || d.sensitiveConsent !== true) {
       return send(res, 400, { success: false });
     }
     const payload = {
       formType: 'manager-call-v1', nome, cognome, email, cellulare,
-      pagina: '/psicologo-per-manager/', privacyVersion: '2026-11-20',
+      pagina: d.pagina, privacyVersion: '2026-11-20',
       contactRequested: true, sensitiveConsent: true,
       startedAt: Number(d.startedAt) || 0,
       honey: testo(d.honey, 70)
