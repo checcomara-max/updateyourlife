@@ -46,7 +46,9 @@ export default async function handler(req, res) {
     }
     const payload = {
       formType: 'manager-call-v1', nome, cognome, email, cellulare,
-      pagina: d.pagina, privacyVersion: '2026-11-20',
+      // Manteniamo il payload già accettato dal Google Apps Script a valle.
+      // La nuova landing è validata qui dal proxy, senza cambiare il contratto dello script.
+      pagina: '/psicologo-per-manager/', privacyVersion: '2026-11-20',
       contactRequested: true, sensitiveConsent: true,
       startedAt: Number(d.startedAt) || 0,
       honey: testo(d.honey, 70)
