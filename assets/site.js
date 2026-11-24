@@ -61,6 +61,7 @@
   }
 
   var pixelId = document.body.getAttribute('data-meta-pixel');
+  window.uylMetaDebug = window.uylMetaDebug || { pixelId: pixelId || '', consent: false, scriptLoaded: false, pageViewCalled: false, leadCalled: false };
   var pixelLoading = false, pixelReady = false, pixelInitialized = false;
   var marketingAllowed = false, analyticsAllowed = false;
 
@@ -80,7 +81,8 @@
       ['utm_id', /^\d+$/],
       ['utm_campaign', /^[a-z0-9_-]{1,48}$/i],
       ['utm_content', /^[a-z0-9_-]{1,48}$/i],
-      ['utm_term', /^\d+$/]
+      ['utm_term', /^\d+$/],
+      ['debug_pixel', /^1$/]
     ]);
     return Array.from(url.searchParams).every(function (entry) {
       var pattern = allowed.get(entry[0]);
@@ -91,6 +93,7 @@
   function applyPixelConsent() {
     if (!pixelReady) return;
     window.fbq('consent', marketingAllowed ? 'grant' : 'revoke');
+    window.uylMetaDebug.consent = !!marketingAllowed;
     if (!marketingAllowed || pixelInitialized || !canLoadPixel()) return;
 
     pixelInitialized = true;
@@ -98,6 +101,8 @@
     window.fbq.disablePushState = true;
     window.fbq('init', pixelId);
     window.fbq('trackSingle', pixelId, 'PageView');
+    window.uylMetaDebug.pageViewCalled = true;
+    window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
   }
 
   function loadPixel() {
@@ -120,6 +125,8 @@
     script.onload = function () {
       pixelLoading = false;
       pixelReady = true;
+      window.uylMetaDebug.scriptLoaded = true;
+      window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
       applyPixelConsent();
     };
     script.onerror = function () {
