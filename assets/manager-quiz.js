@@ -88,9 +88,13 @@
     } catch (_) {}
   }
 
-  // Meta riceve soltanto l'evento standard Lead dopo conferma server.
-  // Nessuna risposta del quiz o dato inserito nel modulo viene passato a fbq.
-  function metaLeadEvent() {
+  // Tracciamento idempotente del lead confermato dal server.
+  // Nessuna risposta del quiz o dato inserito nel modulo viene passato a Meta o GA4.
+  var confirmedLeadTracked = false;
+  window.uylTrackManagerLead = function () {
+    if (confirmedLeadTracked) return;
+    confirmedLeadTracked = true;
+    analyticsEvent('manager_quiz_lead_sent');
     try {
       var pixelId = document.body.getAttribute('data-meta-pixel');
       if (localStorage.getItem('uyl_marketing_consent') === 'granted' &&
@@ -98,7 +102,7 @@
         window.fbq('trackSingle', pixelId, 'Lead');
       }
     } catch (_) {}
-  }
+  };
 
   function showQuestion(index) {
     current = index;
@@ -217,15 +221,5 @@
     }, { threshold: 0.08 }).observe(contact);
   }
 
-  var success = document.getElementById('manager-form-success');
-  if (success && 'MutationObserver' in window) {
-    var leadTracked = false;
-    new MutationObserver(function () {
-      if (!success.hidden && !leadTracked) {
-        leadTracked = true;
-        analyticsEvent('manager_quiz_lead_sent');
-        metaLeadEvent();
-      }
-    }).observe(success, { attributes: true, attributeFilter: ['hidden'] });
-  }
+
 })();
