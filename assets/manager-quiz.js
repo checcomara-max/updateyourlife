@@ -38,7 +38,8 @@
   var restart = document.getElementById('quiz-restart');
   var answers = [null, null, null];
   var current = 0;
-  var order = new URLSearchParams(location.search).get('utm_content') === 'static_a' ? [1, 0, 2] : [0, 1, 2];
+  // Ordine unico per ogni provenienza, anche senza parametri UTM.
+  var order = [1, 0, 2];
   var tracked = Object.create(null);
   var intro = document.getElementById('quiz-intro');
   var started = false;
