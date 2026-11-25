@@ -19,7 +19,15 @@ export default async function handler(req, res) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   // Diagnostica pubblica senza dati personali: permette di verificare che la funzione sia raggiungibile.
-  if (req.method === 'GET') return send(res, 200, { status: 'ok', service: 'expat-contact', version: '2026-11-25' });
+  if (req.method === 'GET') {
+    let upstreamReady = false;
+    try {
+      const r = await fetch(SCRIPT_URL, { redirect: 'follow', signal: AbortSignal.timeout(8000) });
+      const d = r.ok ? await r.json() : null;
+      upstreamReady = !!(d && d.ready === true && d.expatVersion === '2026-11-25');
+    } catch (_) {}
+    return send(res, 200, { status: 'ok', service: 'expat-contact', version: '2026-11-25', upstreamReady });
+  }
   const origin = req.headers.origin || '';
   if (!originConsentita(origin)) return send(res, 403, { success: false });
   res.setHeader('Access-Control-Allow-Origin', origin);
