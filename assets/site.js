@@ -6,6 +6,7 @@
   function get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
   function set(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
   var isManagerLanding = document.body.classList.contains('manager-landing');
+  var isExpatLanding = /^\/psicologo-online-italiani-estero(?:\/|$)/.test(location.pathname);
   var isProductionDomain = /^(?:www\.)?updateyourlife\.it$/.test(location.hostname);
 
   // Sulla landing manager usiamo solo statistiche del traffico, non dettagli dei moduli.
@@ -44,7 +45,7 @@
     return config;
   }
   function loadGA() {
-    if (window._gaLoaded || (isManagerLanding && !isProductionDomain)) return;
+    if (window._gaLoaded || ((isManagerLanding || isExpatLanding) && !isProductionDomain)) return;
     window._gaLoaded = true;
     window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
     gtag('js', new Date());
@@ -54,6 +55,12 @@
       allow_ad_personalization_signals: false
     };
     if (isManagerLanding) Object.assign(config, managerGAConfig());
+    if (isExpatLanding) {
+      var safe = managerGAConfig();
+      safe.page_location = location.origin + location.pathname;
+      safe.page_title = 'Informazioni | Update Your Life';
+      Object.assign(config, safe);
+    }
     gtag('config', GA_ID, config);
     var s = document.createElement('script');
     s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
@@ -242,7 +249,7 @@
   // Contatti: traccia solo il clic, non una richiesta realmente ricevuta.
   // L'evento viene inviato solo dopo il consenso ai cookie analitici.
   document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !analyticsAllowed || !window.gtag || isManagerLanding) return;
+    var a = e.target.closest && e.target.closest('[data-contatto]'); if (!a || !analyticsAllowed || !window.gtag || isManagerLanding || isExpatLanding) return;
     var m = a.getAttribute('data-contatto');
     gtag('event', 'contact_click', { metodo: m.split('-')[0], posizione: m });
   });
