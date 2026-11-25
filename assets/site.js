@@ -45,7 +45,7 @@
     return config;
   }
   function loadGA() {
-    if (window._gaLoaded || ((isManagerLanding || isExpatLanding) && !isProductionDomain)) return;
+    if (window._gaLoaded || isExpatLanding || (isManagerLanding && !isProductionDomain)) return;
     window._gaLoaded = true;
     window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
     gtag('js', new Date());
