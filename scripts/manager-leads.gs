@@ -19,7 +19,7 @@ function doPost(e) {
     const d = JSON.parse(raw);
     if (d.honey) return jsonResponse({ success: true }); // honeypot antispam
     const expat = d.formType === 'expat-call-v1';
-    const validManager = d.formType === 'manager-call-v1' && d.privacyVersion === VERSIONE_PRIVACY && d.pagina === '/psicologo-per-manager/';
+    const validManager = d.formType === 'manager-call-v1' && d.privacyVersion === VERSIONE_PRIVACY && ['/psicologo-per-manager/','/decisioni-manager/'].includes(d.pagina);
     const validExpat = expat && d.privacyVersion === EXPAT_PRIVACY && EXPAT_PAGES.includes(d.pagina) && ['Spagna','Germania','Francia','Altro'].includes(d.paese) && ['google_ads','non_specificata'].includes(d.provenienza);
     if ((!validManager && !validExpat) || d.contactRequested !== true || d.sensitiveConsent !== true) return jsonResponse({ success: false });
 
@@ -30,7 +30,7 @@ function doPost(e) {
         !/^\+[1-9]\d{8,14}$/.test(tel)) return jsonResponse({ success: false });
     if (!Number.isFinite(Number(d.startedAt)) || Date.now() - Number(d.startedAt) < 1000) return jsonResponse({ success: false });
 
-    const digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, (email + '|' + tel).toLowerCase());
+    const digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, (d.pagina + '|' + email + '|' + tel).toLowerCase());
     const key = (expat ? 'expat-' : 'manager-') + digest.map(b => ('0' + (b & 255).toString(16)).slice(-2)).join('').slice(0, 40);
     const cache = CacheService.getScriptCache();
     const lock = LockService.getScriptLock();
