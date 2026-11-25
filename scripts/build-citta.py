@@ -356,7 +356,7 @@ def faq_of(c):
         (c['tz_q'], c['tz_a']),
         (c['lang_q'], LANG_Q.format(lang=c['lang'])),
         ('Posso rivolgermi anche ai servizi del posto?', LOCAL_A.format(svc=c['svc'])),
-        (c['where_q'], c['where_a']),
+        (c['where_q'], 'La disponibilità dei colloqui dipende dalle norme applicabili e dalla copertura professionale nel Paese in cui ti trovi. Contattami per verificarla.'),
         ('E se sto molto male?', EMERG + c['emerg']),
     ]
 
@@ -365,6 +365,7 @@ def chrome(tpl):
     """Pezzi presi dall'hub: asset nel <head>, testata, whobox, footer + cookie + script."""
     assets = tpl[tpl.index('<link rel="preload"'):tpl.index('</head>')]
     assets = assets[:assets.index('<link rel="stylesheet"')] + re.search(r'<link rel="stylesheet"[^>]*>', assets).group(0)
+    assets += '\n<link rel="stylesheet" href="/assets/expat-form.css?v=20261125">'
     header = tpl[tpl.index('<a class="skip"'):tpl.index('</header>') + len('</header>')]
     who = re.search(r'<aside class="whobox".*?</aside>', tpl, re.S).group(0)
     wa_icon = re.search(r'<svg width="20" height="20".*?</svg>', tpl, re.S).group(0)
@@ -422,7 +423,7 @@ def build(c, tpl, today):
 {json.dumps(ld, ensure_ascii=False, indent=2)}
 </script>
 </head>
-<body class="svc">
+<body class="svc" data-campaign-contact="google">
 
 {header}
 
@@ -434,12 +435,14 @@ def build(c, tpl, today):
     <div>
       <h1>{esc(c['h1'])}</h1>
       <p class="lead">{esc(c['lead'])}</p>
+      <p class="note">La disponibilità dei colloqui è subordinata alle norme applicabili e alla copertura professionale nel Paese in cui ti trovi.</p>
       <div class="author">
         <img src="/img/francesco-maragliulo-avatar.webp" width="240" height="240" alt="" fetchpriority="high">
         <p><b>Francesco Maragliulo</b>, psicologo iscritto all'Albo della Lombardia n. 27664. Colloqui online solo in italiano.</p>
       </div>
       <div class="actions">
-        <a class="btn btn-wa" data-contatto="whatsapp-hero-{s}" href="{WA}" target="_blank" rel="noopener">{wa_icon}Scrivimi su WhatsApp</a>
+        <a class="btn btn-wa" href="#inizia">Richiedi una call conoscitiva</a>
+        <a class="btn" data-contatto="whatsapp-hero-{s}" href="{WA}" target="_blank" rel="noopener">{wa_icon}Scrivimi su WhatsApp</a>
         <p class="note">{NOTE}</p>
       </div>
     </div>
@@ -544,7 +547,7 @@ def build(c, tpl, today):
   <div class="wrap grid-2">
     <div>
       <h2>Parliamone in una call conoscitiva</h2>
-      <p class="lead">Scrivimi e ci organizziamo per una call di 20 minuti, gratuita e senza impegno. Mi racconti cosa stai vivendo e troviamo un orario che funzioni per te. Rispondo personalmente, di solito in giornata.</p>
+      <p class="lead">Scrivimi per concordare una call conoscitiva di 20 minuti, gratuita e senza impegno. Indica il Paese in cui ti trovi. Non occorre raccontare il motivo della richiesta. Verifico la disponibilità del servizio prima di concordare un colloquio.</p>
     </div>
     <div class="contact-list">
       <a class="contact-btn primary" data-contatto="whatsapp-{s}" href="{WA}" target="_blank" rel="noopener">
@@ -578,8 +581,8 @@ def hub_block():
 <section class="section" id="dove-vivi" style="background:var(--bg-alt)">
   <div class="wrap">
     <div class="prose">
-      <h2>Colloqui in italiano, in qualsiasi Paese</h2>
-      <p>Lavoro con italiani che vivono in tutto il mondo. Per alcune città e Paesi ho raccolto le informazioni pratiche: fuso orario, servizi locali, numeri utili.</p>
+      <h2>Colloqui in italiano per chi vive all’estero</h2>
+      <p>Per alcune città e Paesi ho raccolto informazioni pratiche: fuso orario, servizi locali e numeri utili. Prima di concordare un colloquio verifico la possibilità di erogare la prestazione nel Paese in cui ti trovi.</p>
       <h3 style="margin-top:28px">In Europa</h3>
       <ul>
 {eu}
@@ -588,7 +591,7 @@ def hub_block():
       <ul>
 {world}
       </ul>
-      <p style="margin-top:20px">Vivi altrove? Va bene lo stesso: ti serve solo una connessione stabile.</p>
+      <p style="margin-top:20px">Vivi altrove? Contattami per verificare la disponibilità del servizio nel Paese in cui ti trovi.</p>
     </div>
   </div>
 </section>
