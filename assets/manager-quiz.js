@@ -121,8 +121,23 @@
     } catch (_) {}
   }
 
-  // Non inviare eventi di richiesta di contatto a piattaforme analitiche o pubblicitarie.
-  window.uylTrackManagerLead = function () {};
+  // Lead standard, una sola volta e soltanto dopo conferma del server.
+  // Nessuna risposta, recapito, testo del modulo o parametro personalizzato.
+  var confirmedLeadTracked = false;
+  window.uylTrackManagerLead = function () {
+    if (confirmedLeadTracked) return;
+    try {
+      var d = window.uylMetaDebug || {};
+      var pixelId = document.body.getAttribute('data-meta-pixel');
+      if (localStorage.getItem('uyl_marketing_consent') !== 'granted' ||
+          !pixelId || !d.pageViewCalled || !d.consent ||
+          typeof window.fbq !== 'function') return;
+      window.fbq('trackSingle', pixelId, 'Lead');
+      confirmedLeadTracked = true;
+      d.leadCalled = true;
+      window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
+    } catch (_) {}
+  };
 
   function showQuestion(index) {
     current = index;
