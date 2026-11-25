@@ -76,11 +76,11 @@
 
     var allowed = new Map([
       ['fbclid', /^[A-Za-z0-9_-]+$/],
-      ['utm_source', /^(meta|facebook|instagram|fb|ig)$/i],
+      ['utm_source', /^(meta|facebook|instagram|fb|ig|msg|an|th|messenger|audience_network|threads)$/i],
       ['utm_medium', /^(cpc|paid|paid_social|social)$/i],
       ['utm_id', /^\d+$/],
       ['utm_campaign', /^[a-z0-9_-]{1,48}$/i],
-      ['utm_content', /^[a-z0-9_-]{1,48}$/i],
+      ['utm_content', /^(?:[a-z0-9_-]{1,48}|static_[ab]_[a-z0-9_-]{1,72})$/i],
       ['utm_term', /^\d+$/],
       ['debug_pixel', /^1$/]
     ]);
