@@ -365,6 +365,7 @@ def chrome(tpl):
     """Pezzi presi dall'hub: asset nel <head>, testata, whobox, footer + cookie + script."""
     assets = tpl[tpl.index('<link rel="preload"'):tpl.index('</head>')]
     assets = assets[:assets.index('<link rel="stylesheet"')] + re.search(r'<link rel="stylesheet"[^>]*>', assets).group(0)
+    assets += '\n<link rel="stylesheet" href="/assets/expat-form.css?v=20261125">'
     header = tpl[tpl.index('<a class="skip"'):tpl.index('</header>') + len('</header>')]
     who = re.search(r'<aside class="whobox".*?</aside>', tpl, re.S).group(0)
     wa_icon = re.search(r'<svg width="20" height="20".*?</svg>', tpl, re.S).group(0)
@@ -440,7 +441,8 @@ def build(c, tpl, today):
         <p><b>Francesco Maragliulo</b>, psicologo iscritto all'Albo della Lombardia n. 27664. Colloqui online solo in italiano.</p>
       </div>
       <div class="actions">
-        <a class="btn btn-wa" data-contatto="whatsapp-hero-{s}" href="{WA}" target="_blank" rel="noopener">{wa_icon}Scrivimi su WhatsApp</a>
+        <a class="btn btn-wa" href="#inizia">Richiedi una call conoscitiva</a>
+        <a class="btn" data-contatto="whatsapp-hero-{s}" href="{WA}" target="_blank" rel="noopener">{wa_icon}Scrivimi su WhatsApp</a>
         <p class="note">{NOTE}</p>
       </div>
     </div>
@@ -545,7 +547,7 @@ def build(c, tpl, today):
   <div class="wrap grid-2">
     <div>
       <h2>Parliamone in una call conoscitiva</h2>
-      <p class="lead">Scrivimi e ci organizziamo per una call di 20 minuti, gratuita e senza impegno. Mi racconti cosa stai vivendo e troviamo un orario che funzioni per te. Rispondo personalmente, di solito in giornata.</p>
+      <p class="lead">Scrivimi per concordare una call conoscitiva di 20 minuti, gratuita e senza impegno. Indica il Paese in cui ti trovi. Non occorre raccontare il motivo della richiesta. Verifico la disponibilità del servizio prima di concordare un colloquio.</p>
     </div>
     <div class="contact-list">
       <a class="contact-btn primary" data-contatto="whatsapp-{s}" href="{WA}" target="_blank" rel="noopener">
