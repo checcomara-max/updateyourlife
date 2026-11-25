@@ -450,3 +450,14 @@ b,strong{font-weight:600}
 .svc .hero-guida .guida-box{grid-column:2;grid-row:2;align-self:start;margin-top:12px;max-width:none;padding:30px 32px 32px}
 .svc .hero-guida .opening{grid-column:2;grid-row:3}
 }
+
+/* Sedi: online in evidenza, layout locale responsive */
+.location-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}
+.location-card{border:1px solid var(--ink);border-radius:12px;padding:clamp(20px,3vw,32px);min-width:0;overflow-wrap:anywhere;background:var(--bg-alt)}
+.location-card.location-primary{border-top:4px solid var(--amber-deep)}
+.location-card h3,.location-card h2{font-size:clamp(24px,2.5vw,34px);line-height:1.14;margin:8px 0 12px}
+.location-card p{margin:0 0 14px;color:var(--graphite)}
+.location-card .location-kicker{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--ink)}
+.location-card a{display:inline-block;margin-top:5px}
+.location-card .location-map{display:block;margin-top:12px}
+@media(max-width:900px){.location-grid{grid-template-columns:1fr;gap:16px}}

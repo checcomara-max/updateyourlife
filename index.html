@@ -25,7 +25,7 @@
 <meta name="twitter:image" content="https://www.updateyourlife.it/img/og/home.jpg">
 <link rel="preload" href="/assets/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=20261118-cookie-uniformi">
+<link rel="stylesheet" href="/assets/site.css?v=20261125-sedi">
 <link rel="preload" as="image" href="/img/francesco-maragliulo-psicologo-online.webp" media="(min-width: 981px)">
 
 <script type="application/ld+json">
@@ -48,18 +48,29 @@
       "name": "Francesco Maragliulo",
       "honorificPrefix": "Dott.",
       "jobTitle": "Psicologo",
-      "description": "Psicologo iscritto all'Ordine degli Psicologi della Lombardia (n. 27664), coach membro ICF e counselor gestaltico ed analitico transazionale. Colloqui psicologici online e in studio a Milano.",
+      "description": "Psicologo iscritto all'Ordine degli Psicologi della Lombardia (n. 27664), coach membro ICF e counselor gestaltico ed analitico transazionale. Colloqui psicologici prevalentemente online e, da gennaio 2027, in studio a Milano.",
       "url": "https://www.updateyourlife.it/chi-sono/",
       "image": "https://www.updateyourlife.it/img/francesco-maragliulo-psicologo-online.webp",
       "telephone": "+393314980002",
       "email": "francescomaragliulo@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Via Marcona 24",
-        "addressLocality": "Milano",
-        "addressRegion": "Lombardia",
-        "addressCountry": "IT"
-      },
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "streetAddress": "Via Marcona 24",
+          "postalCode": "20129",
+          "addressLocality": "Milano",
+          "addressRegion": "Lombardia",
+          "addressCountry": "IT"
+        },
+        {
+          "@type": "PostalAddress",
+          "streetAddress": "Via Monti Sabini 26",
+          "postalCode": "20141",
+          "addressLocality": "Milano",
+          "addressRegion": "Lombardia",
+          "addressCountry": "IT"
+        }
+      ],
       "hasCredential": [
         {
           "@type": "EducationalOccupationalCredential",
@@ -98,6 +109,14 @@
       "sameAs": [
         "https://www.instagram.com/updateyourlife_",
         "https://www.linkedin.com/in/francescomaragliulo/"
+      ],
+      "workLocation": [
+        {
+          "@id": "https://www.updateyourlife.it/psicologo-porta-vittoria-milano/#studio"
+        },
+        {
+          "@id": "https://www.updateyourlife.it/psicologo-ripamonti-vigentino-milano/#studio"
+        }
       ]
     },
     {
@@ -239,6 +258,69 @@
           }
         }
       ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.updateyourlife.it/psicologo-online-milano/#service",
+      "name": "Sostegno psicologico a Milano e online",
+      "provider": {
+        "@id": "https://www.updateyourlife.it/#person"
+      },
+      "availableChannel": [
+        {
+          "@type": "ServiceChannel",
+          "name": "Videochiamata",
+          "serviceUrl": "https://www.updateyourlife.it/psicologo-online/"
+        },
+        {
+          "@type": "ServiceChannel",
+          "name": "Colloqui in studio – Porta Vittoria / Dateo",
+          "serviceLocation": {
+            "@id": "https://www.updateyourlife.it/psicologo-porta-vittoria-milano/#studio"
+          },
+          "serviceUrl": "https://www.updateyourlife.it/psicologo-porta-vittoria-milano/"
+        },
+        {
+          "@type": "ServiceChannel",
+          "name": "Colloqui in studio – Ripamonti / Vigentino",
+          "serviceLocation": {
+            "@id": "https://www.updateyourlife.it/psicologo-ripamonti-vigentino-milano/#studio"
+          },
+          "serviceUrl": "https://www.updateyourlife.it/psicologo-ripamonti-vigentino-milano/"
+        }
+      ]
+    },
+    {
+      "@type": "Place",
+      "@id": "https://www.updateyourlife.it/psicologo-porta-vittoria-milano/#studio",
+      "name": "Studio di Francesco Maragliulo – Porta Vittoria / Dateo",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Marcona 24",
+        "postalCode": "20129",
+        "addressLocality": "Milano",
+        "addressRegion": "Lombardia",
+        "addressCountry": "IT"
+      },
+      "url": "https://www.updateyourlife.it/psicologo-porta-vittoria-milano/",
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Via%20Marcona%2024%2C%2020129%20Milano%2C%20Italia",
+      "description": "Sede per colloqui psicologici in presenza da gennaio 2027, su appuntamento."
+    },
+    {
+      "@type": "Place",
+      "@id": "https://www.updateyourlife.it/psicologo-ripamonti-vigentino-milano/#studio",
+      "name": "Studio di Francesco Maragliulo – Ripamonti / Vigentino",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Monti Sabini 26",
+        "postalCode": "20141",
+        "addressLocality": "Milano",
+        "addressRegion": "Lombardia",
+        "addressCountry": "IT"
+      },
+      "url": "https://www.updateyourlife.it/psicologo-ripamonti-vigentino-milano/",
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Via%20Monti%20Sabini%2026%2C%2020141%20Milano%2C%20Italia",
+      "description": "Sede per colloqui psicologici in presenza da gennaio 2027, su appuntamento."
     }
   ]
 }
@@ -346,7 +428,7 @@
     <ol class="steps3">
       <li><h3>Mi scrivi</h3><p>Su WhatsApp, per telefono o via email. Ti rispondo io, di solito in giornata.</p></li>
       <li><h3>Ci organizziamo per la call conoscitiva</h3><p>Una call di 20 minuti, gratuita e senza impegno: mi racconti cosa ti porta, capiamo se posso esserti utile e ti dico il costo dei colloqui.</p></li>
-      <li><h3>Decidi tu</h3><p>Se vuoi iniziare, ci vediamo in videochiamata, di solito ogni settimana o ogni due. Niente pacchetti.</p></li>
+      <li><h3>Decidi tu</h3><p>Se vuoi iniziare, ci vediamo prevalentemente in videochiamata o, da gennaio 2027, in studio a Milano. Niente pacchetti.</p></li>
     </ol>
     <p class="more"><a class="tlink" href="/psicologo-online/">Cosa serve, privacy e riservatezza: la guida al colloquio online</a></p>
   </div>
@@ -380,6 +462,17 @@
   </div>
 </section>
 
+<section class="sec" id="dove-ricevo" aria-labelledby="sedi-title">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="sedi-title">Dove ricevo</h2><p>Il mio focus sono i colloqui online, in videochiamata. Da gennaio 2027 puoi scegliere anche una delle due sedi a Milano, sempre su appuntamento.</p></div>
+    <div class="location-grid">
+      <article class="location-card location-primary"><p class="location-kicker">Modalità principale</p><h3>Online, in videochiamata</h3><p>Da un luogo riservato, senza spostamenti. Concordiamo insieme gli incontri.</p><a class="tlink" href="/psicologo-online/">Come funzionano i colloqui online</a></article>
+      <article class="location-card"><p class="location-kicker">In studio · da gennaio 2027</p><h3>Porta Vittoria / Dateo</h3><p><b>Via Marcona 24</b><br>20129 Milano (MI)<br>Su appuntamento</p><a class="tlink" href="/psicologo-porta-vittoria-milano/">Colloqui a Milano Porta Vittoria</a><a class="location-map tlink" href="https://www.google.com/maps/search/?api=1&amp;query=Via%20Marcona%2024%2C%2020129%20Milano%2C%20Italia" target="_blank" rel="noopener noreferrer">Indicazioni su Google Maps</a></article>
+      <article class="location-card"><p class="location-kicker">In studio · da gennaio 2027</p><h3>Ripamonti / Vigentino</h3><p><b>Via Monti Sabini 26</b><br>20141 Milano (MI)<br>Su appuntamento</p><a class="tlink" href="/psicologo-ripamonti-vigentino-milano/">Colloqui a Milano Ripamonti / Vigentino</a><a class="location-map tlink" href="https://www.google.com/maps/search/?api=1&amp;query=Via%20Monti%20Sabini%2026%2C%2020141%20Milano%2C%20Italia" target="_blank" rel="noopener noreferrer">Indicazioni su Google Maps</a></article>
+    </div>
+  </div>
+</section>
+
 <section class="sec contact" id="contatti" data-contact>
   <div class="wrap">
     <div class="txt">
@@ -401,7 +494,7 @@
     <div class="foot-grid">
       <div class="foot-id">
         <p class="foot-name">Francesco Maragliulo</p>
-        <p>Psicologo iscritto all'Ordine degli Psicologi della Lombardia n. 27664. Colloqui online e in studio a Milano: Via Marcona 24 e zona Ripamonti/Vigentino. <a href="/psicologo-online-milano/">Sedi e colloqui a Milano</a>.</p>
+        <p>Psicologo iscritto all'Ordine degli Psicologi della Lombardia n. 27664. Colloqui prevalentemente online. Da gennaio 2027 anche in studio a Milano: Via Marcona 24, 20129 e Via Monti Sabini 26, 20141. <a href="/psicologo-online-milano/">Sedi e colloqui a Milano</a>.</p>
         <p><a href="tel:+393314980002" data-contatto="telefono-footer">+39 331 498 0002</a></p>
       </div>
       <nav class="topics" aria-label="Temi trattati">
@@ -418,6 +511,8 @@
         <a href="/coaching-online-crescita-personale/">Coaching personale</a>
         <a href="/psicologo-online-italiani-estero/">Italiani all'estero</a>
         <a href="/psicologo-online-milano/">Milano</a>
+        <a href="/psicologo-porta-vittoria-milano/">Milano Porta Vittoria</a>
+        <a href="/psicologo-ripamonti-vigentino-milano/">Milano Ripamonti / Vigentino</a>
         <a href="/approfondimenti/">Approfondimenti</a>
       </nav>
       <nav class="foot-links" aria-label="Il sito">

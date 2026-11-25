@@ -16,7 +16,7 @@ Diventare un riferimento online come psicologo: chi cerca "psicologo online" e v
 
 - Francesco Maragliulo, psicologo iscritto all'Albo Lombardia n. 27664. NON psicoterapeuta: mai offrire "psicoterapia" o "terapia" come servizio.
 - Non "strillare" ciò che non fa: comunicare cosa fa. "Non sono psicoterapeuta" compare solo nelle FAQ. Altrove, formula neutra: "se emerge un altro bisogno, lo valutiamo insieme e ti indico il professionista più adatto".
-- Colloqui online e in studio a Milano: Via Marcona 24 e zona Ripamonti/Vigentino (indirizzo da concordare). Colloqui in italiano, anche per italiani all'estero.
+- Colloqui prevalentemente online. Da gennaio 2027 anche in studio a Milano: Via Marcona 24, 20129 Milano, e Via Monti Sabini 26, 20141 Milano, su appuntamento. Non pubblicare giorni o orari di ricevimento. Colloqui in italiano, anche per italiani all'estero.
 - Counselor gestaltico ed analitico transazionale, docente SIBIG, coach ICF, mindfulness. Manager in multinazionale da 18 anni (Milano): percorsi personali + lavoro/leadership (futuro: neo manager / junior executive).
 - P.IVA non ancora aperta: niente "fattura", "spesa detraibile", tariffe. Il costo si comunica nella call gratuita. Tariffe e durata seduta: non disponibili (aggiornare quando Francesco le fornisce).
 - Prima call conoscitiva gratuita di 20 minuti.
@@ -58,7 +58,7 @@ Lavorare come un direttore creativo: codice di produzione, un punto di vista chi
 - `/ansia-online/`
 - `/azienda-di-famiglia-online/` (coach e psicologo per chi lavora in azienda di famiglia): contiene il modulo della guida «Il tuo posto» (`#guida`, stesso funzionamento di `/prima-di-dimenticare/`, stessa Google Apps Script). Il PDF viene inviato da Francesco su WhatsApp e NON è pubblicato sul sito né nel repository. Informativa in `privacy-policy.html#guida-il-tuo-posto`.
 - `/coaching/` (coaching per manager e professionisti in azienda) e `/coaching-online-crescita-personale/` (coaching su temi personali: scelte, relazioni, obiettivi; non parla di lavoro per non sovrapporsi a `/coaching/`, e dice con trasparenza che Francesco è anche psicologo).
-- `/relazioni-coppia-online/`, `/autostima-online/`, `/momenti-di-cambiamento-online/`, `/stress-lavoro-burnout-online/`, `/psicologo-per-manager/`, `/psicologo-online-italiani-estero/`, `/psicologo-online-milano/`
+- `/relazioni-coppia-online/`, `/autostima-online/`, `/momenti-di-cambiamento-online/`, `/stress-lavoro-burnout-online/`, `/psicologo-per-manager/`, `/psicologo-online-italiani-estero/`, `/psicologo-online-milano/` (hub sedi), `/psicologo-porta-vittoria-milano/`, `/psicologo-ripamonti-vigentino-milano/`
 - Pagine città per italiani all'estero sotto `/psicologo-online-italiani-estero/<slug>/` (Londra, Germania, Svizzera, Parigi, Bruxelles, Amsterdam, Dublino, Spagna, Dubai, Stati Uniti, Canada, Australia). GENERATE da `scripts/build-citta.py`: per modificarle o aggiungerne una, cambia i dati nello script e rilancialo (non editare gli HTML a mano). Ogni nuova città deve avere contenuto davvero locale (fuso, servizi, numeri di emergenza verificati), mai pagine fotocopia. Non vanno in `nav.topics`: le linka l'hub (blocco "Dove vivi?").
 - Fusi orari: Francesco lavora con clienti in fusi diversi e trova spazio anche in orari meno consueti (si può dire, senza indicare orari precisi).
 - Il footer di home e pagine servizio contiene l'elenco dei temi (`nav.topics`): aggiungere ogni nuova pagina servizio anche lì, in sitemap e nei blocchi "Altri temi".
