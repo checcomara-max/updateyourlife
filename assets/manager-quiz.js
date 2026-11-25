@@ -5,7 +5,7 @@
 
   function setupPixelDebug() {
     var params = new URLSearchParams(location.search);
-    if (params.get('debug_pixel') !== '1') return;
+    if (params.get('debug_pixel') !== '1' || !document.body.hasAttribute('data-meta-pixel')) return;
     var box = document.createElement('div');
     box.id = 'uyl-pixel-debug';
     box.style.cssText = 'position:fixed;right:10px;bottom:10px;z-index:99999;background:#111;color:#fff;padding:10px 12px;border-radius:8px;font:12px/1.45 monospace;max-width:300px;box-shadow:0 4px 20px rgba(0,0,0,.35)';
@@ -38,6 +38,9 @@
   var restart = document.getElementById('quiz-restart');
   var answers = [null, null, null];
   var current = 0;
+  var order = new URLSearchParams(location.search).get('utm_content') === 'static_a' ? [1, 0, 2] : [0, 1, 2];
+  var tracked = Object.create(null);
+  var intro = document.getElementById('quiz-intro');
   var started = false;
   var completed = false;
 
@@ -46,63 +49,63 @@
       scenario: '1 · Risultati vs relazione',
       title: 'Hai scelto di partire dal risultato.',
       choice: '“Parto dalle scadenze mancate e chiarisco cosa deve cambiare.”',
-      body: 'Portare subito il problema sul tavolo può dare chiarezza: rende esplicito cosa non sta funzionando e delimita la responsabilità. Ma con una persona precedentemente affidabile, il cambiamento di comportamento è esso stesso un’informazione. Affrontare rapidamente una performance insoddisfacente non significa necessariamente comprenderne rapidamente la causa.',
+      body: 'Partire dal risultato può chiarire aspettative e responsabilità. Il possibile costo è intervenire prima di aver compreso cosa è cambiato in una persona finora affidabile.',
       prompt: 'Prima di decidere come correggere ciò che sta accadendo, ho già abbastanza elementi per capire cosa sto cercando di correggere?'
     },
     '1B': {
       scenario: '1 · Risultati vs relazione',
       title: 'Hai scelto di partire dalla comprensione.',
       choice: '“Prima provo a capire cosa è successo nelle ultime settimane.”',
-      body: 'Creare spazio per capire può far emergere informazioni che i numeri non mostrano. Ma ascoltare non significa sospendere il tema della responsabilità. Soprattutto quando esiste una relazione positiva, comprendere le ragioni può diventare inconsapevolmente un modo per rimandare il momento in cui occorre parlare anche delle conseguenze.',
+      body: 'Ascoltare può far emergere informazioni che i numeri non mostrano. Il possibile costo è rimandare il confronto sulle responsabilità e sulle conseguenze.',
       prompt: 'Sto ascoltando per comprendere meglio il problema oppure anche per rimandare una conversazione difficile?'
     },
     '1C': {
       scenario: '1 · Risultati vs relazione',
       title: 'Hai scelto di chiarire prima il mandato.',
       choice: '“Prima mi allineo con il mio responsabile su ciò che si aspetta da me.”',
-      body: 'Sapere qual è il margine di azione può evitare promesse o decisioni che non puoi sostenere. Ma quando la pressione arriva dall’alto è facile trasformare la conversazione con il collaboratore nell’esecuzione di una richiesta ricevuta. Qui entra in gioco anche quanto spazio decisionale senti realmente tuo nel ruolo.',
+      body: 'Chiarire il mandato aiuta a capire quale margine di azione hai. Il possibile costo è trasformare il confronto con il collaboratore nella semplice esecuzione di una richiesta ricevuta.',
       prompt: 'Cosa mi sta chiedendo il mio capo e quale conversazione ritengo utile avere io, come responsabile di questa persona?'
     },
     '2A': {
       scenario: '2 · Priorità vs confine',
       title: 'Hai scelto di assorbire l’urgenza.',
       choice: '“La faccio. In questo momento è la priorità.”',
-      body: 'In certi ruoli è inevitabile essere disponibili quando la situazione lo richiede. La parte interessante è quel “non è la prima volta”. Una disponibilità eccezionale e una disponibilità sistematica possono sembrare uguali dall’esterno, ma producono effetti diversi. Se ogni urgenza viene assorbita senza rendere visibile il costo organizzativo, l’organizzazione può imparare che quel costo non esiste.',
+      body: 'Essere disponibili può proteggere il risultato immediato. Se accade sistematicamente, il costo organizzativo dell’urgenza rischia di diventare invisibile.',
       prompt: 'Che cosa sto rendendo normale ogni volta che dico sì?'
     },
     '2B': {
       scenario: '2 · Priorità vs confine',
       title: 'Hai scelto di rendere visibile il trade-off.',
       choice: '“Spiego cosa dovrei spostare e chiedo al mio responsabile di scegliere la priorità.”',
-      body: 'Non stai dicendo semplicemente sì o no: stai riportando nella conversazione una cosa spesso invisibile, cioè che ogni nuova priorità modifica quelle precedenti. È un modo di gestire il confine senza trasformarlo in una contrapposizione personale. Richiede però di tollerare che il limite che rendi visibile possa non essere apprezzato.',
+      body: 'Rendere esplicite le priorità può proteggere il confine senza creare una contrapposizione personale. Il possibile costo è dover tollerare che quel limite non venga apprezzato.',
       prompt: 'Posso dire “lo faccio” e, nello stesso momento, rendere chiaro cosa dovremo lasciare indietro?'
     },
     '2C': {
       scenario: '2 · Priorità vs confine',
       title: 'Hai scelto di gestire autonomamente la complessità.',
       choice: '“Cerco di riorganizzarmi senza coinvolgere il mio responsabile.”',
-      body: 'Filtrare problemi e trovare soluzioni senza riportare verso l’alto ogni difficoltà è una capacità preziosa. Ma chi diventa molto bravo a far funzionare comunque le cose può finire per nascondere proprio le condizioni organizzative che rendono il lavoro difficile. Agli occhi degli altri, il sistema continua semplicemente a funzionare.',
+      body: 'Gestire autonomamente la complessità può proteggere il funzionamento del team. Il possibile costo è rendere invisibili le condizioni che generano il problema.',
       prompt: 'Sto risolvendo un problema oppure sto facendo in modo che il problema non si veda?'
     },
     '3A': {
       scenario: '3 · Ruolo vs posizione personale',
       title: 'Hai scelto di proteggere la coerenza del ruolo.',
       choice: '“Difendo la decisione. Una volta presa, il mio ruolo è rappresentarla.”',
-      body: 'Un gruppo dirigente che prende una decisione e poi la delegittima davanti alle proprie persone difficilmente costruisce fiducia. Ma rappresentare una decisione non significa necessariamente fingere di averla desiderata. Quando il tentativo di apparire completamente allineati diventa eccessivo, le persone possono percepire la distanza tra ciò che viene detto e ciò che realmente pensiamo.',
+      body: 'Rappresentare la decisione può proteggere la coerenza del ruolo. Il possibile costo è apparire allineati a tutti i costi, anche quando il team percepisce una distanza.',
       prompt: 'Posso assumermi la responsabilità di una decisione senza dover sostenere che è esattamente quella che avrei preso io?'
     },
     '3B': {
       scenario: '3 · Ruolo vs posizione personale',
       title: 'Hai scelto di mostrare anche la tua posizione personale.',
       choice: '“Dico al team che anch’io avevo delle perplessità, ma che la decisione è stata presa.”',
-      body: 'Può rendere la comunicazione più autentica e riconoscere che le obiezioni del team hanno una loro legittimità. Ma esiste un confine sottile: condividere un dubbio può creare vicinanza; usare il dubbio per comunicare implicitamente “io sono con voi, sono gli altri ad aver deciso” può invece spostare il costo della decisione e indebolire il ruolo.',
+      body: 'Condividere un dubbio può proteggere l’autenticità della relazione. Il possibile costo è prendere implicitamente le distanze dalla decisione e indebolire il ruolo.',
       prompt: 'Sto raccontando il mio dissenso per aiutare il team a comprendere la complessità oppure per prendere distanza da una decisione scomoda?'
     },
     '3C': {
       scenario: '3 · Ruolo vs posizione personale',
       title: 'Hai scelto di separare la decisione dal processo che l’ha preceduta.',
       choice: '“Comunico la decisione senza entrare né nel mio punto di vista né nella discussione precedente.”',
-      body: 'Non tutte le discussioni del management devono essere trasferite al team. Ma eliminare completamente il processo può avere un costo: quando una decisione difficile viene presentata come se fosse ovvia, chi la riceve può sentirsi non soltanto in disaccordo, ma anche non riconosciuto nella legittimità delle proprie reazioni.',
+      body: 'Separare la decisione dal dibattito può proteggere la riservatezza del processo. Il possibile costo è far sentire le persone non riconosciute nelle loro reazioni.',
       prompt: 'Posso riconoscere che una decisione è difficile da accogliere senza delegittimarla e senza raccontare tutto ciò che è avvenuto prima?'
     }
   };
@@ -110,42 +113,34 @@
   function analyticsEvent(name) {
     try {
       if (localStorage.getItem('uyl_cookie_consent') === 'all' && window.gtag) {
+        if (tracked[name]) return;
+        tracked[name] = true;
         window.gtag('event', name, { content_group: 'manager_quiz' });
       }
     } catch (_) {}
   }
 
-  // Tracciamento idempotente del lead confermato dal server.
-  // Nessuna risposta del quiz o dato inserito nel modulo viene passato a Meta o GA4.
-  var confirmedLeadTracked = false;
-  window.uylTrackManagerLead = function () {
-    if (confirmedLeadTracked) return;
-    confirmedLeadTracked = true;
-    analyticsEvent('manager_quiz_lead_sent');
-    try {
-      var pixelId = document.body.getAttribute('data-meta-pixel');
-      if (localStorage.getItem('uyl_marketing_consent') === 'granted' &&
-          pixelId && window.fbq) {
-        window.fbq('track', 'Lead');
-        if (window.uylMetaDebug) window.uylMetaDebug.leadCalled = true;
-        window.dispatchEvent(new CustomEvent('uyl-meta-debug-update'));
-      }
-    } catch (_) {}
-  };
+  // Non inviare eventi di richiesta di contatto a piattaforme analitiche o pubblicitarie.
+  window.uylTrackManagerLead = function () {};
 
   function showQuestion(index) {
     current = index;
     panels.forEach(function (panel, i) {
-      panel.hidden = i !== index;
-      panel.classList.toggle('is-active', i === index);
+      panel.hidden = i !== order[index];
+      panel.classList.toggle('is-active', i === order[index]);
     });
     results.hidden = true;
     var pct = Math.round(((index + 1) / 3) * 100);
     progressLabel.textContent = 'Situazione ' + (index + 1) + ' di 3';
     progressPct.textContent = pct + '%';
     progressBar.style.width = pct + '%';
-    var panel = panels[index];
-    var selected = answers[index];
+    var panel = panels[order[index]];
+    if (intro) intro.hidden = index !== 0;
+    var backline = panel.querySelector('.quiz-backline');
+    if (backline) backline.hidden = index === 0;
+    var scenarioLabel = panel.querySelector('.quiz-label');
+    if (scenarioLabel) scenarioLabel.textContent = (index + 1) + ' · ' + scenarioLabel.textContent.split(' · ').slice(1).join(' · ');
+    var selected = answers[order[index]];
     panel.querySelectorAll('.quiz-option').forEach(function (button) {
       var on = button.getAttribute('data-answer') === selected;
       button.classList.toggle('is-selected', on);
@@ -157,20 +152,21 @@
 
   function renderResults() {
     completed = true;
+    if (intro) intro.hidden = true;
     panels.forEach(function (panel) { panel.hidden = true; });
     progressLabel.textContent = 'Percorso completato';
     progressPct.textContent = '100%';
     progressBar.style.width = '100%';
     cards.textContent = '';
 
-    answers.forEach(function (code, index) {
-      var item = reflections[code];
+    order.forEach(function (originalIndex, index) {
+      var item = reflections[answers[originalIndex]];
       var card = document.createElement('article');
       card.className = 'quiz-result-card';
 
       var number = document.createElement('p');
       number.className = 'result-number';
-      number.textContent = item.scenario;
+      number.textContent = (index + 1) + ' · ' + item.scenario.split(' · ').slice(1).join(' · ');
 
       var title = document.createElement('h3');
       title.textContent = item.title;
@@ -207,10 +203,9 @@
     panel.querySelectorAll('.quiz-option').forEach(function (button) {
       button.setAttribute('aria-pressed', 'false');
       button.addEventListener('click', function () {
-        if (!started) {
-          started = true;
-          analyticsEvent('manager_quiz_start');
-        }
+        if (!started) started = true;
+        analyticsEvent('manager_quiz_start');
+        var position = order.indexOf(index);
 
         answers[index] = button.getAttribute('data-answer');
         panel.querySelectorAll('.quiz-option').forEach(function (other) {
@@ -220,17 +215,17 @@
           other.disabled = true;
         });
 
-        analyticsEvent('manager_quiz_step_' + (index + 1) + '_complete');
+        analyticsEvent('manager_quiz_step_' + (position + 1) + '_complete');
 
         window.setTimeout(function () {
-          if (index < 2) showQuestion(index + 1);
+          if (position < 2) showQuestion(position + 1);
           else renderResults();
         }, 180);
       });
     });
 
     var back = panel.querySelector('.quiz-back');
-    if (back) back.addEventListener('click', function () { showQuestion(index - 1); });
+    if (back) back.addEventListener('click', function () { showQuestion(Math.max(0, order.indexOf(index) - 1)); });
   });
 
   restart.addEventListener('click', function () {
@@ -242,6 +237,7 @@
     showQuestion(0);
   });
 
+  showQuestion(0);
   var sticky = document.getElementById('quiz-result-sticky');
   if (sticky && contact && 'IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {

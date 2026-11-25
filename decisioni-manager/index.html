@@ -17,9 +17,9 @@
 <link rel="preload" href="/assets/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/newsreader-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css?v=20261118-cookie-uniformi">
-<link rel="stylesheet" href="/assets/manager-quiz.css?v=20261123-fast">
+<link rel="stylesheet" href="/assets/manager-quiz.css?v=20261125-ux">
 </head>
-<body class="manager-quiz-landing" data-meta-pixel="2450169161899880">
+<body class="manager-quiz-landing">
 
 <a class="skip" href="#main">Vai al contenuto</a>
 
@@ -34,6 +34,7 @@
   <section class="quiz-section" id="percorso" data-hero>
     <div class="wrap">
       <div class="quiz-shell" id="quiz-shell">
+        <div class="quiz-intro" id="quiz-intro"><h1>Tre decisioni. Tre costi invisibili.</h1><p>3 situazioni manageriali · circa 2 minuti · nessuna registrazione per vedere le riflessioni.</p><p class="quiz-intro-author">A cura del Dott. Francesco Maragliulo, psicologo con 18 anni di esperienza in azienda.</p></div>
         <div class="quiz-progress" aria-live="polite">
           <div class="quiz-progress-copy"><span id="quiz-progress-label">Situazione 1 di 3</span><span id="quiz-progress-pct">33%</span></div>
           <div class="quiz-progress-track" aria-hidden="true"><span id="quiz-progress-bar"></span></div>
@@ -41,7 +42,7 @@
 
         <article class="quiz-panel is-active" data-question="0">
           <p class="quiz-label">1 · Risultati vs relazione</p>
-          <h1>Una persona affidabile smette improvvisamente di esserlo.</h1>
+          <h2>Una persona affidabile smette improvvisamente di esserlo.</h2>
           <p class="quiz-scenario">Una persona del tuo team, finora molto affidabile, nelle ultime settimane ha mancato due scadenze importanti. Domani hai un incontro con lei. Nel frattempo il tuo responsabile ti ha già chiesto spiegazioni sui ritardi.</p>
           <p class="quiz-question">Come inizieresti il confronto?</p>
           <div class="quiz-options" role="group" aria-label="Scegli come inizieresti il confronto">
@@ -49,7 +50,7 @@
             <button type="button" class="quiz-option" data-answer="1B"><span>B</span><b>Prima provo a capire cosa è successo nelle ultime settimane.</b></button>
             <button type="button" class="quiz-option" data-answer="1C"><span>C</span><b>Prima mi allineo con il mio responsabile su ciò che si aspetta da me.</b></button>
           </div>
-
+          <div class="quiz-backline" hidden><button class="quiz-back" type="button">← Cambia la risposta precedente</button></div>
         </article>
 
         <article class="quiz-panel" data-question="1" hidden>
@@ -81,14 +82,14 @@
         <section class="quiz-results" id="quiz-results" hidden aria-live="polite">
           <p class="quiz-label">Le tue tre riflessioni</p>
           <h2>Ecco cosa rendono visibile le tue scelte.</h2>
-          <p class="quiz-results-intro">Non è un profilo psicologico: sono tre letture delle decisioni che hai appena preso.</p>
+          <p class="quiz-results-intro">Non è un profilo psicologico: sono tre letture delle decisioni che hai appena preso. Ogni scelta può proteggere qualcosa e avere un costo.</p>
           <div class="quiz-results-cta">
-            <div><b>Vuoi portare una situazione reale in uno spazio riservato?</b><span>Call conoscitiva online di 20 minuti · gratuita · senza impegno</span></div>
-            <a class="btn quiz-primary" href="#inizia">Richiedi la call</a>
+            <div><b>Dalle situazioni del quiz a quelle del tuo lavoro.</b><span>Se vuoi confrontarti su un episodio professionale concreto, possiamo partire da lì.</span><span>20 minuti online · gratuiti · senza impegno</span></div>
+            <a class="btn quiz-primary" href="#inizia">Richiedi un confronto</a>
           </div>
           <div id="quiz-result-cards" class="quiz-result-cards"></div>
           <div class="quiz-results-bottom">
-            <p><b>Se una di queste riflessioni ti ha fatto pensare a qualcosa di concreto del tuo lavoro, possiamo partire da lì.</b></p>
+            <div class="quiz-professional"><img src="/img/francesco-maragliulo-psicologo-online.webp" width="900" height="1200" alt="Dott. Francesco Maragliulo" loading="lazy" decoding="async"><div><b>Dott. Francesco Maragliulo</b><p>Psicologo iscritto all’Albo della Lombardia n. 27664, coach ICF. 18 anni in contesti aziendali e manageriali.</p></div></div><p><b>Un confronto conoscitivo per capire insieme se ha senso proseguire.</b></p>
             <a class="btn quiz-primary" href="#inizia">Richiedi una call conoscitiva gratuita</a>
             <button type="button" class="quiz-restart" id="quiz-restart">Rifai il percorso</button>
           </div>
@@ -101,12 +102,13 @@
     <div class="wrap">
       <div class="quiz-contact-head">
         <p class="quiz-kicker">Call conoscitiva gratuita · 20 minuti</p>
-        <h2>Lasciami i tuoi recapiti. Ti scrivo io.</h2>
-        <p>Niente agenda da incastrare adesso e niente descrizioni personali: ti contatto su WhatsApp per trovare insieme un momento adatto.</p>
+        <h2>Organizziamo un confronto.</h2>
+        <p>Puoi chiedermi di ricontattarti oppure scrivermi direttamente. Non serve raccontare qui la tua situazione.</p>
       </div>
 
       <div class="manager-lead-layout">
         <div class="manager-lead-card">
+          <div class="quiz-direct"><b>Preferisci scrivermi direttamente?</b><a class="btn manager-whatsapp-secondary" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20una%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener noreferrer">Apri WhatsApp</a><p>Oppure lascia i recapiti qui sotto e ti scriverò io.</p></div>
           <form id="manager-lead-form" novalidate aria-labelledby="manager-form-title">
             <h3 id="manager-form-title">Richiedi la call conoscitiva</h3>
             <p class="sub">Solo i recapiti necessari per organizzare la call.</p>
@@ -122,7 +124,7 @@
             </div>
             <div class="manager-spam" aria-hidden="true"><label for="manager-website">Lascia vuoto</label><input id="manager-website" name="website" type="text" autocomplete="off" tabindex="-1"></div>
             <p id="manager-form-error" class="manager-form-error" role="alert" hidden></p>
-            <button class="btn quiz-primary manager-form-submit" id="manager-form-submit" type="submit"><span>Chiedi di essere ricontattato</span></button>
+            <button class="btn quiz-primary manager-form-submit" id="manager-form-submit" type="submit"><span>Ricontattami su WhatsApp</span></button>
           </form>
 
           <div id="manager-form-success" class="manager-form-success" role="status" tabindex="-1" hidden>
@@ -134,7 +136,7 @@
 
           <div class="manager-fallback">
             <p><b>Preferisci fare tu il primo passo?</b> WhatsApp resta un'alternativa, ma non è necessario aprirlo adesso.</p>
-            <a class="btn manager-whatsapp-secondary" data-contatto="whatsapp-manager-quiz" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20ho%20completato%20il%20percorso%20sulle%20tre%20decisioni%20manageriali%20e%20vorrei%20organizzare%20una%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
+            <a class="btn manager-whatsapp-secondary" href="https://wa.me/393314980002?text=Ciao%20Francesco%2C%20vorrei%20organizzare%20una%20call%20conoscitiva%20di%2020%20minuti." target="_blank" rel="noopener noreferrer">Scrivimi su WhatsApp</a>
           </div>
         </div>
 
@@ -194,7 +196,7 @@
 </footer>
 
 <div class="cookie" id="cookie" role="dialog" aria-label="Scelte sui cookie" hidden>
-  <p>Usiamo cookie facoltativi per le statistiche e, con il tuo consenso, per misurare questa campagna Meta. Le risposte al percorso non vengono inviate a Meta né agli strumenti analitici. <a href="/cookie-policy.html#preferenze-cookie">Informativa e preferenze</a></p>
+  <p>Usiamo cookie facoltativi per statistiche generali, solo con il tuo consenso. Le risposte al percorso e le richieste di contatto non vengono inviate agli strumenti pubblicitari. <a href="/cookie-policy.html#preferenze-cookie">Informativa e preferenze</a></p>
   <div class="cookie-actions">
     <button id="cookie-no" type="button">Solo necessari</button>
     <button id="cookie-ok" type="button">Accetta</button>
@@ -202,7 +204,7 @@
 </div>
 
 <script src="/assets/site.js?v=20261124-standard-events" defer></script>
-<script src="/assets/manager-quiz.js?v=20261124-standard-events" defer></script>
-<script src="/assets/manager-form.js?v=20261124-lead-direct" defer></script>
+<script src="/assets/manager-quiz.js?v=20261125-ux" defer></script>
+<script src="/assets/manager-form.js?v=20261125-ux" defer></script>
 </body>
 </html>

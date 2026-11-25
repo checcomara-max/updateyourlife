@@ -120,3 +120,18 @@
   .manager-quiz-landing .quiz-result-sticky span{font-size:10.5px}
   .manager-quiz-landing .quiz-result-sticky .btn{min-height:40px;font-size:13px;padding:8px 11px}
 }
+
+/* Decisioni manager: mobile-first conversion refinement */
+.manager-quiz-landing [hidden]{display:none!important}
+.manager-quiz-landing .quiz-intro{margin:0 0 14px;padding:0 4px}
+.manager-quiz-landing .quiz-intro h1{font:600 clamp(21px,4.5vw,30px)/1.15 var(--serif);margin:0 0 5px}
+.manager-quiz-landing .quiz-intro p{font-size:12px;line-height:1.45;margin:3px 0;color:var(--ink-2)}
+.manager-quiz-landing .quiz-intro-author{font-weight:500}
+.manager-quiz-landing .quiz-professional{display:flex;align-items:center;gap:13px}
+.manager-quiz-landing .quiz-professional img{width:68px;height:82px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.manager-quiz-landing .quiz-professional p{margin:4px 0 0;font-size:13px}
+.manager-quiz-landing .quiz-direct{border-bottom:1px solid var(--rule);margin-bottom:18px;padding-bottom:16px;display:grid;gap:8px}
+.manager-quiz-landing .quiz-direct p{font-size:13px;margin:0}
+.manager-quiz-landing #inizia{scroll-margin-top:75px}
+.manager-quiz-landing:has(#cookie:not([hidden])) .quiz-result-sticky{display:none}
+@media(max-width:620px){.manager-quiz-landing .quiz-intro{margin-bottom:9px}.manager-quiz-landing .quiz-intro h1{font-size:21px}.manager-quiz-landing .quiz-intro p{font-size:11.5px}.manager-quiz-landing .quiz-panel h2{font-size:clamp(25px,7.5vw,34px)}.manager-quiz-landing .quiz-option{min-height:48px}.manager-quiz-landing .quiz-result-sticky{padding-bottom:max(9px,env(safe-area-inset-bottom))}}

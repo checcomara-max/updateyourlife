@@ -77,6 +77,6 @@
       var reason = error && /^HTTP [0-9]{3}$/.test(error.message || '') ? ' (' + error.message + ')' : '';
       fail("Non posso confermare che la richiesta sia stata ricevuta" + reason + ". Puoi scrivermi direttamente su WhatsApp usando il pulsante qui sotto.");
     })
-    .finally(function() { btn.disabled = false; label.textContent = 'Chiedi di essere ricontattato'; });
+    .finally(function() { btn.disabled = false; label.textContent = document.body.classList.contains('manager-quiz-landing') ? 'Ricontattami su WhatsApp' : 'Chiedi di essere ricontattato'; });
   });
 })();
