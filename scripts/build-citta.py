@@ -356,7 +356,7 @@ def faq_of(c):
         (c['tz_q'], c['tz_a']),
         (c['lang_q'], LANG_Q.format(lang=c['lang'])),
         ('Posso rivolgermi anche ai servizi del posto?', LOCAL_A.format(svc=c['svc'])),
-        (c['where_q'], c['where_a']),
+        (c['where_q'], 'La disponibilità dei colloqui dipende dalle norme applicabili e dalla copertura professionale nel Paese in cui ti trovi. Contattami per verificarla.'),
         ('E se sto molto male?', EMERG + c['emerg']),
     ]
 
@@ -422,7 +422,7 @@ def build(c, tpl, today):
 {json.dumps(ld, ensure_ascii=False, indent=2)}
 </script>
 </head>
-<body class="svc">
+<body class="svc" data-campaign-contact="google">
 
 {header}
 
@@ -434,6 +434,7 @@ def build(c, tpl, today):
     <div>
       <h1>{esc(c['h1'])}</h1>
       <p class="lead">{esc(c['lead'])}</p>
+      <p class="note">La disponibilità dei colloqui è subordinata alle norme applicabili e alla copertura professionale nel Paese in cui ti trovi.</p>
       <div class="author">
         <img src="/img/francesco-maragliulo-avatar.webp" width="240" height="240" alt="" fetchpriority="high">
         <p><b>Francesco Maragliulo</b>, psicologo iscritto all'Albo della Lombardia n. 27664. Colloqui online solo in italiano.</p>
@@ -578,8 +579,8 @@ def hub_block():
 <section class="section" id="dove-vivi" style="background:var(--bg-alt)">
   <div class="wrap">
     <div class="prose">
-      <h2>Colloqui in italiano, in qualsiasi Paese</h2>
-      <p>Lavoro con italiani che vivono in tutto il mondo. Per alcune città e Paesi ho raccolto le informazioni pratiche: fuso orario, servizi locali, numeri utili.</p>
+      <h2>Colloqui in italiano per chi vive all’estero</h2>
+      <p>Per alcune città e Paesi ho raccolto informazioni pratiche: fuso orario, servizi locali e numeri utili. Prima di concordare un colloquio verifico la possibilità di erogare la prestazione nel Paese in cui ti trovi.</p>
       <h3 style="margin-top:28px">In Europa</h3>
       <ul>
 {eu}
@@ -588,7 +589,7 @@ def hub_block():
       <ul>
 {world}
       </ul>
-      <p style="margin-top:20px">Vivi altrove? Va bene lo stesso: ti serve solo una connessione stabile.</p>
+      <p style="margin-top:20px">Vivi altrove? Contattami per verificare la disponibilità del servizio nel Paese in cui ti trovi.</p>
     </div>
   </div>
 </section>
